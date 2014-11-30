@@ -1,0 +1,135 @@
+﻿@model IEnumerable<CareHomeMock.Models.CareHome>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Area.PrefectureName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Zip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebsiteUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Established)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChiefName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChiefJobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataUpdated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaFileDataId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Region)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Traits)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Messages)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Area.PrefectureName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Zip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WebsiteUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Established)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChiefName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChiefJobTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Longitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Latitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataUpdated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediaFileDataId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Region)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Traits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Messages)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CareHomeId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CareHomeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CareHomeId })
+        </td>
+    </tr>
+}
+
+</table>

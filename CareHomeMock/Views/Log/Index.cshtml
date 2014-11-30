@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@section scripts{
+    <script>
+        function fmDate(str) {
+            // /Date(1417328685970)/
+            var regex = /\/Date([0-9]*)\//;
+            return new Date(parseInt(str.match(/[0-9]+/)));
+        }
+
+        $(document).ready(function () {
+
+            function Level(name, value) {
+                this.name = name;
+                this.value = value;
+            }
+
+            function Log(root, data) {
+                this.root = root;
+                this.data = data;
+                this.ShowDetails = function () {
+                    this.root.selectedLogData(this.data);
+                    $('#DetailsModal').modal('show');
+                }
+            }
+
+            function AppModel() {
+                var s = this;
+
+                s.levels = [
+                    new Level('重要', 'Fatal'),
+                    new Level('管理者', 'Admin'),
+                    new Level('事業所', 'CareHome'),
+                    new Level('ケアマネ', 'CareManager'),
+                    new Level('その他', 'Others')
+                ];
+                s.logs = ko.observableArray([]);
+                s.oldestRowKey = ko.observable(null);
+                s.noMoreLogs = ko.observable(false);
+                s.selectedLevel = ko.observable(s.levels[0]);
+                s.selectedLogData = ko.observable();
+
+                s.selectedLevel.subscribe(function (newValue) {
+                    //console.info(newValue);
+                    s.oldestRowKey(null);
+                    s.noMoreLogs(false);
+                    s.GetLogs();
+                });
+
+                s.GetLogs = function () {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Log/GetLogs',
+                        data: {
+                            level: s.selectedLevel().value,
+                            rowKeyAfter: s.oldestRowKey()
+                        }
+                    }).done(function (data) {
+                        //s.logs(data);
+                        console.info(data);
+                        var append = s.oldestRowKey() != null;
+                        s.oldestRowKey(null);
+                        if (data.length == 0)
+                            s.noMoreLogs(true);
+                        var logs = [];
+                        for(var n=0; n<data.length; n++){
+                            logs.push(new Log(s, data[n]));
+                            s.oldestRowKey(data[n].RowKey);
+                        }
+
+                        if (append) {
+                            for (var n = 0; n < logs.length; n++)
+                                s.logs.push(logs[n]);
+                        }else
+                            s.logs(logs);
+                    });
+                }
+            }
+
+            var model = new AppModel();
+            model.GetLogs();
+            ko.applyBindings(model);
+        });
+    </script>
+}
+
+<h2>ログ一覧</h2>
+
+<!-- Details Modal -->
+<div class="modal fade" id="DetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">ログ詳細</h4>
+            </div>
+            <div data-bind="with: selectedLogData" class="modal-body">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <th>ログID(区分)</th>
+                            <td data-bind="text: PartitionKey"></td>
+                        </tr>
+                        <tr>
+                            <th>ログID(行)</th>
+                            <td data-bind="text: RowKey"></td>
+                        </tr>
+                        <tr>
+                            <th>日時</th>
+                            <td data-bind="text: fmDate(Created)"></td>
+                        </tr>
+                        <tr>
+                            <th>IPアドレス</th>
+                            <td data-bind="text: IpAddress"></td>
+                        </tr>
+                        <tr>
+                            <th>HTTPメソッド</th>
+                            <td data-bind="text: HttpMethod"></td>
+                        </tr>
+                        <tr>
+                            <th>URL</th>
+                            <td data-bind="text: Url"></td>
+                        </tr>
+                        <tr>
+                            <th>Content Length</th>
+                            <td data-bind="text: ContentLength"></td>
+                        </tr>
+                        <tr>
+                            <th>クッキー</th>
+                            <td><pre data-bind="text: Cookies"></pre></td>
+                        </tr>
+                        <tr>
+                            <th>GETパラメータ</th>
+                            <td><pre data-bind="text: QueryString"></pre></td>
+                        </tr>
+                        <tr>
+                            <th>POSTパラメータ</th>
+                            <td><pre data-bind="text: Form"></pre></td>
+                        </tr>
+                        <tr>
+                            <th>ユーザーID</th>
+                            <td data-bind="text: UserId"></td>
+                        </tr>
+                        <tr>
+                            <th>操作内容</th>
+                            <td data-bind="text: Action"></td>
+                        </tr>
+                        <tr>
+                            <th>追加情報</th>
+                            <td><pre data-bind="text: JsonData"></pre></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<select data-bind="options: levels, optionsText: 'name', value: selectedLevel" class="form-control"></select>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>日時</th>
+            <th>IPアドレス</th>
+            <th>ユーザーID</th>
+            <th>操作内容</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: logs">
+        <tr>
+            <td data-bind="text: fmDate(data.Created)"></td>
+            <td data-bind="text: data.IpAddress"></td>
+            <td data-bind="text: data.UserId"></td>
+            <td data-bind="text: data.Action"></td>
+            <td><button type="button" data-bind="click: ShowDetails" class="btn btn-default btn-xs">詳細</button></td>
+        </tr>
+    </tbody>
+</table>
+<button type="button" data-bind="visible: !noMoreLogs(), click: GetLogs" class="btn btn-default">もっと読み込む</button>
+<p data-bind="visible: noMoreLogs">これ以上のログはありませんでした。</p>

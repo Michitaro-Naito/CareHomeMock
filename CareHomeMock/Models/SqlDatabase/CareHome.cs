@@ -20,7 +20,7 @@ namespace CareHomeMock.Models
         /// Professional parameters to display.
         /// </summary>
         [ComplexType]
-        public class ProfessionalParameters
+        public class CareHomeProfessionalParameters
         {
             public int 介護支援専門員在席人数 { get; set; }
             public int 介護支援専門員常勤換算 { get; set; }
@@ -43,10 +43,10 @@ namespace CareHomeMock.Models
 
             public double 利用者の権利擁護 { get; set; }
             public double サービスの質の確保 { get; set; }
-            public double 相談・苦情等への対応 { get; set; }
+            public double 相談苦情等への対応 { get; set; }
             public double 外部機関等との連携 { get; set; }
-            public double 事業運営・管理 { get; set; }
-            public double 安全・衛生管理等 { get; set; }
+            public double 事業運営管理 { get; set; }
+            public double 安全衛生管理等 { get; set; }
             public double 従業者の研修等 { get; set; }
         }
 
@@ -134,7 +134,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Professional parameters to display.
         /// </summary>
-        public ProfessionalParameters Parameters { get; set; }
+        public CareHomeProfessionalParameters Parameters { get; set; }
 
         /// <summary>
         /// RowKey of Image.

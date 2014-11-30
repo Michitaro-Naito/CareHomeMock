@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CareHomeMock.Models.TableStorage
+namespace CareHomeMock.Models
 {
     /// <summary>
     /// Represents a Review which has been posted by Visitor.

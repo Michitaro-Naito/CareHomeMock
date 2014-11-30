@@ -1,0 +1,162 @@
+﻿@model CareHomeMock.Models.CareHome
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CareHome</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Area.PrefectureName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Area.PrefectureName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WebsiteUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WebsiteUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Established)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Established)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChiefName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChiefName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChiefJobTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChiefJobTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataUpdated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MediaFileDataId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MediaFileDataId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Region)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Region)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Traits)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Traits)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Messages)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Messages)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CareHomeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

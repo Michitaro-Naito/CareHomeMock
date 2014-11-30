@@ -183,10 +183,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CareHomeController.cs" />
+    <Compile Include="Controllers\CareManagerController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\StaticPageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Extension.cs" />
+    <Compile Include="Migrations\201411300031186_Init.cs" />
+    <Compile Include="Migrations\201411300031186_Init.Designer.cs">
+      <DependentUpon>201411300031186_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\CompanyType.cs" />
     <Compile Include="Models\Enum\Gender.cs" />
@@ -202,6 +215,7 @@
     <Compile Include="Models\SqlDatabase\Otp.cs" />
     <Compile Include="Models\SqlDatabase\StaticPage.cs" />
     <Compile Include="Models\SqlDatabase\User.cs" />
+    <Compile Include="Helper\TableHelper.cs" />
     <Compile Include="Models\ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\BlobStorage\FileData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -256,9 +270,36 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\CareHome\Create.cshtml" />
+    <Content Include="Views\CareHome\Delete.cshtml" />
+    <Content Include="Views\CareHome\Details.cshtml" />
+    <Content Include="Views\CareHome\Edit.cshtml" />
+    <Content Include="Views\CareHome\Index.cshtml" />
+    <Content Include="Views\StaticPage\Create.cshtml" />
+    <Content Include="Views\StaticPage\Delete.cshtml" />
+    <Content Include="Views\StaticPage\Details.cshtml" />
+    <Content Include="Views\StaticPage\Edit.cshtml" />
+    <Content Include="Views\StaticPage\Index.cshtml" />
+    <Content Include="Views\CareManager\Create.cshtml" />
+    <Content Include="Views\CareManager\Delete.cshtml" />
+    <Content Include="Views\CareManager\Details.cshtml" />
+    <Content Include="Views\CareManager\Edit.cshtml" />
+    <Content Include="Views\CareManager\Index.cshtml" />
+    <Content Include="Views\Application\Create.cshtml" />
+    <Content Include="Views\Application\Delete.cshtml" />
+    <Content Include="Views\Application\Details.cshtml" />
+    <Content Include="Views\Application\Edit.cshtml" />
+    <Content Include="Views\Application\Index.cshtml" />
+    <Content Include="Views\File\Create.cshtml" />
+    <Content Include="Views\File\Delete.cshtml" />
+    <Content Include="Views\File\Details.cshtml" />
+    <Content Include="Views\File\Edit.cshtml" />
+    <Content Include="Views\File\Index.cshtml" />
+    <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -266,6 +307,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201411300031186_Init.resx">
+      <DependentUpon>201411300031186_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -20,10 +20,10 @@ namespace CareHomeMock.Models
         /// Professional parameters to display.
         /// </summary>
         [ComplexType]
-        public class ProfessionalParameters
+        public class CaremanagerProfessionalParameters
         {
-            public double 企画・立案力 { get; set; }
-            public double 行動・実践力 { get; set; }
+            public double 企画立案力 { get; set; }
+            public double 行動実践力 { get; set; }
             public double 関係構築力 { get; set; }
             public double マネジメント力 { get; set; }
             public double 医療知識 { get; set; }
@@ -101,7 +101,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Professional parameters to display.
         /// </summary>
-        public ProfessionalParameters Parameters { get; set; }
+        public CaremanagerProfessionalParameters Parameters { get; set; }
 
         /// <summary>
         /// Cached total rating.

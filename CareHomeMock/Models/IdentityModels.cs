@@ -5,8 +5,16 @@ namespace CareHomeMock.Models
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
+        public DbSet<Application> Applications { get; set; }
+        public DbSet<Area> Areas { get; set; }
         public DbSet<CareHome> CareHomes { get; set; }
         public DbSet<CareManager> CareManagers { get; set; }
+        public DbSet<Cluster> Clusters { get; set; }
+        public DbSet<EmailVerification> EmailVerifications { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<MediaFile> MediaFiles { get; set; }
+        public DbSet<Otp> Otps { get; set; }
+        public DbSet<StaticPage> StaticPage { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<CareHomeMock.Models.CareManager>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CareHome.Zip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaFileDataId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Licensed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Licenses)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentPatients)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AllowNewPatient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Career)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Messages)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogUrls)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewsCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CareHome.Zip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediaFileDataId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Licensed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Licenses)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentPatients)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AllowNewPatient)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Career)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Messages)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BlogUrls)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewsCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CareManagerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CareManagerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CareManagerId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,8 @@ namespace CareHomeMock.Models
     {
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
+
+        [Key]
         public string RowKey { get; set; }
     }
 }
