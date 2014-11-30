@@ -36,6 +36,7 @@
                     new Level('ケアマネ', 'CareManager'),
                     new Level('その他', 'Others')
                 ];
+                s.messages = ko.observableArray([]);
                 s.logs = ko.observableArray([]);
                 s.oldestRowKey = ko.observable(null);
                 s.noMoreLogs = ko.observable(false);
@@ -76,6 +77,27 @@
                                 s.logs.push(logs[n]);
                         }else
                             s.logs(logs);
+                    });
+                }
+
+                s.DeleteLogs = function () {
+                    if (!confirm('1ヶ月以上経過したログを削除します。よろしいですか？'))
+                        return;
+                    s.messages.push('削除を開始します...');
+                    s.DeleteLogsConfirmed();
+                }
+                s.DeleteLogsConfirmed = function () {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Log/DeleteLogs'
+                    }).done(function (data) {
+                        console.info(data);
+                        s.messages.push(data['Deleted'] + '件削除しました。');
+                        if (data['Deleted'] > 0)
+                            s.DeleteLogsConfirmed();
+                        else
+                            s.messages.push('削除が完了しました。');
                     });
                 }
             }
@@ -185,3 +207,9 @@
 </table>
 <button type="button" data-bind="visible: !noMoreLogs(), click: GetLogs" class="btn btn-default">もっと読み込む</button>
 <p data-bind="visible: noMoreLogs">これ以上のログはありませんでした。</p>
+
+<h2>ログの削除</h2>
+<button type="button" data-bind="click: DeleteLogs" class="btn btn-warning">古いログを削除する</button>
+<ul data-bind="foreach: messages">
+    <li data-bind="text: $data"></li>
+</ul>

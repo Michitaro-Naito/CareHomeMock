@@ -8,6 +8,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
 using CareHomeMock.Models;
+using CareHomeMock.Helper;
 
 namespace CareHomeMock.Controllers
 {
@@ -22,8 +23,6 @@ namespace CareHomeMock.Controllers
         {
             /*var table = TableHelper<Log>.Table;
 
-            //Log(LogType.CareHome, "Foo", "ログイン", null);
-
             var logs = table.CreateQuery<Log>()
                 .Where(l => l.PartitionKey == "CareHome"
                     //&& l.RowKey.CompareTo("2519849844367280569_e3c286ec-8129-417c-a2e7-879f54917f44") > 0
@@ -31,6 +30,8 @@ namespace CareHomeMock.Controllers
                     )
                 .Take(10)
                 .ToList();*/
+
+            //Log(LogType.CareHome, "Foo", "ログイン", null);
 
             return View();
         }
@@ -43,6 +44,27 @@ namespace CareHomeMock.Controllers
             if (rowKeyAfter != null)
                 query = query.Where(l => l.RowKey.CompareTo(rowKeyAfter) > 0);
             return Json(query.Take(50).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult DeleteLogs()
+        {
+            var rowKeyOneMonthAgo = Helper.Helper.GenerateRowKey(DateTime.UtcNow.AddMonths(-1));
+
+            var table = TableHelper<Log>.Table;
+            var batch = new TableBatchOperation();
+            var logsToDelete = table.CreateQuery<Log>()
+                .Where(l => l.RowKey.CompareTo(rowKeyOneMonthAgo) >= 0)
+                .Take(50).ToList();
+            if (logsToDelete.Count > 0)
+            {
+                foreach (var log in logsToDelete)
+                {
+                    batch.Delete(log);
+                }
+                table.ExecuteBatch(batch);
+            }
+            return Json(new { Deleted = logsToDelete.Count });
         }
 	}
 }
