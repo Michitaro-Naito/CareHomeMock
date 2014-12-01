@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>固定ページ一覧</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新しいページを作成する", "Edit")
 </p>
 <table class="table">
     <tr>
@@ -22,9 +22,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Html)
         </th>
         <th></th>
     </tr>
@@ -44,12 +41,8 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Html)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.StaticPageId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.StaticPageId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.StaticPageId })
+            @Html.ActionLink("編集", "Edit", new { id=item.StaticPageId }) |
+            @Html.ActionLink("削除", "Delete", new { id=item.StaticPageId })
         </td>
     </tr>
 }

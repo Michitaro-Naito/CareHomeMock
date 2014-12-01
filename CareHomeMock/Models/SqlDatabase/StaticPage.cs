@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CareHomeMock.Models
 {
@@ -17,6 +18,15 @@ namespace CareHomeMock.Models
 
         public int Order { get; set; }
         public string Title { get; set; }
+        [AllowHtml]
         public string Html { get; set; }
+
+
+
+        public StaticPage()
+        {
+            Created = DateTime.UtcNow;
+            Updated = DateTime.UtcNow;
+        }
     }
 }

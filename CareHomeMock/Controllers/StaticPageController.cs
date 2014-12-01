@@ -23,57 +23,22 @@ namespace CareHomeMock.Controllers
             return View(db.StaticPage.ToList());
         }
 
-        // GET: /StaticPage/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            StaticPage staticpage = db.StaticPage.Find(id);
-            if (staticpage == null)
-            {
-                return HttpNotFound();
-            }
-            return View(staticpage);
-        }
-
-        // GET: /StaticPage/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: /StaticPage/Create
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="StaticPageId,Created,Updated,Order,Title,Html")] StaticPage staticpage)
-        {
-            if (ModelState.IsValid)
-            {
-                db.StaticPage.Add(staticpage);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(staticpage);
-        }
-
         // GET: /StaticPage/Edit/5
         public ActionResult Edit(int? id)
         {
+            StaticPage staticPage;
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                // Creates a new StaticPage.
+                staticPage = new StaticPage();
             }
-            StaticPage staticpage = db.StaticPage.Find(id);
-            if (staticpage == null)
+            else
             {
-                return HttpNotFound();
+                staticPage = db.StaticPage.Find(id);
             }
-            return View(staticpage);
+            if (staticPage == null)
+                return HttpNotFound();
+            return View(staticPage);
         }
 
         // POST: /StaticPage/Edit/5
@@ -85,7 +50,16 @@ namespace CareHomeMock.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(staticpage).State = EntityState.Modified;
+                if (staticpage.StaticPageId == 0)
+                {
+                    staticpage.Created = staticpage.Updated = DateTime.UtcNow;
+                    db.StaticPage.Add(staticpage);
+                }
+                else
+                {
+                    staticpage.Updated = DateTime.UtcNow;
+                    db.Entry(staticpage).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
