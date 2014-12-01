@@ -22,6 +22,11 @@ namespace CareHomeMock.Models
         [Key]
         public int CareHomeId { get; set; }
 
+        /// <summary>
+        /// Is deactivated by Admin?
+        /// </summary>
+        public bool Deactivated { get; set; }
+
         public int AreaId { get; set; }
 
         /// <summary>

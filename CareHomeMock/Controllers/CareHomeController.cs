@@ -21,21 +21,6 @@ namespace CareHomeMock.Controllers
             return View(carehomes.ToList());
         }
 
-        // GET: /CareHome/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CareHome carehome = db.CareHomes.Find(id);
-            if (carehome == null)
-            {
-                return HttpNotFound();
-            }
-            return View(carehome);
-        }
-
         // GET: /CareHome/Create
         public ActionResult Create()
         {
@@ -94,28 +79,26 @@ namespace CareHomeMock.Controllers
             return View(carehome);
         }
 
-        // GET: /CareHome/Delete/5
-        public ActionResult Delete(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Deactivate(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CareHome carehome = db.CareHomes.Find(id);
-            if (carehome == null)
-            {
+            var home = db.CareHomes.Find(id);
+            if (home == null)
                 return HttpNotFound();
-            }
-            return View(carehome);
+            home.Deactivated = true;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
-        // POST: /CareHome/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Activate(int? id)
         {
-            CareHome carehome = db.CareHomes.Find(id);
-            db.CareHomes.Remove(carehome);
+            var home = db.CareHomes.Find(id);
+            if (home == null)
+                return HttpNotFound();
+            home.Deactivated = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
