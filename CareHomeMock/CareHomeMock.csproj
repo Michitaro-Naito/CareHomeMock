@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201411300031186_Init.Designer.cs">
       <DependentUpon>201411300031186_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412010942320_AddSurrogateKey_File_MediaFile.cs" />
+    <Compile Include="Migrations\201412010942320_AddSurrogateKey_File_MediaFile.Designer.cs">
+      <DependentUpon>201412010942320_AddSurrogateKey_File_MediaFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\CompanyType.cs" />
@@ -457,6 +461,7 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Views\File\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -472,6 +477,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411300031186_Init.resx">
       <DependentUpon>201411300031186_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412010942320_AddSurrogateKey_File_MediaFile.resx">
+      <DependentUpon>201412010942320_AddSurrogateKey_File_MediaFile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

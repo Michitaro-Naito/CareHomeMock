@@ -19,6 +19,9 @@ namespace CareHomeMock.Models
             Youtube = 1
         }
 
+        [Key]
+        public int MediaFileId { get; set; }
+
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 
@@ -29,7 +32,6 @@ namespace CareHomeMock.Models
         public int Order { get; set; }
         public MediaFileType Type { get; set; }
 
-        [Key]
         public string RowKey { get; set; }
     }
 }

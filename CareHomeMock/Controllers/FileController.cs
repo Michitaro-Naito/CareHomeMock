@@ -7,6 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CareHomeMock.Models;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure;
+using System.Diagnostics;
 
 namespace CareHomeMock.Controllers
 {
@@ -23,77 +28,91 @@ namespace CareHomeMock.Controllers
             return View(db.Files.ToList());
         }
 
-        // GET: /File/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            File file = db.Files.Find(id);
-            if (file == null)
-            {
-                return HttpNotFound();
-            }
-            return View(file);
-        }
-
-        // GET: /File/Create
-        public ActionResult Create()
+        public ActionResult Upload()
         {
             return View();
         }
 
-        // POST: /File/Create
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="RowKey,Created,Updated")] File file)
+        public ActionResult Upload(HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            Debug.WriteLine("{0} bytes uploaded.", file.ContentLength);
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("file");
+            container.CreateIfNotExists();
+
+            // Checks for name collisions.
+            var fileName = file.FileName;
+            var existing = db.Files.FirstOrDefault(f=>f.RowKey==fileName);
+            if (existing != null)
             {
-                db.Files.Add(file);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                fileName = string.Format("{0}_{1}{2}",
+                    System.IO.Path.GetFileNameWithoutExtension(fileName),
+                    Guid.NewGuid(),
+                    System.IO.Path.GetExtension(fileName));
             }
 
-            return View(file);
+            // Inserts to SQL.
+            var row = new File()
+            {
+                RowKey = fileName
+            };
+            db.Files.Add(row);
+            db.SaveChanges();
+
+            // Uploads to Blob.
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+            switch (System.IO.Path.GetExtension(fileName).ToLower())
+            {
+                case ".png":
+                    blockBlob.Properties.ContentType = "image/png";
+                    break;
+
+                case ".jpg":
+                case ".jpeg":
+                    blockBlob.Properties.ContentType = "image/jpeg";
+                    break;
+
+                case ".gif":
+                    blockBlob.Properties.ContentType = "image/gif";
+                    break;
+            }
+            blockBlob.UploadFromStream(file.InputStream);
+
+            Debug.WriteLine("Maybe uploaded to blob." + fileName);
+
+            return null;
         }
 
-        // GET: /File/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Download(string fileName)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            File file = db.Files.Find(id);
-            if (file == null)
-            {
+            Debug.WriteLine("Downloading: " + fileName);
+            //var file = db.Files.Find(fileName);
+            //if (file == null)
+            //    return HttpNotFound();
+
+            // TODO: cache this
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("file");
+            container.CreateIfNotExists();
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+            if (!blockBlob.Exists())
                 return HttpNotFound();
-            }
-            return View(file);
-        }
 
-        // POST: /File/Edit/5
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="RowKey,Created,Updated")] File file)
-        {
-            if (ModelState.IsValid)
+            using (var mem = new System.IO.MemoryStream())
             {
-                db.Entry(file).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                blockBlob.DownloadToStream(mem);
+                return File(mem.ToArray(), blockBlob.Properties.ContentType);
             }
-            return View(file);
         }
 
         // GET: /File/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -110,11 +129,23 @@ namespace CareHomeMock.Controllers
         // POST: /File/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int? id)
         {
             File file = db.Files.Find(id);
+
+            // Deletes from Blob
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("file");
+            container.CreateIfNotExists();
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(file.RowKey);
+            blockBlob.Delete();
+
+            // Deletes from SQL
             db.Files.Remove(file);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

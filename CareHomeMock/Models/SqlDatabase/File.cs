@@ -12,10 +12,20 @@ namespace CareHomeMock.Models
     /// </summary>
     public class File
     {
+        [Key]
+        public int FileId { get; set; }
+
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 
-        [Key]
         public string RowKey { get; set; }
+
+
+
+        public File()
+        {
+            Created = DateTime.UtcNow;
+            Updated = DateTime.UtcNow;
+        }
     }
 }

@@ -7,15 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("アップロード", "Upload")
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Updated)
         </th>
         <th></th>
     </tr>
@@ -26,12 +23,8 @@
             @Html.DisplayFor(modelItem => item.Created)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Updated)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RowKey }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RowKey }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RowKey })
+            @Html.ActionLink("ダウンロード", "Download", new { fileName = item.RowKey }) |
+            @Html.ActionLink("削除", "Delete", new { id = item.FileId })
         </td>
     </tr>
 }

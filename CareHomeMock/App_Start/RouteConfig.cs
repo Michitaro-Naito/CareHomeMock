@@ -13,6 +13,16 @@ namespace CareHomeMock
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.RouteExistingFiles = true;
+
+            // Files (Virtual directory like feature)
+            routes.MapRoute(
+                name: "Files",
+                url: "Files/{fileName}",
+                defaults: new { controller = "File", action = "Download", fileName = UrlParameter.Optional }
+            );
+
+            // Default
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
