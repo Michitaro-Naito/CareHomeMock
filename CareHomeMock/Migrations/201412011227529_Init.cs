@@ -26,7 +26,7 @@ namespace CareHomeMock.Migrations
                 c => new
                     {
                         CareHomeId = c.Int(nullable: false, identity: true),
-                        CityCode = c.Int(nullable: false),
+                        AreaId = c.Int(nullable: false),
                         Zip = c.String(),
                         Address = c.String(),
                         Tel = c.String(),
@@ -71,24 +71,25 @@ namespace CareHomeMock.Migrations
                         Cluster_ClusterId = c.Int(),
                     })
                 .PrimaryKey(t => t.CareHomeId)
-                .ForeignKey("dbo.Areas", t => t.CityCode, cascadeDelete: true)
+                .ForeignKey("dbo.Areas", t => t.AreaId, cascadeDelete: true)
                 .ForeignKey("dbo.Clusters", t => t.Cluster_ClusterId)
-                .Index(t => t.CityCode)
+                .Index(t => t.AreaId)
                 .Index(t => t.Cluster_ClusterId);
             
             CreateTable(
                 "dbo.Areas",
                 c => new
                     {
-                        CityCode = c.Int(nullable: false, identity: true),
+                        AreaId = c.Int(nullable: false, identity: true),
                         PrefectureCode = c.Int(nullable: false),
                         PrefectureName = c.String(),
+                        CityCode = c.Int(nullable: false),
                         CityName = c.String(),
                         ZoneCode = c.Int(nullable: false),
                         ZoneName = c.String(),
                         ZonePopulation = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.CityCode);
+                .PrimaryKey(t => t.AreaId);
             
             CreateTable(
                 "dbo.CareManagers",
@@ -152,14 +153,15 @@ namespace CareHomeMock.Migrations
                 "dbo.MediaFiles",
                 c => new
                     {
-                        RowKey = c.String(nullable: false, maxLength: 128),
+                        MediaFileId = c.Int(nullable: false, identity: true),
                         Created = c.DateTime(nullable: false),
                         Updated = c.DateTime(nullable: false),
                         CareHomeId = c.Int(nullable: false),
                         Order = c.Int(nullable: false),
                         Type = c.Int(nullable: false),
+                        RowKey = c.String(),
                     })
-                .PrimaryKey(t => t.RowKey)
+                .PrimaryKey(t => t.MediaFileId)
                 .ForeignKey("dbo.CareHomes", t => t.CareHomeId, cascadeDelete: true)
                 .Index(t => t.CareHomeId);
             
@@ -177,11 +179,12 @@ namespace CareHomeMock.Migrations
                 "dbo.Files",
                 c => new
                     {
-                        RowKey = c.String(nullable: false, maxLength: 128),
+                        FileId = c.Int(nullable: false, identity: true),
                         Created = c.DateTime(nullable: false),
                         Updated = c.DateTime(nullable: false),
+                        RowKey = c.String(),
                     })
-                .PrimaryKey(t => t.RowKey);
+                .PrimaryKey(t => t.FileId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -269,7 +272,7 @@ namespace CareHomeMock.Migrations
             DropForeignKey("dbo.Otps", "CareManagerId", "dbo.CareManagers");
             DropForeignKey("dbo.EmailVerifications", "CareManagerId", "dbo.CareManagers");
             DropForeignKey("dbo.CareManagers", "CareHomeId", "dbo.CareHomes");
-            DropForeignKey("dbo.CareHomes", "CityCode", "dbo.Areas");
+            DropForeignKey("dbo.CareHomes", "AreaId", "dbo.Areas");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
@@ -279,7 +282,7 @@ namespace CareHomeMock.Migrations
             DropIndex("dbo.EmailVerifications", new[] { "CareManagerId" });
             DropIndex("dbo.CareManagers", new[] { "CareHomeId" });
             DropIndex("dbo.CareHomes", new[] { "Cluster_ClusterId" });
-            DropIndex("dbo.CareHomes", new[] { "CityCode" });
+            DropIndex("dbo.CareHomes", new[] { "AreaId" });
             DropIndex("dbo.Applications", new[] { "CareHomeId" });
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");

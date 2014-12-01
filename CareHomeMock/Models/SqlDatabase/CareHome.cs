@@ -17,51 +17,17 @@ namespace CareHomeMock.Models
     public class CareHome
     {
         /// <summary>
-        /// Professional parameters to display.
-        /// </summary>
-        [ComplexType]
-        public class CareHomeProfessionalParameters
-        {
-            public int 介護支援専門員在席人数 { get; set; }
-            public int 介護支援専門員常勤換算 { get; set; }
-            public int 事務員在席人数 { get; set; }
-            public int 事務員常勤換算 { get; set; }
-            public int その他在席人数 { get; set; }
-            public int その他常勤換算 { get; set; }
-            public int 全職員在席人数 { get; set; }
-            public int 全職員常勤換算 { get; set; }
-            public double 経験5年以上割合 { get; set; }
-
-            public double 要介護5 { get; set; }
-            public double 要介護4 { get; set; }
-            public double 要介護3 { get; set; }
-            public double 要介護2 { get; set; }
-            public double 要介護1 { get; set; }
-            public double 要支援2 { get; set; }
-            public double 要支援1 { get; set; }
-            public double 自立 { get; set; }
-
-            public double 利用者の権利擁護 { get; set; }
-            public double サービスの質の確保 { get; set; }
-            public double 相談苦情等への対応 { get; set; }
-            public double 外部機関等との連携 { get; set; }
-            public double 事業運営管理 { get; set; }
-            public double 安全衛生管理等 { get; set; }
-            public double 従業者の研修等 { get; set; }
-        }
-
-        /// <summary>
         /// Business Key.
         /// </summary>
         [Key]
         public int CareHomeId { get; set; }
 
-        public int CityCode { get; set; }
+        public int AreaId { get; set; }
 
         /// <summary>
         /// Area which this CareHome belongs to.
         /// </summary>
-        [ForeignKey("CityCode")]
+        [ForeignKey("AreaId")]
         public virtual Area Area { get; set; }
 
         /// <summary>
@@ -131,10 +97,34 @@ namespace CareHomeMock.Models
         /// </summary>
         public DateTime DataUpdated { get; set; }
 
-        /// <summary>
-        /// Professional parameters to display.
-        /// </summary>
-        public CareHomeProfessionalParameters Parameters { get; set; }
+        // ----- Professional parameters to display -----
+        public int 介護支援専門員在席人数 { get; set; }
+        public int 介護支援専門員常勤換算 { get; set; }
+        public int 事務員在席人数 { get; set; }
+        public int 事務員常勤換算 { get; set; }
+        public int その他在席人数 { get; set; }
+        public int その他常勤換算 { get; set; }
+        public int 全職員在席人数 { get; set; }
+        public int 全職員常勤換算 { get; set; }
+        public double 経験5年以上割合 { get; set; }
+
+        public double 要介護5 { get; set; }
+        public double 要介護4 { get; set; }
+        public double 要介護3 { get; set; }
+        public double 要介護2 { get; set; }
+        public double 要介護1 { get; set; }
+        public double 要支援2 { get; set; }
+        public double 要支援1 { get; set; }
+        public double 自立 { get; set; }
+
+        public double 利用者の権利擁護 { get; set; }
+        public double サービスの質の確保 { get; set; }
+        public double 相談苦情等への対応 { get; set; }
+        public double 外部機関等との連携 { get; set; }
+        public double 事業運営管理 { get; set; }
+        public double 安全衛生管理等 { get; set; }
+        public double 従業者の研修等 { get; set; }
+        // ----- /Professional parameters to display -----
 
         /// <summary>
         /// RowKey of Image.

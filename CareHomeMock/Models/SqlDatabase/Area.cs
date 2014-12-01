@@ -14,6 +14,9 @@ namespace CareHomeMock.Models
     /// </summary>
     public class Area
     {
+        [Key]
+        public int AreaId { get; set; }
+
         /// <summary>
         /// Japanese PrefectureCode like "01".
         /// </summary>
@@ -28,7 +31,6 @@ namespace CareHomeMock.Models
         /// Japanese CityCode like "1101".
         /// Business Key.
         /// </summary>
-        [Key]
         public int CityCode { get; set; }
 
         /// <summary>

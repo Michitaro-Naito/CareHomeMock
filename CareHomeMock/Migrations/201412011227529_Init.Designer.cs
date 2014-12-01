@@ -7,13 +7,13 @@ namespace CareHomeMock.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class AddSurrogateKey_File_MediaFile : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSurrogateKey_File_MediaFile));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201412010942320_AddSurrogateKey_File_MediaFile"; }
+            get { return "201412011227529_Init"; }
         }
         
         string IMigrationMetadata.Source

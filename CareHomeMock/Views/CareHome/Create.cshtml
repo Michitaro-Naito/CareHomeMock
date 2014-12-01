@@ -17,10 +17,10 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CityCode, "CityCode", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AreaId, "AreaId", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CityCode", String.Empty)
-                @Html.ValidationMessageFor(model => model.CityCode)
+                @Html.DropDownList("AreaId", String.Empty)
+                @Html.ValidationMessageFor(model => model.AreaId)
             </div>
         </div>
 
@@ -125,6 +125,198 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DataUpdated)
                 @Html.ValidationMessageFor(model => model.DataUpdated)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.介護支援専門員在席人数, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.介護支援専門員在席人数)
+                @Html.ValidationMessageFor(model => model.介護支援専門員在席人数)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.介護支援専門員常勤換算, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.介護支援専門員常勤換算)
+                @Html.ValidationMessageFor(model => model.介護支援専門員常勤換算)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.事務員在席人数, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.事務員在席人数)
+                @Html.ValidationMessageFor(model => model.事務員在席人数)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.事務員常勤換算, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.事務員常勤換算)
+                @Html.ValidationMessageFor(model => model.事務員常勤換算)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.その他在席人数, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.その他在席人数)
+                @Html.ValidationMessageFor(model => model.その他在席人数)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.その他常勤換算, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.その他常勤換算)
+                @Html.ValidationMessageFor(model => model.その他常勤換算)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.全職員在席人数, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.全職員在席人数)
+                @Html.ValidationMessageFor(model => model.全職員在席人数)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.全職員常勤換算, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.全職員常勤換算)
+                @Html.ValidationMessageFor(model => model.全職員常勤換算)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.経験5年以上割合, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.経験5年以上割合)
+                @Html.ValidationMessageFor(model => model.経験5年以上割合)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.要介護5, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.要介護5)
+                @Html.ValidationMessageFor(model => model.要介護5)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.要介護4, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.要介護4)
+                @Html.ValidationMessageFor(model => model.要介護4)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.要介護3, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.要介護3)
+                @Html.ValidationMessageFor(model => model.要介護3)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.要介護2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.要介護2)
+                @Html.ValidationMessageFor(model => model.要介護2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.要介護1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.要介護1)
+                @Html.ValidationMessageFor(model => model.要介護1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.要支援2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.要支援2)
+                @Html.ValidationMessageFor(model => model.要支援2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.要支援1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.要支援1)
+                @Html.ValidationMessageFor(model => model.要支援1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.自立, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.自立)
+                @Html.ValidationMessageFor(model => model.自立)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.利用者の権利擁護, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.利用者の権利擁護)
+                @Html.ValidationMessageFor(model => model.利用者の権利擁護)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.サービスの質の確保, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.サービスの質の確保)
+                @Html.ValidationMessageFor(model => model.サービスの質の確保)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.相談苦情等への対応, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.相談苦情等への対応)
+                @Html.ValidationMessageFor(model => model.相談苦情等への対応)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.外部機関等との連携, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.外部機関等との連携)
+                @Html.ValidationMessageFor(model => model.外部機関等との連携)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.事業運営管理, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.事業運営管理)
+                @Html.ValidationMessageFor(model => model.事業運営管理)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.安全衛生管理等, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.安全衛生管理等)
+                @Html.ValidationMessageFor(model => model.安全衛生管理等)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.従業者の研修等, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.従業者の研修等)
+                @Html.ValidationMessageFor(model => model.従業者の研修等)
             </div>
         </div>
 

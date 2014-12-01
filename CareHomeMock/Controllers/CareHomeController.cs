@@ -10,9 +10,6 @@ using CareHomeMock.Models;
 
 namespace CareHomeMock.Controllers
 {
-    /// <summary>
-    /// Admin controls CareHomes here.
-    /// </summary>
     public class CareHomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -42,7 +39,7 @@ namespace CareHomeMock.Controllers
         // GET: /CareHome/Create
         public ActionResult Create()
         {
-            ViewBag.CityCode = new SelectList(db.Areas, "CityCode", "PrefectureName");
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "PrefectureName");
             return View();
         }
 
@@ -51,7 +48,7 @@ namespace CareHomeMock.Controllers
         // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CareHomeId,CityCode,Zip,Address,Tel,Fax,WebsiteUrl,Established,CompanyType,CompanyName,ChiefName,ChiefJobTitle,Longitude,Latitude,DataUpdated,MediaFileDataId,Region,Traits,Messages")] CareHome carehome)
+        public ActionResult Create([Bind(Include="CareHomeId,AreaId,Zip,Address,Tel,Fax,WebsiteUrl,Established,CompanyType,CompanyName,ChiefName,ChiefJobTitle,Longitude,Latitude,DataUpdated,介護支援専門員在席人数,介護支援専門員常勤換算,事務員在席人数,事務員常勤換算,その他在席人数,その他常勤換算,全職員在席人数,全職員常勤換算,経験5年以上割合,要介護5,要介護4,要介護3,要介護2,要介護1,要支援2,要支援1,自立,利用者の権利擁護,サービスの質の確保,相談苦情等への対応,外部機関等との連携,事業運営管理,安全衛生管理等,従業者の研修等,MediaFileDataId,Region,Traits,Messages")] CareHome carehome)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +57,7 @@ namespace CareHomeMock.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityCode = new SelectList(db.Areas, "CityCode", "PrefectureName", carehome.CityCode);
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "PrefectureName", carehome.AreaId);
             return View(carehome);
         }
 
@@ -76,7 +73,7 @@ namespace CareHomeMock.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CityCode = new SelectList(db.Areas, "CityCode", "PrefectureName", carehome.CityCode);
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "PrefectureName", carehome.AreaId);
             return View(carehome);
         }
 
@@ -85,7 +82,7 @@ namespace CareHomeMock.Controllers
         // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CareHomeId,CityCode,Zip,Address,Tel,Fax,WebsiteUrl,Established,CompanyType,CompanyName,ChiefName,ChiefJobTitle,Longitude,Latitude,DataUpdated,MediaFileDataId,Region,Traits,Messages")] CareHome carehome)
+        public ActionResult Edit([Bind(Include="CareHomeId,AreaId,Zip,Address,Tel,Fax,WebsiteUrl,Established,CompanyType,CompanyName,ChiefName,ChiefJobTitle,Longitude,Latitude,DataUpdated,介護支援専門員在席人数,介護支援専門員常勤換算,事務員在席人数,事務員常勤換算,その他在席人数,その他常勤換算,全職員在席人数,全職員常勤換算,経験5年以上割合,要介護5,要介護4,要介護3,要介護2,要介護1,要支援2,要支援1,自立,利用者の権利擁護,サービスの質の確保,相談苦情等への対応,外部機関等との連携,事業運営管理,安全衛生管理等,従業者の研修等,MediaFileDataId,Region,Traits,Messages")] CareHome carehome)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +90,7 @@ namespace CareHomeMock.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityCode = new SelectList(db.Areas, "CityCode", "PrefectureName", carehome.CityCode);
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "PrefectureName", carehome.AreaId);
             return View(carehome);
         }
 
@@ -121,21 +118,6 @@ namespace CareHomeMock.Controllers
             db.CareHomes.Remove(carehome);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        public ActionResult UploadCsv()
-        {
-            return View();
-        }
-
-        public ActionResult DownloadCsvCareHomes()
-        {
-            return View();
-        }
-
-        public ActionResult DownloadCsvCareManagers()
-        {
-            return View();
         }
 
         protected override void Dispose(bool disposing)

@@ -7,13 +7,13 @@ namespace CareHomeMock.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class Init : IMigrationMetadata
+    public sealed partial class DropComplexType_CareHome : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DropComplexType_CareHome));
         
         string IMigrationMetadata.Id
         {
-            get { return "201411300031186_Init"; }
+            get { return "201412011248408_DropComplexType_CareHome"; }
         }
         
         string IMigrationMetadata.Source

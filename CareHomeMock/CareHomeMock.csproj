@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.8.4\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -191,18 +194,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
+    <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Extension.cs" />
     <Compile Include="Helper\Helper.cs" />
-    <Compile Include="Migrations\201411300031186_Init.cs" />
-    <Compile Include="Migrations\201411300031186_Init.Designer.cs">
-      <DependentUpon>201411300031186_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201412011227529_Init.cs" />
+    <Compile Include="Migrations\201412011227529_Init.Designer.cs">
+      <DependentUpon>201412011227529_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201412010942320_AddSurrogateKey_File_MediaFile.cs" />
-    <Compile Include="Migrations\201412010942320_AddSurrogateKey_File_MediaFile.Designer.cs">
-      <DependentUpon>201412010942320_AddSurrogateKey_File_MediaFile.cs</DependentUpon>
+    <Compile Include="Migrations\201412011248408_DropComplexType_CareHome.cs" />
+    <Compile Include="Migrations\201412011248408_DropComplexType_CareHome.Designer.cs">
+      <DependentUpon>201412011248408_DropComplexType_CareHome.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
@@ -427,11 +431,6 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\CareHome\Create.cshtml" />
-    <Content Include="Views\CareHome\Delete.cshtml" />
-    <Content Include="Views\CareHome\Details.cshtml" />
-    <Content Include="Views\CareHome\Edit.cshtml" />
-    <Content Include="Views\CareHome\Index.cshtml" />
     <Content Include="Views\StaticPage\Delete.cshtml" />
     <Content Include="Views\StaticPage\Edit.cshtml" />
     <Content Include="Views\StaticPage\Index.cshtml" />
@@ -462,6 +461,12 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Views\File\Upload.cshtml" />
+    <Content Include="Views\Tool\ImportArea.cshtml" />
+    <Content Include="Views\CareHome\Create.cshtml" />
+    <Content Include="Views\CareHome\Delete.cshtml" />
+    <Content Include="Views\CareHome\Details.cshtml" />
+    <Content Include="Views\CareHome\Edit.cshtml" />
+    <Content Include="Views\CareHome\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -475,11 +480,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201411300031186_Init.resx">
-      <DependentUpon>201411300031186_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412011227529_Init.resx">
+      <DependentUpon>201412011227529_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201412010942320_AddSurrogateKey_File_MediaFile.resx">
-      <DependentUpon>201412010942320_AddSurrogateKey_File_MediaFile.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412011248408_DropComplexType_CareHome.resx">
+      <DependentUpon>201412011248408_DropComplexType_CareHome.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
