@@ -132,6 +132,11 @@ namespace CareHomeMock.Models
         // ----- /Professional parameters to display -----
 
         /// <summary>
+        /// Email address like foo@example.com
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// RowKey of Image.
         /// </summary>
         public string MediaFileDataId { get; set; }

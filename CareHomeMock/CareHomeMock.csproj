@@ -212,6 +212,14 @@
     <Compile Include="Migrations\201412011256394_Add_Deactivated_CareHome.Designer.cs">
       <DependentUpon>201412011256394_Add_Deactivated_CareHome.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412020605042_Add_CareHome_Email.cs" />
+    <Compile Include="Migrations\201412020605042_Add_CareHome_Email.Designer.cs">
+      <DependentUpon>201412020605042_Add_CareHome_Email.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412020611167_Add_CareManager_Email_Birthday.cs" />
+    <Compile Include="Migrations\201412020611167_Add_CareManager_Email_Birthday.Designer.cs">
+      <DependentUpon>201412020611167_Add_CareManager_Email_Birthday.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\CompanyType.cs" />
@@ -492,6 +500,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412011256394_Add_Deactivated_CareHome.resx">
       <DependentUpon>201412011256394_Add_Deactivated_CareHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412020605042_Add_CareHome_Email.resx">
+      <DependentUpon>201412020605042_Add_CareHome_Email.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412020611167_Add_CareManager_Email_Birthday.resx">
+      <DependentUpon>201412020611167_Add_CareManager_Email_Birthday.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -49,6 +49,16 @@ namespace CareHomeMock.Models
         public string MediaFileDataId { get; set; }
 
         /// <summary>
+        /// Email address like foo@example.com
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Birthday of this CareManager. Date only like 2014/1/1 0:00:00.
+        /// </summary>
+        public DateTime Birthday { get; set; }
+
+        /// <summary>
         /// Name of this CareManager like "田中太郎".
         /// </summary>
         public string Name { get; set; }

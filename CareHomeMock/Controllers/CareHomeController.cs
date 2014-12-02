@@ -103,6 +103,46 @@ namespace CareHomeMock.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult DownloadCareHomes()
+        {
+            using (var writer = new System.IO.StreamWriter(Response.OutputStream))
+            using (var csv = new CsvHelper.CsvWriter(writer))
+            {
+                foreach (var c in db.CareHomes)
+                {
+                    csv.WriteField(c.CareHomeId.ToString());
+                    csv.WriteField(c.CompanyName);
+                    csv.WriteField(c.ChiefName);
+                    csv.WriteField(c.Email);
+                    csv.NextRecord();
+                }
+            }
+            //Response.ContentType = "text/csv";
+            return null;
+        }
+
+        public ActionResult DownloadCareManagers()
+        {
+            using (var writer = new System.IO.StreamWriter(Response.OutputStream))
+            using (var csv = new CsvHelper.CsvWriter(writer))
+            {
+                foreach (var m in db.CareManagers)
+                {
+                    csv.WriteField(m.CareHomeId);
+                    csv.WriteField(m.CareManagerId);
+                    csv.WriteField(m.Name);
+                    csv.WriteField(m.Email);
+                    csv.WriteField(m.Birthday);
+                    csv.WriteField(m.Gender);
+                    csv.WriteField(m.Licensed);
+                    csv.WriteField(m.Licenses);
+                    csv.NextRecord();
+                }
+            }
+            //Response.ContentType = "text/csv";
+            return null;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
