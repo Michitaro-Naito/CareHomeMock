@@ -17,10 +17,15 @@ namespace CareHomeMock.Models
     public class CareHome
     {
         /// <summary>
-        /// Business Key.
+        /// Surrogate key.
         /// </summary>
         [Key]
         public int CareHomeId { get; set; }
+
+        /// <summary>
+        /// Business key.
+        /// </summary>
+        public string CareHomeCode { get; set; }
 
         /// <summary>
         /// Is deactivated by Admin?
@@ -103,14 +108,14 @@ namespace CareHomeMock.Models
         public DateTime DataUpdated { get; set; }
 
         // ----- Professional parameters to display -----
-        public int 介護支援専門員在席人数 { get; set; }
-        public int 介護支援専門員常勤換算 { get; set; }
-        public int 事務員在席人数 { get; set; }
-        public int 事務員常勤換算 { get; set; }
-        public int その他在席人数 { get; set; }
-        public int その他常勤換算 { get; set; }
-        public int 全職員在席人数 { get; set; }
-        public int 全職員常勤換算 { get; set; }
+        public double 介護支援専門員在席人数 { get; set; }
+        public double 介護支援専門員常勤換算 { get; set; }
+        public double 事務員在席人数 { get; set; }
+        public double 事務員常勤換算 { get; set; }
+        public double その他在席人数 { get; set; }
+        public double その他常勤換算 { get; set; }
+        public double 全職員在席人数 { get; set; }
+        public double 全職員常勤換算 { get; set; }
         public double 経験5年以上割合 { get; set; }
 
         public double 要介護5 { get; set; }

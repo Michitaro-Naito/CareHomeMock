@@ -7,13 +7,13 @@ namespace CareHomeMock.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class Add_CareHome_Email : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Add_CareHome_Email));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201412020605042_Add_CareHome_Email"; }
+            get { return "201412021244573_Init"; }
         }
         
         string IMigrationMetadata.Source

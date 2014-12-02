@@ -200,25 +200,9 @@
     </Compile>
     <Compile Include="Helper\Extension.cs" />
     <Compile Include="Helper\Helper.cs" />
-    <Compile Include="Migrations\201412011227529_Init.cs" />
-    <Compile Include="Migrations\201412011227529_Init.Designer.cs">
-      <DependentUpon>201412011227529_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201412011248408_DropComplexType_CareHome.cs" />
-    <Compile Include="Migrations\201412011248408_DropComplexType_CareHome.Designer.cs">
-      <DependentUpon>201412011248408_DropComplexType_CareHome.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201412011256394_Add_Deactivated_CareHome.cs" />
-    <Compile Include="Migrations\201412011256394_Add_Deactivated_CareHome.Designer.cs">
-      <DependentUpon>201412011256394_Add_Deactivated_CareHome.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201412020605042_Add_CareHome_Email.cs" />
-    <Compile Include="Migrations\201412020605042_Add_CareHome_Email.Designer.cs">
-      <DependentUpon>201412020605042_Add_CareHome_Email.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201412020611167_Add_CareManager_Email_Birthday.cs" />
-    <Compile Include="Migrations\201412020611167_Add_CareManager_Email_Birthday.Designer.cs">
-      <DependentUpon>201412020611167_Add_CareManager_Email_Birthday.cs</DependentUpon>
+    <Compile Include="Migrations\201412021244573_Init.cs" />
+    <Compile Include="Migrations\201412021244573_Init.Designer.cs">
+      <DependentUpon>201412021244573_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
@@ -479,6 +463,7 @@
     <Content Include="Views\CareHome\Details.cshtml" />
     <Content Include="Views\CareHome\Edit.cshtml" />
     <Content Include="Views\CareHome\Index.cshtml" />
+    <Content Include="Views\CareHome\UploadCsv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -492,20 +477,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201412011227529_Init.resx">
-      <DependentUpon>201412011227529_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201412011248408_DropComplexType_CareHome.resx">
-      <DependentUpon>201412011248408_DropComplexType_CareHome.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201412011256394_Add_Deactivated_CareHome.resx">
-      <DependentUpon>201412011256394_Add_Deactivated_CareHome.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201412020605042_Add_CareHome_Email.resx">
-      <DependentUpon>201412020605042_Add_CareHome_Email.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201412020611167_Add_CareManager_Email_Birthday.resx">
-      <DependentUpon>201412020611167_Add_CareManager_Email_Birthday.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412021244573_Init.resx">
+      <DependentUpon>201412021244573_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

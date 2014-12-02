@@ -7,5 +7,7 @@ namespace CareHomeMock.Models
 {
     public enum CompanyType
     {
+        営利法人 = 0,
+        非営利法人 = 1
     }
 }
