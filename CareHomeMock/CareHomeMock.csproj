@@ -469,6 +469,7 @@
     <Content Include="Views\CareHome\Edit.cshtml" />
     <Content Include="Views\CareHome\Index.cshtml" />
     <Content Include="Views\CareHome\UploadCsv.cshtml" />
+    <Content Include="Views\CareHome\EditAdditionalInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

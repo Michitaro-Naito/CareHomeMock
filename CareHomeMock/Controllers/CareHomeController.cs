@@ -69,7 +69,7 @@ namespace CareHomeMock.Controllers
         // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CareHomeId,AreaId,Zip,Address,Tel,Fax,WebsiteUrl,Established,CompanyType,CompanyName,ChiefName,ChiefJobTitle,Longitude,Latitude,DataUpdated,介護支援専門員在席人数,介護支援専門員常勤換算,事務員在席人数,事務員常勤換算,その他在席人数,その他常勤換算,全職員在席人数,全職員常勤換算,経験5年以上割合,要介護5,要介護4,要介護3,要介護2,要介護1,要支援2,要支援1,自立,利用者の権利擁護,サービスの質の確保,相談苦情等への対応,外部機関等との連携,事業運営管理,安全衛生管理等,従業者の研修等,MediaFileDataId,Region,Traits,Messages")] CareHome carehome)
+        public ActionResult Edit([Bind(Include="CareHomeId,AreaId,Zip,Address,Tel,Fax,WebsiteUrl,Established,CompanyType,CompanyName,ChiefName,ChiefJobTitle,Longitude,Latitude,DataUpdated,介護支援専門員在席人数,介護支援専門員常勤換算,事務員在席人数,事務員常勤換算,その他在席人数,その他常勤換算,全職員在席人数,全職員常勤換算,経験5年以上割合,要介護5,要介護4,要介護3,要介護2,要介護1,要支援2,要支援1,自立,利用者の権利擁護,サービスの質の確保,相談苦情等への対応,外部機関等との連携,事業運営管理,安全衛生管理等,従業者の研修等,MediaFileDataId,Region,Traits,Messages,Email")] CareHome carehome)
         {
             if (ModelState.IsValid)
             {
@@ -226,6 +226,38 @@ namespace CareHomeMock.Controllers
             }
             db.SaveChanges();
             return null;
+        }
+
+        /// <summary>
+        /// CareHomeUser edits it's additional info.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EditAdditionalInfo(int? careHomeId)
+        {
+            if (careHomeId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var careHome = db.CareHomes.Find(careHomeId);
+            if (careHome == null)
+                return HttpNotFound();
+
+            return View(careHome);
+        }
+        [HttpPost]
+        public ActionResult EditAdditionalInfo([Bind(Include = "CareHomeId,MediaFileDataId,Region,Traits,Messages")]CareHome careHome)
+        {
+            if (ModelState.IsValid)
+            {
+                var home = db.CareHomes.Find(careHome.CareHomeId);
+                home.MediaFileDataId = careHome.MediaFileDataId;
+                home.Region = careHome.Region;
+                home.Traits = careHome.Traits;
+                home.Messages = careHome.Messages;
+                //db.Entry(careHome).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(careHome);
         }
 
         protected override void Dispose(bool disposing)

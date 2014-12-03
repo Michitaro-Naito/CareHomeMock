@@ -1,0 +1,56 @@
+﻿@model CareHomeMock.Models.CareHome
+@{
+    ViewBag.Title = "EditAdditionalInfo";
+}
+
+<h2>EditAdditionalInfo</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>CareHome</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.CareHomeId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MediaFileDataId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MediaFileDataId)
+                @Html.ValidationMessageFor(model => model.MediaFileDataId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Region, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Region)
+                @Html.ValidationMessageFor(model => model.Region)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Traits, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Traits)
+                @Html.ValidationMessageFor(model => model.Traits)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Messages, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Messages)
+                @Html.ValidationMessageFor(model => model.Messages)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
