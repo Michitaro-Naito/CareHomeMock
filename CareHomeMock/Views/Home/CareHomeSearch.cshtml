@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "CareHomeSearch";
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            function CareHome(data) {
+                var s = this;
+                s.data = data;
+                s.cpHref = ko.computed(function () {
+                    return '/Home/CareHomeInfo_BasicInfo/' + s.data.CareHomeId;
+                });
+            }
+
+            function AppModel() {
+                var s = this;
+
+                s.prefectures = ko.observableArray([]);
+                s.cities = ko.observableArray([]);
+                s.companyTypes = ko.observableArray([]);
+
+                s.selectedPrefecture = ko.observable();
+                s.selectedCity = ko.observable();
+                s.selectedCompanyType = ko.observable();
+                s.keyword = ko.observable();
+
+                s.careHomes = ko.observableArray([]);
+
+                s.cpPrefectureCode = ko.computed(function () {
+                    if (s.selectedPrefecture() == null)
+                        return null;
+                    return s.selectedPrefecture().id;
+                });
+
+                s.cpCityCode = ko.computed(function () {
+                    if (s.selectedCity() == null)
+                        return null;
+                    return s.selectedCity().id;
+                });
+
+                s.cpCompanyType = ko.computed(function () {
+                    if (s.selectedCompanyType() == null)
+                        return null;
+                    return s.selectedCompanyType().id;
+                });
+
+                s.Init = function () {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Home/GetSelectOptions'
+                    }).done(function (data) {
+                        console.info(data);
+                        s.prefectures(data.prefectures);
+                        s.cities(data.cities);
+                        s.companyTypes(data.companyTypes);
+                    });
+                }
+
+                s.Search = function () {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Home/GetCareHomes',
+                        data: {
+                            prefectureCode: s.cpPrefectureCode(),
+                            cityCode: s.cpCityCode(),
+                            companyType: s.cpCompanyType(),
+                            keyword: s.keyword()
+                        }
+                    }).done(function (data) {
+                        console.info(data);
+                        var careHomes = [];
+                        for (var n = 0; n < data.length; n++) {
+                            careHomes.push(new CareHome(data[n]));
+                        }
+                        s.careHomes(careHomes);
+                    });
+                }
+            }
+
+            var model = new AppModel();
+            model.Init();
+            ko.applyBindings(model);
+        });
+    </script>
+}
+
+<h2>CareHomeSearch</h2>
+<select data-bind="options: prefectures, optionsText: 'name', value: selectedPrefecture"></select>
+<select data-bind="options: cities, optionsText: 'name', value: selectedCity"></select>
+<select data-bind="options: companyTypes, optionsText: 'name', value: selectedCompanyType"></select>
+<input data-bind="value: keyword" />
+<button type="button" data-bind="click: Search">検索</button>
+
+<ul data-bind="foreach: careHomes">
+    <li>
+        <span data-bind="text: data.CareHomeId"></span>
+        <span data-bind="text: data.CompanyName"></span>
+        <a data-bind="attr: { href : cpHref }" href="/Home/CareHomeInfo_BasicInfo/" target="_blank">詳細</a>
+    </li>
+</ul>

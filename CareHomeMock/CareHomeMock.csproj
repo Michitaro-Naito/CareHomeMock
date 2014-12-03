@@ -193,6 +193,7 @@
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\MediaFileController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Global.asax.cs">
@@ -418,8 +419,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
@@ -470,6 +469,18 @@
     <Content Include="Views\CareHome\Index.cshtml" />
     <Content Include="Views\CareHome\UploadCsv.cshtml" />
     <Content Include="Views\CareHome\EditAdditionalInfo.cshtml" />
+    <Content Include="Views\MediaFile\Create.cshtml" />
+    <Content Include="Views\MediaFile\Delete.cshtml" />
+    <Content Include="Views\MediaFile\Details.cshtml" />
+    <Content Include="Views\MediaFile\Edit.cshtml" />
+    <Content Include="Views\MediaFile\Index.cshtml" />
+    <Content Include="Views\Home\CareHomeSearch.cshtml" />
+    <Content Include="Views\Home\CareManagerSearch.cshtml" />
+    <Content Include="Views\Home\CareHomeInfo_BasicInfo.cshtml" />
+    <Content Include="Views\Home\CareHomeInfo_CareManagers.cshtml" />
+    <Content Include="Views\Home\CareHomeInfo_Media.cshtml" />
+    <Content Include="Views\Home\CareHomeInfo_AccessMap.cshtml" />
+    <Content Include="Views\Home\CareManagerInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
