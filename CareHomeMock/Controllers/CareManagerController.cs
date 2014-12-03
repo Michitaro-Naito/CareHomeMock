@@ -15,29 +15,27 @@ namespace CareHomeMock.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /CareManager/
-        public ActionResult Index()
+        public ActionResult Index(int? careHomeId)
         {
-            var caremanagers = db.CareManagers.Include(c => c.CareHome);
-            return View(caremanagers.ToList());
-        }
-
-        // GET: /CareManager/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
+            if (careHomeId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CareManager caremanager = db.CareManagers.Find(id);
-            if (caremanager == null)
-            {
+
+            var home = db.CareHomes.FirstOrDefault(h => h.CareHomeId == careHomeId);
+            if (home == null)
                 return HttpNotFound();
-            }
-            return View(caremanager);
+
+            var careManagers = home.CareManagers.ToList();
+
+            //var caremanagers = db.CareManagers.Where(m=>m.CareHomeId == careHomeId).Include(c => c.CareHome);
+
+            return View(new CareManagerIndexVM() {
+                CareHomeId = careHomeId.Value,
+                CareManagers = careManagers
+            });
         }
 
         // GET: /CareManager/Create
-        public ActionResult Create()
+        public ActionResult Create(int? careHomeId)
         {
             ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip");
             return View();
@@ -48,7 +46,7 @@ namespace CareHomeMock.Controllers
         // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CareManagerId,CareHomeId,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating")] CareManager caremanager)
+        public ActionResult Create([Bind(Include="CareManagerId,CareHomeId,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager)
         {
             if (ModelState.IsValid)
             {
@@ -62,19 +60,22 @@ namespace CareHomeMock.Controllers
         }
 
         // GET: /CareManager/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int?careHomeId, int? careManagerId)
         {
-            if (id == null)
-            {
+            if (careHomeId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CareManager caremanager = db.CareManagers.Find(id);
-            if (caremanager == null)
+
+            var careManager = new CareManager();
+            if(careManagerId != null)
             {
-                return HttpNotFound();
+                // Edit
+                careManager = db.CareManagers.FirstOrDefault(m => m.CareHomeId == careHomeId && m.CareManagerId == careManagerId);
+                if (careManager == null)
+                    return HttpNotFound();
             }
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
-            return View(caremanager);
+
+            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", careManager.CareHomeId);
+            return View(careManager);
         }
 
         // POST: /CareManager/Edit/5
@@ -82,11 +83,20 @@ namespace CareHomeMock.Controllers
         // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CareManagerId,CareHomeId,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating")] CareManager caremanager)
+        public ActionResult Edit([Bind(Include="CareManagerId,CareHomeId,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(caremanager).State = EntityState.Modified;
+                if (caremanager.CareManagerId == 0)
+                {
+                    // Add
+                    db.CareManagers.Add(caremanager);
+                }
+                else
+                {
+                    // Edit
+                    db.Entry(caremanager).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

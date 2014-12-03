@@ -17,20 +17,6 @@ namespace CareHomeMock.Models
     public class CareManager
     {
         /// <summary>
-        /// Professional parameters to display.
-        /// </summary>
-        [ComplexType]
-        public class CaremanagerProfessionalParameters
-        {
-            public double 企画立案力 { get; set; }
-            public double 行動実践力 { get; set; }
-            public double 関係構築力 { get; set; }
-            public double マネジメント力 { get; set; }
-            public double 医療知識 { get; set; }
-            public double 介護知識 { get; set; }
-        }
-
-        /// <summary>
         /// Incremental, surrogate identifier.
         /// </summary>
         public int CareManagerId { get; set; }
@@ -108,10 +94,14 @@ namespace CareHomeMock.Models
         /// </summary>
         public string BlogUrls { get; set; }
 
-        /// <summary>
-        /// Professional parameters to display.
-        /// </summary>
-        public CaremanagerProfessionalParameters Parameters { get; set; }
+        // ----- Professional Parameters to Display -----
+        public double 企画立案力 { get; set; }
+        public double 行動実践力 { get; set; }
+        public double 関係構築力 { get; set; }
+        public double マネジメント力 { get; set; }
+        public double 医療知識 { get; set; }
+        public double 介護知識 { get; set; }
+        // ----- /Professional Parameters to Display -----
 
         /// <summary>
         /// Cached total rating.

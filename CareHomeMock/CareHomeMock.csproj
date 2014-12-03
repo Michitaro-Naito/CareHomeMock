@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201412021244573_Init.Designer.cs">
       <DependentUpon>201412021244573_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412030241377_Edit_CareManager_Parameters.cs" />
+    <Compile Include="Migrations\201412030241377_Edit_CareManager_Parameters.Designer.cs">
+      <DependentUpon>201412030241377_Edit_CareManager_Parameters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\CompanyType.cs" />
@@ -226,6 +230,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\TableStorage\Review.cs" />
     <Compile Include="Models\TableStorage\Log.cs" />
+    <Compile Include="Models\ViewModel\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -479,6 +484,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201412021244573_Init.resx">
       <DependentUpon>201412021244573_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412030241377_Edit_CareManager_Parameters.resx">
+      <DependentUpon>201412030241377_Edit_CareManager_Parameters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
