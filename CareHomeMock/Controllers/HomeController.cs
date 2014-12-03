@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -30,24 +31,44 @@ namespace CareHomeMock.Controllers
             return View();
         }
 
-        public ActionResult CareHomeInfo_BasicInfo()
+        public ActionResult CareHomeInfo_BasicInfo(int? id)
         {
-            return View();
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var careHome = db.CareHomes.Find(id);
+            if (careHome == null)
+                return HttpNotFound();
+            return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_CareManagers()
+        public ActionResult CareHomeInfo_CareManagers(int? id)
         {
-            return View();
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var careHome = db.CareHomes.Find(id);
+            if (careHome == null)
+                return HttpNotFound();
+            return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_Media()
+        public ActionResult CareHomeInfo_Media(int? id)
         {
-            return View();
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var careHome = db.CareHomes.Find(id);
+            if (careHome == null)
+                return HttpNotFound();
+            return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_AccessMap()
+        public ActionResult CareHomeInfo_AccessMap(int? id)
         {
-            return View();
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var careHome = db.CareHomes.Find(id);
+            if (careHome == null)
+                return HttpNotFound();
+            return View(careHome);
         }
 
         public ActionResult CareManagerInfo()

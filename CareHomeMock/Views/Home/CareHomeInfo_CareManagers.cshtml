@@ -1,7 +1,15 @@
-﻿
+﻿@model CareHomeMock.Models.CareHome
 @{
     ViewBag.Title = "CareHomeInfo_CareManagers";
 }
 
 <h2>CareHomeInfo_CareManagers</h2>
-
+<ul>
+    @foreach (var m in Model.CareManagers)
+    {
+        <li>
+            <span>@m.Name</span>
+            <span>@Html.ActionLink("詳細", "CareManagerInfo", "Home", new { id = m.CareManagerId }, new { target = "_blank" })</span>
+        </li>
+    }
+</ul>
