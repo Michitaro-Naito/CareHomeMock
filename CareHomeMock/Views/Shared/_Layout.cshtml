@@ -51,9 +51,17 @@
                     </div>
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#">地図検索</a></li>
-                            <li><a href="#about">事業所検索</a></li>
-                            <li><a href="#contact">ケアマネ検索</a></li>
+                            @{
+                                var controller = ViewContext.RouteData.Values["controller"].ToString();
+                                var action = ViewContext.RouteData.Values["action"].ToString();
+                                var active = "";
+                            }
+                            @if (action == "Index" && controller == "Home") { active = "active"; } else { active = ""; }
+                            <li class="@active">@Html.ActionLink("地図検索", "Index", "Home")</li>
+                            @if (action == "CareHomeSearch" && controller == "Home") { active = "active"; } else { active = ""; }
+                            <li class="@active">@Html.ActionLink("事業所検索", "CareHomeSearch", "Home")</li>
+                            @if (action == "CareManagerSearch" && controller == "Home") { active = "active"; } else { active = ""; }
+                            <li class="@active">@Html.ActionLink("ケアマネ検索", "CareManagerSearch", "Home")</li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
