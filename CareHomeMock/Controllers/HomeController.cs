@@ -177,7 +177,7 @@ namespace CareHomeMock.Controllers
             return Json(new { count = count, careHomes = careHomes });
         }
 
-        public ActionResult GetCareManagers(int? prefectureCode, int? cityCode, Gender? gender, AgeRange? ageRange, bool? allowNewPatient /* licenses */)
+        public ActionResult GetCareManagers(int? prefectureCode, int? cityCode, Gender? gender, AgeRange? ageRange, bool? allowNewPatient /* licenses */, int? page)
         {
             // Active
             var q = db.CareHomes.Where(h => !h.Deactivated);
@@ -207,13 +207,26 @@ namespace CareHomeMock.Controllers
 
             // Licenses
 
-            var careManagers = mq.Select(m => new {
+            // Paging
+            var limit = 50;
+            var offset = 0;
+            if (page != null)
+                offset = limit * page.Value;
+            var count = mq.Count();
+
+            var careManagers = mq.OrderBy(m=>m.CareManagerId).Skip(offset).Take(limit).ToList().Select(m => new {
+                CareHomeId = m.CareHomeId,
+                CareHomeName = m.CareHome.CompanyName,
                 CareManagerId = m.CareManagerId,
-                Name = m.Name
+                CareManagerName = m.Name,
+                Years = m.Years,
+                ReviewCount = m.ReviewsCount,
+                Rating = m.Rating
             }).ToList();
 
             return Json(new 
             {
+                count = count,
                 careManagers = careManagers
             });
         }

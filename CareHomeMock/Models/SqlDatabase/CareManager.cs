@@ -65,6 +65,18 @@ namespace CareHomeMock.Models
         public DateTime Licensed { get; set; }
 
         /// <summary>
+        /// How many full years passed sinse licensed.
+        /// </summary>
+        public int Years
+        {
+            get
+            {
+                var zero = new DateTime(1, 1, 1);
+                return (zero + (DateTime.UtcNow - Licensed)).Year - 1;
+            }
+        }
+
+        /// <summary>
         /// Other licenses which this CareManager has.
         /// </summary>
         public string Licenses { get; set; }

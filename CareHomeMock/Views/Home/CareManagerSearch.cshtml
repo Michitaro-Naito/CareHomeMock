@@ -7,6 +7,14 @@
     <script>
         $(document).ready(function () {
 
+            function CareManager(data) {
+                var s = this;
+                s.data = data;
+                s.cpHref = ko.computed(function () {
+                    return '/Home/CareManagerInfo/' + s.data.CareManagerId;
+                });
+            }
+
             function AppModel() {
                 var s = this;
 
@@ -22,6 +30,40 @@
                 s.selectedAgeRange = ko.observable();
                 s.allowNewPatient = ko.observable(true);
 
+                s.nextPage = ko.observable(0);
+                s.noMore = ko.observable(false);
+
+                s.count = ko.observable(0);
+                s.careManagers = ko.observableArray([]);
+
+                s.cpPrefectures = ko.computed(function () {
+                    var prefectures = Enumerable.From(s.prefectures()).ToArray();
+                    //prefectures.unshift({ id: null, name: '都道府県' });
+                    return prefectures;
+                });
+                s.cpCities = ko.computed(function () {
+                    var cities = [];
+                    if (s.selectedPrefecture() != null) {
+                        var q = Enumerable.From(s.cities());
+                        q = q.Where(function (c) { return Math.floor(parseInt(c.id) / 1000) == s.selectedPrefecture().id; })
+                        cities = q.ToArray();
+                    }
+                    cities.unshift({ id: null, name: '市区町村' });
+                    return cities;
+                });
+
+                s.cpPrefectureCode = ko.computed(function () {
+                    if (s.selectedPrefecture() == null)
+                        return null;
+                    return s.selectedPrefecture().id;
+                });
+
+                s.cpCityCode = ko.computed(function () {
+                    if (s.selectedCity() == null)
+                        return null;
+                    return s.selectedCity().id;
+                });
+
                 s.Init = function () {
                     $.ajax({
                         cache: false,
@@ -33,19 +75,37 @@
                         s.cities(data.cities);
                         s.genders(data.genders);
                         s.ageRanges(data.ageRanges);
+                        s.Search();
                     });
                 }
 
                 s.Search = function () {
+                    s.nextPage(0);
+                    s.noMore(false);
+                    s.SearchMore();
+                }
+
+                s.SearchMore = function () {
                     $.ajax({
                         cache: false,
                         type: 'POST',
                         url: '/Home/GetCareManagers',
                         data: {
-
+                            prefectureCode: s.cpPrefectureCode(),
+                            cityCode: s.cpCityCode(),
+                            page: s.nextPage()
                         }
                     }).done(function (data) {
                         console.info(data);
+                        s.count(data.count);
+                        if (s.nextPage() == 0)
+                            s.careManagers([]);
+                        if (data.careManagers.length == 0)
+                            s.noMore(true);
+                        for (var n = 0; n < data.careManagers.length; n++) {
+                            s.careManagers.push(new CareManager(data.careManagers[n]));
+                        }
+                        s.nextPage(s.nextPage() + 1);
                     });
                 }
             }
@@ -57,12 +117,72 @@
     </script>
 }
 
-<h2>CareManagerSearch</h2>
-<select data-bind="options: prefectures, optionsText: 'name', value: selectedPrefecture"></select>
-<select data-bind="options: cities, optionsText: 'name', value: selectedCity"></select>
-<select data-bind="options: genders, optionsText: 'name', value: selectedGender"></select>
-<select data-bind="options: ageRanges, optionsText: 'name', value: selectedAgeRange"></select>
-<input type="checkbox" data-bind="value: allowNewPatient" />
-<!-- Licenses -->
 
-<button type="button" data-bind="click: Search">検索</button>
+
+<!-- Search -->
+<div class="search-blo">
+    <h1><i class="fa fa-search"></i>ケアマネ検索</h1>
+    <div class="row">
+        <div class="col-md-4"><select data-bind="options: cpPrefectures, optionsText: 'name', value: selectedPrefecture" class="form-control"></select></div>
+        <div class="col-md-7"><select data-bind="options: cpCities, optionsText: 'name', value: selectedCity" class="form-control"></select></div>
+
+        <div class="col-md-4"><select data-bind="options: genders, optionsText: 'name', value: selectedGender" class="form-control"></select></div>
+        <div class="col-md-4"><select data-bind="options: ageRanges, optionsText: 'name', value: selectedAgeRange" class="form-control"></select></div>
+        <div class="col-md-4">
+            <div class="checkbox">
+                <label>
+                    新規対応可<input type="checkbox" data-bind="value: allowNewPatient" />
+                </label>
+            </div>
+        </div>
+        <div class="col-md-12">保有資格</div>
+        <div class="col-md-12">並べ替え</div>
+
+        <div class="col-md-4"><button type="button" data-bind="click: Search" class="search-btn">検索する</button></div>
+    </div>
+</div>
+
+<!-- Results -->
+<div class="col-md-12 total-search">
+    <span data-bind="text: count"></span>件の検索結果
+</div>
+
+<div data-bind="foreach: careManagers">
+    <div class="search-rslt col-md-12">
+        <div class="row">
+            <div class="col-md-4"><img alt="" src="~/Content/images/search-img01.png"></div>
+            <div class="col-md-8">
+                <h3><a data-bind="text: data.CareManagerName, attr: { href : cpHref }" href="#" target="_blank"></a></h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><i class="fa  fa-thumb-tack"></i></td>
+                            <td>所属:</td>
+                            <td><span data-bind="text: data.CareHomeName"></span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-calendar"></i></td>
+                            <td>経験年数:</td>
+                            <td><span data-bind="text: data.Years"></span>年</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-comments"></i></td>
+                            <td>評価件数:</td>
+                            <td><span data-bind="text: data.ReviewCount"></span>件</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-star-half-full"></i></td>
+                            <td>平均得点:</td>
+                            <td><span data-bind="text: data.Rating"></span>点</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div data-bind="text: data.Messages" class="col-md-12"></div>
+        </div>
+    </div>
+</div>
+
+<div data-bind="visible: !noMore(), click: SearchMore" class="col-md-12 total-search more-search">
+    さらに読み込む
+</div>

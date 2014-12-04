@@ -22,6 +22,13 @@ namespace CareHomeMock
                 defaults: new { controller = "Home", action = "CareHomeSearch" }
             );
 
+            // CareManagerSearch
+            routes.MapRoute(
+                name: "CareManagerSearch",
+                url: "ケアマネ検索",
+                defaults: new { controller = "Home", action = "CareManagerSearch" }
+            );
+
             // Files (Virtual directory like feature)
             routes.MapRoute(
                 name: "Files",
