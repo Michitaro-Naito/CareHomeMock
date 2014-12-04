@@ -15,6 +15,13 @@ namespace CareHomeMock
 
             routes.RouteExistingFiles = true;
 
+            // CareHomeSearch
+            routes.MapRoute(
+                name: "CareHomeSearch",
+                url: "事業所検索",
+                defaults: new { controller = "Home", action = "CareHomeSearch" }
+            );
+
             // Files (Virtual directory like feature)
             routes.MapRoute(
                 name: "Files",

@@ -156,10 +156,12 @@ namespace CareHomeMock.Controllers
                 q = q.Where(h => h.CompanyName.Contains(keyword) || h.Messages.Contains(keyword));
 
             // Paging
+            var limit = 50;
             var offset = 0;
             if (page != null)
-                offset = 50 * page.Value;
-            var careHomes = q.OrderBy(h => h.CareHomeId).Skip(offset).Take(50).ToList()
+                offset = limit * page.Value;
+            var count = q.Count();
+            var careHomes = q.OrderBy(h => h.CareHomeId).Skip(offset).Take(limit).ToList()
                 .Select(h => new
                 {
                     CareHomeId = h.CareHomeId,
@@ -168,10 +170,11 @@ namespace CareHomeMock.Controllers
                     Years = 123,
                     CareManagerCount = h.CareManagers.Count,
                     ReviewCount = 456,
-                    Rating = 4.5
+                    Rating = 4.5,
+                    Messages = h.Messages
                 }).ToList();
 
-            return Json(careHomes);
+            return Json(new { count = count, careHomes = careHomes });
         }
 
         public ActionResult GetCareManagers(int? prefectureCode, int? cityCode, Gender? gender, AgeRange? ageRange, bool? allowNewPatient /* licenses */)

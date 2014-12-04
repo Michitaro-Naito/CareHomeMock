@@ -27,7 +27,31 @@
                 s.selectedCompanyType = ko.observable();
                 s.keyword = ko.observable();
 
+                s.count = ko.observable();
                 s.careHomes = ko.observableArray([]);
+                s.nextPage = ko.observable(0);
+                s.noMore = ko.observable(false);
+
+                s.cpPrefectures = ko.computed(function () {
+                    var prefectures = Enumerable.From(s.prefectures()).ToArray();
+                    prefectures.unshift({ id: null, name: '都道府県' });
+                    return prefectures;
+                });
+                s.cpCities = ko.computed(function () {
+                    var cities = [];
+                    if (s.selectedPrefecture() != null) {
+                        var q = Enumerable.From(s.cities());
+                        q = q.Where(function (c) { return Math.floor(parseInt(c.id) / 1000) == s.selectedPrefecture().id; })
+                        cities = q.ToArray();
+                    }
+                    cities.unshift({ id: null, name: '市区町村' });
+                    return cities;
+                });
+                s.cpCompanyTypes = ko.computed(function () {
+                    var types = Enumerable.From(s.companyTypes()).ToArray();
+                    types.unshift({ id: null, name: '法人区分' });
+                    return types;
+                });
 
                 s.cpPrefectureCode = ko.computed(function () {
                     if (s.selectedPrefecture() == null)
@@ -57,10 +81,17 @@
                         s.prefectures(data.prefectures);
                         s.cities(data.cities);
                         s.companyTypes(data.companyTypes);
+                        s.Search();
                     });
                 }
 
                 s.Search = function () {
+                    s.nextPage(0);
+                    s.noMore(false);
+                    s.SearchMore();
+                }
+
+                s.SearchMore = function () {
                     $.ajax({
                         cache: false,
                         type: 'POST',
@@ -69,15 +100,20 @@
                             prefectureCode: s.cpPrefectureCode(),
                             cityCode: s.cpCityCode(),
                             companyType: s.cpCompanyType(),
-                            keyword: s.keyword()
+                            keyword: s.keyword(),
+                            page: s.nextPage()
                         }
                     }).done(function (data) {
                         console.info(data);
-                        var careHomes = [];
-                        for (var n = 0; n < data.length; n++) {
-                            careHomes.push(new CareHome(data[n]));
+                        s.count(data.count);
+                        if (s.nextPage() == 0)
+                            s.careHomes([]);
+                        if (data.careHomes.length == 0)
+                            s.noMore(true);
+                        for (var n = 0; n < data.careHomes.length; n++) {
+                            s.careHomes.push(new CareHome(data.careHomes[n]));
                         }
-                        s.careHomes(careHomes);
+                        s.nextPage(s.nextPage() + 1);
                     });
                 }
             }
@@ -89,17 +125,67 @@
     </script>
 }
 
-<h2>CareHomeSearch</h2>
-<select data-bind="options: prefectures, optionsText: 'name', value: selectedPrefecture"></select>
-<select data-bind="options: cities, optionsText: 'name', value: selectedCity"></select>
-<select data-bind="options: companyTypes, optionsText: 'name', value: selectedCompanyType"></select>
-<input data-bind="value: keyword" />
-<button type="button" data-bind="click: Search">検索</button>
+<!-- Search -->
+<div class="search-blo">
+    <h1><i class="fa fa-search"></i>事業所検索</h1>
+    <div class="row">
+        <div class="col-md-4"><select data-bind="options: cpPrefectures, optionsText: 'name', value: selectedPrefecture" class="form-control"></select></div>
+        <div class="col-md-4"><select data-bind="options: cpCities, optionsText: 'name', value: selectedCity" class="form-control"></select></div>
+        <div class="col-md-4"><select data-bind="options: cpCompanyTypes, optionsText: 'name', value: selectedCompanyType" class="form-control"></select></div>
 
-<ul data-bind="foreach: careHomes">
-    <li>
-        <span data-bind="text: data.CareHomeId"></span>
-        <span data-bind="text: data.CompanyName"></span>
-        <a data-bind="attr: { href : cpHref }" href="/Home/CareHomeInfo_BasicInfo/" target="_blank">詳細</a>
-    </li>
-</ul>
+        <div class="col-md-8"><input type="text" data-bind="value: keyword" placeholder="キーワード(事業所名など)" /></div>
+        <div class="col-md-4"><button type="button" data-bind="click: Search" class="search-btn">検索する</button></div>
+    </div>
+</div>
+
+<!-- Results -->
+<div class="col-md-12 total-search">
+    <span data-bind="text: count"></span>件の検索結果
+</div>
+
+<div data-bind="foreach: careHomes">
+    <div class="search-rslt col-md-12">
+        <div class="row">
+            <div class="col-md-4"><img alt="" src="~/Content/images/search-img01.png"></div>
+            <div class="col-md-8">
+                <h3><a data-bind="text: data.CompanyName, attr: { href : cpHref }" href="#" target="_blank"></a></h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><i class="fa  fa-thumb-tack"></i></td>
+                            <td>所在地:</td>
+                            <td>
+                                <span data-bind="text: data.Address"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-calendar"></i></td>
+                            <td>運営年数:</td>
+                            <td><span data-bind="text: data.Years"></span>年</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-tachometer"></i></td>
+                            <td>ケアマネ人数:</td>
+                            <td><span data-bind="text: data.CareManagerCount"></span>人</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-comments"></i></td>
+                            <td>評価件数:</td>
+                            <td><span data-bind="text: data.ReviewCount"></span>件</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-star-half-full"></i></td>
+                            <td>平均得点:</td>
+                            <td><span data-bind="text: data.Rating"></span>点</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div data-bind="text: data.Messages" class="col-md-12"></div>
+        </div>
+    </div>
+</div>
+
+<div data-bind="visible: !noMore(), click: SearchMore" class="col-md-12 total-search more-search">
+    さらに読み込む
+</div>
