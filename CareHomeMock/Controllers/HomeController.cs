@@ -71,9 +71,14 @@ namespace CareHomeMock.Controllers
             return View(careHome);
         }
 
-        public ActionResult CareManagerInfo()
+        public ActionResult CareManagerInfo(int? id)
         {
-            return View();
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var careManager = db.CareManagers.Find(id);
+            if (careManager == null)
+                return HttpNotFound();
+            return View(careManager);
         }
 
         [HttpPost]
