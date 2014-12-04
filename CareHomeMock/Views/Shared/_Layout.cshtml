@@ -10,33 +10,153 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("アプリケーション名", "Index", "Home", null, new { @class = "navbar-brand" })
+    <div id="wrap" class="grid_1200">
+
+        <header>
+            <div class="top-header">
+                <div class="container">
+                    <div class="col-md-5 top-email">
+                        <i class="fa fa-envelope"></i><a href="mailto:mail@carehomes.com">mail@carehomes.com</a>
+                        <i class="fa fa-phone"></i>1-234-567-8900
+                    </div>
+                    <div class="col-md-7">
+                        <div class="right">
+                            <div class="left"><button class="login-btn"><i class="fa fa-sign-in"></i>Login</button></div>
+                            <div class="social-ul">
+                                <ul>
+                                    <li class="social-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li class="social-google"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li class="social-youtube"><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                    <li class="social-dribbble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <!-- End container -->
+        </header><!-- End header -->
+        <header>
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="logo"><a href="#"><img alt="" src="~/Content/images/logo.png"></a></div>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="#">地図検索</a></li>
+                            <li><a href="#about">事業所検索</a></li>
+                            <li><a href="#contact">ケアマネ検索</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+            <!-- End container -->
+        </header><!-- End header -->
+        <section>
+            <div class="container section-main-container">
+                <!--Top start-->
+                <div class="center top-ad"><img alt="" src="~/Content/images/top-ad.png"></div>
+                <!--Top end-->
+                <div class="row">
+                    <!--Left panel start-->
+                    <div class="col-md-8">
+                        @RenderBody()
+                    </div>
+                    <!--Left panel end-->
+                    <!--Right panel start-->
+                    <div class="col-md-4">
+                        <!--right navigation start-->
+                        <div class="right-navigation">
+                            <h3>Main Links</h3>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>About us</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Press release</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Terms of service</a></li></a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Privacy Policy</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Careers</a></li>
+                            </ul>
+                        </div>
+                        <!--right navigation end-->
+                        <!--right add-->
+                        <div class="rgt-ad-blo">
+                            <img alt="" src="~/Content/images/right-ad01.png">
+                        </div>
+                        <!--right add-->
+                        <div class="rgt-ad-blo">
+                            <img alt="" src="~/Content/images/right-ad02.png">
+                        </div>
+                    </div>
+                    <!--Right panel end-->
+
+                </div>
+                <!--Top start-->
+                <div class="center top-ad"><img alt="" src="~/Content/images/bottom-ad.png"></div>
+                <!--Top end-->
             </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+            @{
+                //Html.Partial("_LoginPartial");
+            }
+        </section>
         <footer>
-            <p>&copy; @DateTime.Now.Year - マイ ASP.NET アプリケーション</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>About Us</h4>
+                        <div class="aboutus">
+                            <p>Consectetur adipiscing elit aeneane lorem lipsum, condimentum ultrices consequat eu, vehicula mauris lipsum adipiscing lipsum aenean orci lorem.</p>
+                            <p>Asequat lorem ipsum dolor lorem sit amet, consectetur adipiscing dolor elit. Aenean nisl orci, condimentum.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Main Links</h4>
+                        <div class="ftr-navigation">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>About us</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Press release</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Terms of service</a></li></a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Privacy Policy</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Careers</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Follow us</h4>
+                        <div class="row ftr-social">
+                            <div class="col-md-6">
+                                <a href="#"><i class="fa fa-facebook"></i>Facebook</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#"><i class="fa fa-google-plus"></i>Google Plus</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#"><i class="fa fa-dribbble"></i>Dribbble</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#"><i class="fa fa-youtube"></i>Youtube</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </footer>
-    </div>
+        <footer class="copyright">
+            <div class="container">
+                <div class="col-md-5">© Copyright @DateTime.Now.Year by Care Homes. All Rights Reserved. </div>
+                <div class="col-md-7 txt-rgt">Developed By: Net Magnetic</div>
+            </div>
+        </footer>
+        
+    </div><!-- End wrap -->
+
+
 
     @Scripts.Render("~/bundles/jquery")
     <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>

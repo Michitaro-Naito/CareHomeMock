@@ -2,39 +2,146 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-    <div>
-        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="R4AR26DXDD3RQ">
-            <input type="image" src="https://www.sandbox.paypal.com/ja_JP/JP/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - オンラインでより安全・簡単にお支払い">
-            <img alt="" border="0" src="https://www.sandbox.paypal.com/ja_JP/i/scr/pixel.gif" width="1" height="1">
-        </form>
+<!--Search start-->
+<div class="search-blo">
+    <h1><i class="fa fa-search"></i>SEARCH CARE HOMES</h1>
+    <div class="row">
+        <div class="col-md-4"><input type="text" class="form-fld-space" value="Prefecture" onfocus="if(this.value=='Prefecture') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='Prefecture'; this.style.color='#ABABAB';}" /></div>
+        <div class="col-md-4"><input type="text" class="form-fld-space" value="City" onfocus="if(this.value=='City') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='City'; this.style.color='#ABABAB';}" /></div>
+        <div class="col-md-4"><input type="text" value="Company Type" onfocus="if(this.value=='Company Type') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='Company Type'; this.style.color='#ABABAB';}" /></div>
+
+        <div class="col-md-8"><input type="text" value="Keyword (E.G.Name or Special)" onfocus="if(this.value=='Keyword (E.G.Name or Special)') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='Keyword (E.G.Name or Special)'; this.style.color='#ABABAB';}" /></div>
+        <div class="col-md-4"><button class="search-btn">SEARCH</button></div>
+        <div class="col-md-12">
+            <div class="advanced-search">
+                Advance Search [+]
+            </div>
+        </div>
 
     </div>
 </div>
+<!--Search end-->
+<div class="col-md-12 total-search">
+    <span>1,16,460</span> items of Care Homes
+</div>
+<!--Search result start-->
+<div class="search-rslt col-md-12">
+    <div class="row">
+        <div class="col-md-4"><img alt="" src="~/Content/images/search-img01.png"></div>
+        <div class="col-md-8">
+            <h3><a href="#">Duis aute irure  in reprehenderit</a></h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><i class="fa  fa-thumb-tack"></i></td>
+                        <td>Address:</td>
+                        <td>30, Lorem ipsum,unt in culpa</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-calendar"></i></td>
+                        <td>Years:</td>
+                        <td>30Yr. </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-tachometer"></i></td>
+                        <td>CMs Count:</td>
+                        <td>1253</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-comments"></i></td>
+                        <td>Reviewed Count:</td>
+                        <td>4265</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-star-half-full"></i></td>
+                        <td>Reviewed Average Points:</td>
+                        <td>563</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">Duis aute irure  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occcupidatat non proident, sunt in culpa qui officia deserunt mollit ani laborum dolore eu fugiat nulla.</div>
+    </div>
+</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="search-rslt col-md-12">
+    <div class="row">
+        <div class="col-md-4"><img alt="" src="~/Content/images/search-img02.png"></div>
+        <div class="col-md-8">
+            <h3><a href="#">Duis aute irure  in reprehenderit</a></h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><i class="fa  fa-thumb-tack"></i></td>
+                        <td>Address:</td>
+                        <td>30, Lorem ipsum,unt in culpa</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-calendar"></i></td>
+                        <td>Years:</td>
+                        <td>30Yr. </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-tachometer"></i></td>
+                        <td>CMs Count:</td>
+                        <td>1253</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-comments"></i></td>
+                        <td>Reviewed Count:</td>
+                        <td>4265</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-star-half-full"></i></td>
+                        <td>Reviewed Average Points:</td>
+                        <td>563</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">Duis aute irure  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occcupidatat non proident, sunt in culpa qui officia deserunt mollit ani laborum dolore eu fugiat nulla.</div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</div>
+
+<div class="search-rslt col-md-12">
+    <div class="row">
+        <div class="col-md-4"><img alt="" src="~/Content/images/search-img03.png"></div>
+        <div class="col-md-8">
+            <h3><a href="#">Duis aute irure  in reprehenderit</a></h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><i class="fa  fa-thumb-tack"></i></td>
+                        <td>Address:</td>
+                        <td>30, Lorem ipsum,unt in culpa</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-calendar"></i></td>
+                        <td>Years:</td>
+                        <td>30Yr. </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-tachometer"></i></td>
+                        <td>CMs Count:</td>
+                        <td>1253</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-comments"></i></td>
+                        <td>Reviewed Count:</td>
+                        <td>4265</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-star-half-full"></i></td>
+                        <td>Reviewed Average Points:</td>
+                        <td>563</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">Duis aute irure  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occcupidatat non proident, sunt in culpa qui officia deserunt mollit ani laborum dolore eu fugiat nulla.</div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+</div>
+<!--Search result end-->
+<div class="col-md-12 total-search more-search">
+    More Results
 </div>
