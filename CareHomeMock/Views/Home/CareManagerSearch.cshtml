@@ -3,5 +3,66 @@
     ViewBag.Title = "CareManagerSearch";
 }
 
-<h2>CareManagerSearch</h2>
+@section scripts{
+    <script>
+        $(document).ready(function () {
 
+            function AppModel() {
+                var s = this;
+
+                s.prefectures = ko.observableArray([]);
+                s.cities = ko.observableArray([]);
+                s.genders = ko.observableArray([]);
+                s.ageRanges = ko.observableArray([]);
+                s.licenses = ko.observableArray([]);
+
+                s.selectedPrefecture = ko.observable();
+                s.selectedCity = ko.observable();
+                s.selectedGender = ko.observable();
+                s.selectedAgeRange = ko.observable();
+                s.allowNewPatient = ko.observable(true);
+
+                s.Init = function () {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Home/GetSelectOptions_CareManagerSearch'
+                    }).done(function (data) {
+                        console.info(data);
+                        s.prefectures(data.prefectures);
+                        s.cities(data.cities);
+                        s.genders(data.genders);
+                        s.ageRanges(data.ageRanges);
+                    });
+                }
+
+                s.Search = function () {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Home/GetCareManagers',
+                        data: {
+
+                        }
+                    }).done(function (data) {
+                        console.info(data);
+                    });
+                }
+            }
+
+            var model = new AppModel();
+            model.Init();
+            ko.applyBindings(model);
+        });
+    </script>
+}
+
+<h2>CareManagerSearch</h2>
+<select data-bind="options: prefectures, optionsText: 'name', value: selectedPrefecture"></select>
+<select data-bind="options: cities, optionsText: 'name', value: selectedCity"></select>
+<select data-bind="options: genders, optionsText: 'name', value: selectedGender"></select>
+<select data-bind="options: ageRanges, optionsText: 'name', value: selectedAgeRange"></select>
+<input type="checkbox" data-bind="value: allowNewPatient" />
+<!-- Licenses -->
+
+<button type="button" data-bind="click: Search">検索</button>

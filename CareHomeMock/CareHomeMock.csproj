@@ -211,6 +211,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
+    <Compile Include="Models\Enum\AgeRange.cs" />
     <Compile Include="Models\Enum\CompanyType.cs" />
     <Compile Include="Models\Enum\Gender.cs" />
     <Compile Include="Models\Enum\PatientType.cs" />
