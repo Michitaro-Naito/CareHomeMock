@@ -119,6 +119,54 @@ namespace CareHomeMock.Controllers
             return null;
         }
 
+        public ActionResult PopulateDummyCareManagers()
+        {
+            var start = DateTime.UtcNow;
+            var homeIds = db.CareHomes.Select(h=>h.CareHomeId).ToList();
+            var licenseIds = db.Licenses.Select(l=>l.LicenseId).ToList();
+            var rand = new Random();
+            for (var n = 0; n < 1000; n++)
+            {
+                var m = new CareManager();
+
+                m.AllowNewPatient = rand.Next(2) == 0;
+                m.Birthday = DateTime.UtcNow.AddYears(-rand.Next(90));
+                m.BlogUrls = string.Format("http://example.com/foo/{0}/", n);
+                m.Career = string.Format("ケアマネ会員が入力したキャリアです。{0}", n);
+                m.CareHomeId = homeIds[rand.Next(homeIds.Count)];
+                m.CurrentPatients = rand.Next(100);
+                m.Email = string.Format("care{0}@example.com", n);
+                m.Gender = new[] { Gender.男性, Gender.女性 }[rand.Next(2)];
+                m.Licensed = DateTime.UtcNow.AddYears(-rand.Next(50));
+                m.Messages = string.Format("ケアマネ会員が入力したメッセージです。{0}", n);
+                if (m.Gender == Gender.男性)
+                    m.Name = string.Format("田中一郎{0}", n);
+                else
+                    m.Name = string.Format("佐藤花子{0}", n);
+                m.Rating = 5.0 * rand.NextDouble();
+                m.ReviewsCount = rand.Next(1000);
+                m.マネジメント力 = 5.0 * rand.NextDouble();
+                m.医療知識 = 5.0 * rand.NextDouble();
+                m.介護知識 = 5.0 * rand.NextDouble();
+                m.関係構築力 = 5.0 * rand.NextDouble();
+                m.企画立案力 = 5.0 * rand.NextDouble();
+                m.行動実践力 = 5.0 * rand.NextDouble();
+
+                var rows = new List<CareManagerLicenses>();
+                foreach (var id in licenseIds)
+                {
+                    if (rand.NextDouble() > 0.8)
+                        rows.Add(new CareManagerLicenses() { CareManager = m, LicenseId = id });
+                }
+                m.CareManagerLicenses = rows;
+
+                db.CareManagers.Add(m);
+            }
+            db.SaveChanges();
+            Response.Write(string.Format("Populated. {0}ms", (DateTime.UtcNow - start).TotalMilliseconds));
+            return null;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
