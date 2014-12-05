@@ -206,7 +206,7 @@ namespace CareHomeMock.Controllers
                 {
                     CareHomeId = h.CareHomeId,
                     CompanyName = h.CompanyName,
-                    Address = h.Address,
+                    Address = h.Area.PrefectureName + h.Area.CityName + h.Address,
                     Years = h.Years,
                     CareManagerCount = h.CareManagers.Count,
                     ReviewCount = h.ReviewCount,
