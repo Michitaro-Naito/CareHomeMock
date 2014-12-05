@@ -7,7 +7,7 @@ namespace CareHomeMock.Models
 {
     public enum Gender
     {
-        Male = 0,
-        Female = 1
+        男性 = 0,
+        女性 = 1
     }
 }
