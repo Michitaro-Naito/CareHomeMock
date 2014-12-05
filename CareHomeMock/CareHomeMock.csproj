@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201412051600315_Add_License.Designer.cs">
       <DependentUpon>201412051600315_Add_License.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412051617191_Add_CareManagerLicenses.cs" />
+    <Compile Include="Migrations\201412051617191_Add_CareManagerLicenses.Designer.cs">
+      <DependentUpon>201412051617191_Add_CareManagerLicenses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -235,6 +239,7 @@
     <Compile Include="Models\SqlDatabase\Area.cs" />
     <Compile Include="Models\SqlDatabase\CareHome.cs" />
     <Compile Include="Models\SqlDatabase\CareManager.cs" />
+    <Compile Include="Models\SqlDatabase\CareManagerLicenses.cs" />
     <Compile Include="Models\SqlDatabase\Cluster.cs" />
     <Compile Include="Models\SqlDatabase\EmailVerification.cs" />
     <Compile Include="Models\SqlDatabase\File.cs" />
@@ -560,6 +565,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412051600315_Add_License.resx">
       <DependentUpon>201412051600315_Add_License.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412051617191_Add_CareManagerLicenses.resx">
+      <DependentUpon>201412051617191_Add_CareManagerLicenses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

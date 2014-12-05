@@ -147,6 +147,11 @@ namespace CareHomeMock.Models
         /// </summary>
         public virtual ICollection<EmailVerification> EmailVerifications { get; set; }
 
+        /// <summary>
+        /// CareManager HABTM Licenses.
+        /// </summary>
+        public virtual ICollection<CareManagerLicenses> CareManagerLicenses { get; set; }
+
 
 
         public CareManager()

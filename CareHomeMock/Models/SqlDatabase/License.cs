@@ -15,5 +15,10 @@ namespace CareHomeMock.Models
         /// Name of License like "医師".
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// License HABTM CareManagers.
+        /// </summary>
+        public virtual ICollection<CareManagerLicenses> CareManagerLicenses { get; set; }
     }
 }

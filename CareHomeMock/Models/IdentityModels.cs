@@ -9,6 +9,7 @@ namespace CareHomeMock.Models
         public DbSet<Area> Areas { get; set; }
         public DbSet<CareHome> CareHomes { get; set; }
         public DbSet<CareManager> CareManagers { get; set; }
+        public DbSet<CareManagerLicenses> CareManagerLicenses { get; set; }
         public DbSet<Cluster> Clusters { get; set; }
         public DbSet<EmailVerification> EmailVerifications { get; set; }
         public DbSet<File> Files { get; set; }
