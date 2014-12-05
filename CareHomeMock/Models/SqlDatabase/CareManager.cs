@@ -57,7 +57,14 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Age of this CareManager like 24.
         /// </summary>
-        public int Age { get; set; }
+        public int Age
+        {
+            get
+            {
+                var zero = new DateTime(1, 1, 1);
+                return (zero + (DateTime.UtcNow - Birthday)).Year - 1;
+            }
+        }
 
         /// <summary>
         /// When this CareManager has been licensed.
