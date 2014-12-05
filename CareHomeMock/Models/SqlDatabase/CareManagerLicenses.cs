@@ -20,11 +20,11 @@ namespace CareHomeMock.Models
         public int CareManagerId { get; set; }
 
         [ForeignKey("CareManagerId")]
-        public CareManager CareManager { get; set; }
+        public virtual CareManager CareManager { get; set; }
 
         public int LicenseId { get; set; }
 
         [ForeignKey("LicenseId")]
-        public License License { get; set; }
+        public virtual License License { get; set; }
     }
 }

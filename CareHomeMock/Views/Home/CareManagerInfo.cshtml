@@ -109,7 +109,12 @@
             </tr>
             <tr>
                 <td>保有資格</td>
-                <td>工事中</td>
+                <td>
+                    @foreach (var l in Model.CareManagerLicenses)
+                    {
+                        <div>@l.License.Name</div>
+                    }
+                </td>
             </tr>
             <tr>
                 <td>現在担当人数</td>
@@ -117,7 +122,16 @@
             </tr>
             <tr>
                 <td>新規対応</td>
-                <td>@Model.AllowNewPatient</td>
+                <td>
+                    @if (Model.AllowNewPatient)
+                    {
+                        <span>可</span>
+                    }
+                    else
+                    {
+                        <span>不可</span>
+                    }
+                </td>
             </tr>
             <tr>
                 <td>経歴</td>

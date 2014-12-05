@@ -158,6 +158,7 @@ namespace CareHomeMock.Models
         {
             Otps = new List<Otp>();
             EmailVerifications = new List<EmailVerification>();
+            CareManagerLicenses = new List<CareManagerLicenses>();
         }
     }
 }
