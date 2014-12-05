@@ -3,6 +3,174 @@
     ViewBag.Title = "CareManagerInfo";
 }
 
-<h2>CareManagerInfo</h2>
-@Model.CareManagerId
-@Model.Name
+@section scripts{
+    <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/amcharts.js"></script>
+    <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/radar.js"></script>
+    <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/themes/patterns.js"></script>
+    <script>
+        AmCharts.makeChart("chartdiv",
+            {
+                "type": "radar",
+                "pathToImages": "http://cdn.amcharts.com/lib/3/images/",
+                "categoryField": "country",
+                "startDuration": 2,
+                "fontSize": 13,
+                "theme": "patterns",
+                "graphs": [
+                    {
+                        "balloonText": "[[value]] litres of beer per year",
+                        "bullet": "round",
+                        "bulletSize": 9,
+                        "id": "AmGraph-1",
+                        "lineAlpha": 1,
+                        "lineThickness": 2,
+                        "valueField": "litres"
+                    }
+                ],
+                "guides": [],
+                "valueAxes": [
+                    {
+                        "axisTitleOffset": 20,
+                        "gridType": "circles",
+                        "id": "ValueAxis-1",
+                        "minimum": 0,
+                        'maximum': 5,
+                        "axisAlpha": 0.54,
+                        "dashLength": 3,
+                        "gridAlpha": 0.51
+                    }
+                ],
+                "allLabels": [],
+                "balloon": {},
+                "titles": [],
+                "dataProvider": [
+                    {
+                        "country": "企画・立案力",
+                        "litres": @Model.企画立案力
+                    },
+                    {
+                        "country": "行動・実践力",
+                        "litres": @Model.行動実践力
+                    },
+                    {
+                        "country": "関係構築力",
+                        "litres": @Model.関係構築力
+                    },
+                    {
+                        "country": "マネジメント力",
+                        "litres": @Model.マネジメント力
+                    },
+                    {
+                        "country": "医療知識",
+                        "litres": @Model.医療知識
+                    },
+                    {
+                        "country": "介護知識",
+                        "litres": @Model.介護知識
+                    }
+                ]
+            }
+        );
+    </script>
+}
+
+<h2>@Model.CareHome.CompanyName @Model.Name</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <tr>
+                <td>所属</td>
+                <td>@Model.CareHome.CompanyName</td>
+            </tr>
+            <tr>
+                <td>名前</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>ケアマネ評価得点</td>
+                <td>@Model.Rating</td>
+            </tr>
+            <tr>
+                <td>ケアマネ評価件数</td>
+                <td>@Model.ReviewsCount</td>
+            </tr>
+            <tr>
+                <td>性別</td>
+                <td>@Model.Gender</td>
+            </tr>
+            <tr>
+                <td>年齢</td>
+                <td>@Model.Age</td>
+            </tr>
+            <tr>
+                <td>ケアマネ資格取得</td>
+                <td>@Model.Licensed</td>
+            </tr>
+            <tr>
+                <td>保有資格</td>
+                <td>工事中</td>
+            </tr>
+            <tr>
+                <td>現在担当人数</td>
+                <td>@Model.CurrentPatients</td>
+            </tr>
+            <tr>
+                <td>新規対応</td>
+                <td>@Model.AllowNewPatient</td>
+            </tr>
+            <tr>
+                <td>経歴</td>
+                <td>@Model.Career</td>
+            </tr>
+            <tr>
+                <td>メッセージ</td>
+                <td>@Model.Messages</td>
+            </tr>
+            <tr>
+                <td>ブログ、FBなど</td>
+                <td>@Model.BlogUrls</td>
+            </tr>
+        </table>
+
+        <h2>コンピテンシー自己評価</h2>
+        <table class="table">
+            <tr>
+                <td>企画・立案力</td>
+                <td>@Model.企画立案力</td>
+            </tr>
+            <tr>
+                <td>行動・実践力</td>
+                <td>@Model.行動実践力</td>
+            </tr>
+            <tr>
+                <td>関係構築力</td>
+                <td>@Model.関係構築力</td>
+            </tr>
+            <tr>
+                <td>マネジメント力</td>
+                <td>@Model.マネジメント力</td>
+            </tr>
+            <tr>
+                <td>医療知識</td>
+                <td>@Model.医療知識</td>
+            </tr>
+            <tr>
+                <td>介護知識</td>
+                <td>@Model.介護知識</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <div>顔写真(工事中)</div>
+        <div>
+            <div id="chartdiv" style="width: 100%; height: 240px; background-color: #FFFFFF;"></div>
+        </div>
+        <div>@QRCode.Render(Request.Url.AbsoluteUri.ToString())</div>
+        <div>SNS連携(工事中)</div>
+    </div>
+</div>
+
+<h2>このケアマネの評価</h2>
+<div>工事中</div>

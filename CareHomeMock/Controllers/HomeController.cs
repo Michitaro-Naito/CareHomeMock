@@ -71,13 +71,15 @@ namespace CareHomeMock.Controllers
             return View(careHome);
         }
 
-        public ActionResult CareManagerInfo(int? id)
+        public ActionResult CareManagerInfo(int? id, string careHomeName, string careManagerName)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var careManager = db.CareManagers.Find(id);
             if (careManager == null)
                 return HttpNotFound();
+            if (careHomeName != careManager.CareHome.CompanyName || careManagerName != careManager.Name)
+                return RedirectToRoute(new { action = "CareManagerInfo", controller = "Home", id = id, careHomeName = careManager.CareHome.CompanyName, careManagerName = careManager.Name });
             return View(careManager);
         }
 
@@ -229,6 +231,11 @@ namespace CareHomeMock.Controllers
                 count = count,
                 careManagers = careManagers
             });
+        }
+
+        public ActionResult QRCode()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)

@@ -29,6 +29,20 @@ namespace CareHomeMock
                 defaults: new { controller = "Home", action = "CareManagerSearch" }
             );
 
+            // CareManagerInfo
+            routes.MapRoute(
+                name: "CareManagerInfo",
+                url: "ケアマネ/{id}/{careHomeName}/{careManagerName}",
+                defaults: new { controller = "Home", action = "CareManagerInfo", id = UrlParameter.Optional, careHomeName = UrlParameter.Optional, careManagerName = UrlParameter.Optional }
+            );
+
+            // QRCode
+            routes.MapRoute(
+                name: "QRCode",
+                url: "QRCode",
+                defaults: new { controller = "Home", action = "QRCode" }
+            );
+
             // Files (Virtual directory like feature)
             routes.MapRoute(
                 name: "Files",
