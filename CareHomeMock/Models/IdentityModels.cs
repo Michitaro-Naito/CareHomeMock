@@ -12,6 +12,7 @@ namespace CareHomeMock.Models
         public DbSet<Cluster> Clusters { get; set; }
         public DbSet<EmailVerification> EmailVerifications { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<License> Licenses { get; set; }
         public DbSet<MediaFile> MediaFiles { get; set; }
         public DbSet<Otp> Otps { get; set; }
         public DbSet<StaticPage> StaticPage { get; set; }

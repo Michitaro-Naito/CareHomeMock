@@ -221,6 +221,10 @@
     <Compile Include="Migrations\201412051523496_Add_CareHome_ReviewCount_and_Rating.Designer.cs">
       <DependentUpon>201412051523496_Add_CareHome_ReviewCount_and_Rating.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412051600315_Add_License.cs" />
+    <Compile Include="Migrations\201412051600315_Add_License.Designer.cs">
+      <DependentUpon>201412051600315_Add_License.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -234,6 +238,7 @@
     <Compile Include="Models\SqlDatabase\Cluster.cs" />
     <Compile Include="Models\SqlDatabase\EmailVerification.cs" />
     <Compile Include="Models\SqlDatabase\File.cs" />
+    <Compile Include="Models\SqlDatabase\License.cs" />
     <Compile Include="Models\SqlDatabase\MediaFile.cs" />
     <Compile Include="Models\SqlDatabase\Otp.cs" />
     <Compile Include="Models\SqlDatabase\StaticPage.cs" />
@@ -552,6 +557,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412051523496_Add_CareHome_ReviewCount_and_Rating.resx">
       <DependentUpon>201412051523496_Add_CareHome_ReviewCount_and_Rating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412051600315_Add_License.resx">
+      <DependentUpon>201412051600315_Add_License.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
