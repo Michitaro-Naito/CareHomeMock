@@ -143,6 +143,7 @@ namespace CareHomeMock.Controllers
         }
 
         [HttpPost]
+        [OutputCache(Duration = 300, VaryByParam = "prefectureCode;cityCode;companyType;keyword;page;sortField;descending")]
         public ActionResult GetCareHomes(int? prefectureCode, int? cityCode, CompanyType? companyType, string keyword, int? page, string sortField, bool descending = false)
         {
             // Active
