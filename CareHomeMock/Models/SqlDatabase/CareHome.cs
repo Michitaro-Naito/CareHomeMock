@@ -70,6 +70,15 @@ namespace CareHomeMock.Models
         /// </summary>
         public DateTime Established { get; set; }
 
+        public int Years
+        {
+            get
+            {
+                var zero = new DateTime(1, 1, 1);
+                return (zero + (DateTime.UtcNow - Established)).Year - 1;
+            }
+        }
+
         /// <summary>
         /// Type of company like "営利法人(Corporation)", "非営利法人(NPO)", "自営業(Individual Company)" etc.
         /// </summary>
@@ -135,6 +144,10 @@ namespace CareHomeMock.Models
         public double 安全衛生管理等 { get; set; }
         public double 従業者の研修等 { get; set; }
         // ----- /Professional parameters to display -----
+
+        public int ReviewCount { get; set; }
+
+        public double Rating { get; set; }
 
         /// <summary>
         /// Email address like foo@example.com

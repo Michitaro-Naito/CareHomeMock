@@ -101,7 +101,14 @@ namespace CareHomeMock.Controllers
                 .Select(n => new { id = Enum.Parse(typeof(CompanyType), n), name = n })
                 .ToList();
 
-            return Json(new { prefectures = prefectures, cities = cities, companyTypes = companyTypes });
+            var sortFields = new[]{
+                new { id = "ReviewCount", name = "評価件数" },
+                new { id = "Rating", name = "評価得点" },
+                new { id = "Established", name = "設立年月日" },
+                new { id = "CareManagerCount", name = "ケアマネ人数" }
+            };
+
+            return Json(new { prefectures = prefectures, cities = cities, companyTypes = companyTypes, sortFields = sortFields });
         }
 
         [HttpPost]
@@ -136,7 +143,7 @@ namespace CareHomeMock.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetCareHomes(int? prefectureCode, int? cityCode, CompanyType? companyType, string keyword, int? page)
+        public ActionResult GetCareHomes(int? prefectureCode, int? cityCode, CompanyType? companyType, string keyword, int? page, string sortField, bool descending = false)
         {
             // Active
             var q = db.CareHomes.Where(h => !h.Deactivated);
@@ -163,16 +170,47 @@ namespace CareHomeMock.Controllers
             if (page != null)
                 offset = limit * page.Value;
             var count = q.Count();
-            var careHomes = q.OrderBy(h => h.CareHomeId).Skip(offset).Take(limit).ToList()
-                .Select(h => new
+            IQueryable<CareHome> rows;
+            switch (sortField)
+            {
+                case "Established":
+                    if (descending)
+                        rows = q.OrderByDescending(h => h.Established);
+                    else
+                        rows = q.OrderBy(h => h.Established);
+                    break;
+
+                case "CareManagerCount":
+                    if (descending)
+                        rows = q.OrderByDescending(h => h.CareManagers.Count);
+                    else
+                        rows = q.OrderBy(h => h.CareManagers.Count);
+                    break;
+
+                case "ReviewCount":
+                default:
+                    if (descending)
+                        rows = q.OrderByDescending(h => h.ReviewCount);
+                    else
+                        rows = q.OrderBy(h => h.ReviewCount);
+                    break;
+
+                case "Rating":
+                    if (descending)
+                        rows = q.OrderByDescending(h => h.Rating);
+                    else
+                        rows = q.OrderBy(h => h.Rating);
+                    break;
+            }
+            var careHomes = rows.Skip(offset).Take(limit).ToList().Select(h => new
                 {
                     CareHomeId = h.CareHomeId,
                     CompanyName = h.CompanyName,
                     Address = h.Address,
-                    Years = 123,
+                    Years = h.Years,
                     CareManagerCount = h.CareManagers.Count,
-                    ReviewCount = 456,
-                    Rating = 4.5,
+                    ReviewCount = h.ReviewCount,
+                    Rating = h.Rating,
                     Messages = h.Messages
                 }).ToList();
 

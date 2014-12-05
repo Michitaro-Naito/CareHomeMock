@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201412051501409_Drop_CareManager_Age.Designer.cs">
       <DependentUpon>201412051501409_Drop_CareManager_Age.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412051523496_Add_CareHome_ReviewCount_and_Rating.cs" />
+    <Compile Include="Migrations\201412051523496_Add_CareHome_ReviewCount_and_Rating.Designer.cs">
+      <DependentUpon>201412051523496_Add_CareHome_ReviewCount_and_Rating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -545,6 +549,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412051501409_Drop_CareManager_Age.resx">
       <DependentUpon>201412051501409_Drop_CareManager_Age.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412051523496_Add_CareHome_ReviewCount_and_Rating.resx">
+      <DependentUpon>201412051523496_Add_CareHome_ReviewCount_and_Rating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

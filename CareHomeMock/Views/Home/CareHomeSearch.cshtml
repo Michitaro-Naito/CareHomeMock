@@ -21,10 +21,13 @@
                 s.prefectures = ko.observableArray([]);
                 s.cities = ko.observableArray([]);
                 s.companyTypes = ko.observableArray([]);
+                s.sortFields = ko.observableArray([]);
 
                 s.selectedPrefecture = ko.observable();
                 s.selectedCity = ko.observable();
                 s.selectedCompanyType = ko.observable();
+                s.selectedSortField = ko.observable();
+                s.descending = ko.observable(true);
                 s.keyword = ko.observable();
 
                 s.count = ko.observable();
@@ -71,6 +74,12 @@
                     return s.selectedCompanyType().id;
                 });
 
+                s.cpSortField = ko.computed(function () {
+                    if (s.selectedSortField() == null)
+                        return null;
+                    return s.selectedSortField().id;
+                });
+
                 s.Init = function () {
                     $.ajax({
                         cache: false,
@@ -81,6 +90,7 @@
                         s.prefectures(data.prefectures);
                         s.cities(data.cities);
                         s.companyTypes(data.companyTypes);
+                        s.sortFields(data.sortFields);
                         s.Search();
                     });
                 }
@@ -100,6 +110,8 @@
                             prefectureCode: s.cpPrefectureCode(),
                             cityCode: s.cpCityCode(),
                             companyType: s.cpCompanyType(),
+                            sortField: s.cpSortField(),
+                            descending: s.descending(),
                             keyword: s.keyword(),
                             page: s.nextPage()
                         }
@@ -132,6 +144,13 @@
         <div class="col-md-4"><select data-bind="options: cpPrefectures, optionsText: 'name', value: selectedPrefecture" class="form-control"></select></div>
         <div class="col-md-4"><select data-bind="options: cpCities, optionsText: 'name', value: selectedCity" class="form-control"></select></div>
         <div class="col-md-4"><select data-bind="options: cpCompanyTypes, optionsText: 'name', value: selectedCompanyType" class="form-control"></select></div>
+
+        <div class="col-md-8"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
+        <div class="col-md-4" style="margin-top: 10px">
+            <div class="checkbox">
+                <label>降順<input type="checkbox" data-bind="checked: descending" /></label>
+            </div>
+        </div>
 
         <div class="col-md-8"><input type="text" data-bind="value: keyword" placeholder="キーワード(事業所名など)" /></div>
         <div class="col-md-4"><button type="button" data-bind="click: Search" class="search-btn">検索する</button></div>
