@@ -21,6 +21,7 @@ namespace CareHomeMock.Controllers
             return View();
         }
 
+        [OutputCache(Duration=300)]
         public ActionResult CareHomeSearch()
         {
             return View();
@@ -84,6 +85,7 @@ namespace CareHomeMock.Controllers
         }
 
         [HttpPost]
+        [OutputCache(Duration=300)]
         public ActionResult GetSelectOptions()
         {
             var prefectures = db.Areas
