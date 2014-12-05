@@ -104,7 +104,7 @@ namespace CareHomeMock.Controllers
             var sortFields = new[]{
                 new { id = "ReviewCount", name = "評価件数" },
                 new { id = "Rating", name = "評価得点" },
-                new { id = "Established", name = "設立年月日" },
+                new { id = "Years", name = "運営年数" },
                 new { id = "CareManagerCount", name = "ケアマネ人数" }
             };
 
@@ -173,11 +173,11 @@ namespace CareHomeMock.Controllers
             IQueryable<CareHome> rows;
             switch (sortField)
             {
-                case "Established":
+                case "Years":
                     if (descending)
-                        rows = q.OrderByDescending(h => h.Established);
-                    else
                         rows = q.OrderBy(h => h.Established);
+                    else
+                        rows = q.OrderByDescending(h => h.Established);
                     break;
 
                 case "CareManagerCount":
