@@ -4,6 +4,7 @@
 }
 
 @section scripts{
+    <script src="~/Scripts/raty/jquery.raty.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -95,6 +96,15 @@
                     });
                 }
 
+                s.ActivateRaty = function () {
+                    $('.rating').raty({
+                        score: function () {
+                            return $(this).attr('data-score');
+                        },
+                        path: '/Scripts/raty/images'
+                    });
+                }
+
                 s.Search = function () {
                     s.nextPage(0);
                     s.noMore(false);
@@ -126,6 +136,7 @@
                             s.careHomes.push(new CareHome(data.careHomes[n]));
                         }
                         s.nextPage(s.nextPage() + 1);
+                        s.ActivateRaty();
                     });
                 }
             }
@@ -195,7 +206,10 @@
                         <tr>
                             <td><i class="fa fa-star-half-full"></i></td>
                             <td>平均得点:</td>
-                            <td><span data-bind="text: data.Rating"></span>点</td>
+                            <td style="font-size: 11px;">
+                                <span data-bind="attr: { 'data-score': data.Rating }" class="rating"></span>
+                                <span><span data-bind="text: Math.round(10*data.Rating)/10.0"></span>点</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
