@@ -18,9 +18,17 @@ namespace CareHomeMock.Models
         public string IpAddress { get; set; }
         public string Host { get; set; }
 
-        public ReviewerType PatientType { get; set; }
+        public ReviewerType ReviewerType { get; set; }
         public int Rating { get; set; }
         public string Comment { get; set; }
         public string Reply { get; set; }
+
+
+
+        public Review()
+        {
+            Created = DateTime.UtcNow;
+            RowKey = Helper.Helper.GenerateRowKey(Created);
+        }
     }
 }
