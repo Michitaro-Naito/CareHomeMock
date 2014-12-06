@@ -72,7 +72,7 @@ namespace CareHomeMock.Controllers
                 home.ChiefJobTitle = string.Format("施設長{0}", n);
                 home.ChiefName = string.Format("責任一郎{0}", n);
                 home.CompanyName = string.Format("○○ケア{0}", n);
-                home.CompanyType = new[]{ CompanyType.営利法人, CompanyType.非営利法人 }[rand.Next(2)];
+                home.CompanyType = new[]{ CompanyType.NPO, CompanyType.その他法人, CompanyType.医療法人, CompanyType.営利法人, CompanyType.社会福祉法人, CompanyType.地方自治体 }[rand.Next(6)];
                 home.DataUpdated = DateTime.UtcNow.AddDays(-rand.Next(365));
                 home.Email = string.Format("ichiro{0}@example.com", n);
                 home.Established = DateTime.UtcNow.AddYears(-rand.Next(20));
