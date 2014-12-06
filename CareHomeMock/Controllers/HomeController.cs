@@ -134,9 +134,26 @@ namespace CareHomeMock.Controllers
                 ModelState.AddModelError("Otp", "無効なOTPです。");
             if (ModelState.IsValid)
             {
+                // Updates SQL
                 db.Otps.Remove(otp);
+                db.ReviewRatings.Add(new ReviewRating() { CareManagerId = otp.CareManagerId, Rating = model.Rating });
                 db.SaveChanges();
+
+                // Updates TableStorage
                 AddReview(otp.CareManagerId, otp.ReviewerType, model.Rating, model.Message);
+
+                // Calculates CareManager.Rating and CareManager.Rating (Cached value to display)
+                var careManager = db.CareManagers.Find(otp.CareManagerId);
+                var oneMonthAgo = DateTime.UtcNow.AddMinutes(-10);//.AddMonths(-1);
+                var ratings = careManager.ReviewRatings.Where(r => r.Created > oneMonthAgo);
+                var sum = ratings.Sum(r => r.Rating);
+                var count = ratings.Count();
+                careManager.ReviewsCount = count;
+                careManager.Rating = (double)sum / count;
+                Debug.WriteLine("sum:{0} count:{1} avg:{2}", sum, count, careManager.Rating);
+                var ratingsToRemove = db.ReviewRatings.Where(r => r.Created <= oneMonthAgo).ToList();
+                db.ReviewRatings.RemoveRange(ratingsToRemove);
+                db.SaveChanges();
             }
             ViewBag.Rating = new SelectList(Helper.Helper.Ratings, "RatingId", "Label");
             return View(model);
