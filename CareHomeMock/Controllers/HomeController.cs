@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -132,15 +133,43 @@ namespace CareHomeMock.Controllers
                 .ToList();
 
             var ageRanges = Enum.GetNames(typeof(AgeRange))
-                .Select(n => new { id = Enum.Parse(typeof(AgeRange), n), name = n })
+                .Select(n => {
+                    var name = n;
+                    var regex = new Regex(@"Range(?<num>[0-9]+)");
+                    name = regex.Replace(name, match => {
+                        switch (match.Groups["num"].Value)
+                        {
+                            case "10":
+                                return "20歳未満";
+                            case "90":
+                                return "90歳以上";
+                            default:
+                                return match.Groups["num"].Value + "代";
+                        }
+                    });
+                    return new { id = Enum.Parse(typeof(AgeRange), n), name = name };
+                })
                 .ToList();
+
+            var licenses = db.Licenses
+                .Select(l => new { id = l.LicenseId, name = l.Name })
+                .OrderBy(l => l.id)
+                .ToList();
+
+            var sortFields = new[]{
+                new { id = "ReviewCount", name = "評価件数" },
+                new { id = "Rating", name = "評価得点" },
+                new { id = "Years", name = "経験年数" }
+            };
 
             return Json(new
             {
                 prefectures = prefectures,
                 cities = cities,
                 genders = genders,
-                ageRanges = ageRanges
+                ageRanges = ageRanges,
+                licenses = licenses,
+                sortFields = sortFields
             });
         }
 
@@ -220,7 +249,7 @@ namespace CareHomeMock.Controllers
             return Json(new { count = count, careHomes = careHomes });
         }
 
-        public ActionResult GetCareManagers(int? prefectureCode, int? cityCode, Gender? gender, AgeRange? ageRange, bool? allowNewPatient /* licenses */, int? page)
+        public ActionResult GetCareManagers(int? prefectureCode, int? cityCode, Gender? gender, AgeRange? ageRange, bool? allowNewPatient, int? licenseId, string sortField, bool descending, int? page)
         {
             // Active
             var q = db.CareHomes.Where(h => !h.Deactivated);
@@ -241,23 +270,67 @@ namespace CareHomeMock.Controllers
                 mq = mq.Where(m => m.Gender == gender.Value);
 
             // AgeRange
-            //if(ageRange != null)
-            //    careManagers = careManagers.Where(m => m.Birthday)
+            if (ageRange != null)
+            {
+                var min = new DateTime(1, 1, 1);
+                var max = new DateTime(3000, 1, 1);
+                switch (ageRange.Value)
+                {
+                    case AgeRange.Range10:
+                        min = DateTime.UtcNow.AddYears(-20);
+                        break;
+                    default:
+                        min = DateTime.UtcNow.AddYears(-10 * ((int)ageRange.Value + 1));
+                        max = DateTime.UtcNow.AddYears(-10 * (int)ageRange.Value);
+                        break;
+                    case AgeRange.Range90:
+                        max = DateTime.UtcNow.AddYears(-90);
+                        break;
+                }
+                mq = mq.Where(m => m.Birthday > min && m.Birthday <= max);
+            }
 
             // AllowNewPatient
             if (allowNewPatient != null)
                 mq = mq.Where(m => m.AllowNewPatient == allowNewPatient.Value);
 
             // Licenses
+            if (licenseId != null)
+                mq = mq.Where(m => m.CareManagerLicenses.Any(l => l.LicenseId == licenseId.Value));
+
+            // Sort
+            IQueryable<CareManager> rows;
+            switch (sortField)
+            {
+                case "ReviewCount":
+                default:
+                    if (descending)
+                        rows = mq.OrderByDescending(m => m.ReviewsCount);
+                    else
+                        rows = mq.OrderBy(m => m.ReviewsCount);
+                    break;
+                case "Rating":
+                    if (descending)
+                        rows = mq.OrderByDescending(m => m.Rating);
+                    else
+                        rows = mq.OrderBy(m => m.Rating);
+                    break;
+                case "Years":
+                    if (descending)
+                        rows = mq.OrderBy(m => m.Licensed);
+                    else
+                        rows = mq.OrderByDescending(m => m.Licensed);
+                    break;
+            }
 
             // Paging
             var limit = 50;
             var offset = 0;
             if (page != null)
                 offset = limit * page.Value;
-            var count = mq.Count();
+            var count = rows.Count();
 
-            var careManagers = mq.OrderBy(m=>m.CareManagerId).Skip(offset).Take(limit).ToList().Select(m => new {
+            var careManagers = rows.Skip(offset).Take(limit).ToList().Select(m => new {
                 CareHomeId = m.CareHomeId,
                 CareHomeName = m.CareHome.CompanyName,
                 CareManagerId = m.CareManagerId,

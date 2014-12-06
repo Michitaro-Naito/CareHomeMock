@@ -15,6 +15,16 @@
                 });
             }
 
+            function License(data) {
+                var s = this;
+                s.id = data.id;
+                s.name = data.name;
+                s.checked = ko.observable(false);
+                s.Toggled = function () {
+                    console.info('toggled');
+                }
+            }
+
             function AppModel() {
                 var s = this;
 
@@ -23,12 +33,16 @@
                 s.genders = ko.observableArray([]);
                 s.ageRanges = ko.observableArray([]);
                 s.licenses = ko.observableArray([]);
+                s.sortFields = ko.observableArray([]);
 
                 s.selectedPrefecture = ko.observable();
                 s.selectedCity = ko.observable();
                 s.selectedGender = ko.observable();
                 s.selectedAgeRange = ko.observable();
+                s.selectedSortField = ko.observable();
+                s.selectedLicense = ko.observable();
                 s.allowNewPatient = ko.observable(true);
+                s.descending = ko.observable(true);
 
                 s.nextPage = ko.observable(0);
                 s.noMore = ko.observable(false);
@@ -51,6 +65,22 @@
                     cities.unshift({ id: null, name: '市区町村' });
                     return cities;
                 });
+                s.cpLicenses = ko.computed(function () {
+                    var licenses = Enumerable.From(s.licenses())
+                        .ToArray();
+                    licenses.unshift({ id: null, name: '保有資格' });
+                    return licenses;
+                });
+                s.cpGenders = ko.computed(function () {
+                    var genders = Enumerable.From(s.genders()).ToArray();
+                    genders.unshift({ id: null, name: '性別' });
+                    return genders;
+                });
+                s.cpAgeRanges = ko.computed(function () {
+                    var ageRanges = Enumerable.From(s.ageRanges()).ToArray();
+                    ageRanges.unshift({ id: null, name: '年代' });
+                    return ageRanges;
+                });
 
                 s.cpPrefectureCode = ko.computed(function () {
                     if (s.selectedPrefecture() == null)
@@ -62,6 +92,27 @@
                     if (s.selectedCity() == null)
                         return null;
                     return s.selectedCity().id;
+                });
+                s.cpGender = ko.computed(function () {
+                    if (s.selectedGender() == null)
+                        return null;
+                    return s.selectedGender().id;
+                });
+                s.cpAgeRange = ko.computed(function () {
+                    if (s.selectedAgeRange() == null)
+                        return null;
+                    return s.selectedAgeRange().id;
+                })
+                s.cpSortField = ko.computed(function () {
+                    if (s.selectedSortField() == null)
+                        return null;
+                    return s.selectedSortField().id;
+                });
+
+                s.cpLicenseId = ko.computed(function () {
+                    if (s.selectedLicense() == null)
+                        return null;
+                    return s.selectedLicense().id;
                 });
 
                 s.Init = function () {
@@ -75,6 +126,10 @@
                         s.cities(data.cities);
                         s.genders(data.genders);
                         s.ageRanges(data.ageRanges);
+                        for (var n = 0; n < data.licenses.length; n++) {
+                            s.licenses.push(new License(data.licenses[n]));
+                        }
+                        s.sortFields(data.sortFields);
                         s.Search();
                     });
                 }
@@ -93,6 +148,12 @@
                         data: {
                             prefectureCode: s.cpPrefectureCode(),
                             cityCode: s.cpCityCode(),
+                            gender: s.cpGender(),
+                            ageRange: s.cpAgeRange(),
+                            allowNewPatient: s.allowNewPatient(),
+                            licenseId: s.cpLicenseId(),
+                            sortField: s.cpSortField(),
+                            descending: s.descending(),
                             page: s.nextPage()
                         }
                     }).done(function (data) {
@@ -126,17 +187,26 @@
         <div class="col-md-4"><select data-bind="options: cpPrefectures, optionsText: 'name', value: selectedPrefecture" class="form-control"></select></div>
         <div class="col-md-7"><select data-bind="options: cpCities, optionsText: 'name', value: selectedCity" class="form-control"></select></div>
 
-        <div class="col-md-4"><select data-bind="options: genders, optionsText: 'name', value: selectedGender" class="form-control"></select></div>
-        <div class="col-md-4"><select data-bind="options: ageRanges, optionsText: 'name', value: selectedAgeRange" class="form-control"></select></div>
+        <div class="col-md-4"><select data-bind="options: cpGenders, optionsText: 'name', value: selectedGender" class="form-control"></select></div>
+        <div class="col-md-4"><select data-bind="options: cpAgeRanges, optionsText: 'name', value: selectedAgeRange" class="form-control"></select></div>
         <div class="col-md-4">
             <div class="checkbox">
                 <label>
-                    新規対応可<input type="checkbox" data-bind="value: allowNewPatient" />
+                    新規対応可<input type="checkbox" data-bind="checked: allowNewPatient" />
                 </label>
             </div>
         </div>
-        <div class="col-md-12">保有資格</div>
-        <div class="col-md-12">並べ替え</div>
+
+        <div class="col-md-12"><select data-bind="options: cpLicenses, optionsText: 'name', value: selectedLicense" class="form-control"></select></div>
+
+        <div class="col-md-8"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
+        <div class="col-md-4">
+            <div class="checkbox">
+                <label>
+                    降順<input type="checkbox" data-bind="checked: descending" />
+                </label>
+            </div>
+        </div>
 
         <div class="col-md-4"><button type="button" data-bind="click: Search" class="search-btn">検索する</button></div>
     </div>

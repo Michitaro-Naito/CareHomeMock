@@ -7,16 +7,14 @@ namespace CareHomeMock.Models
 {
     public enum AgeRange
     {
-        All = 0,
-
-        UnderTen = 1,
-        Teens = 2,
-        Twenties = 3,
-        Thirties = 4,
-        Forties = 5,
-        Fifties = 6,
-        Sixties = 7,
-        Seventies = 8,
-        MoreThanEighty = 9
+        Range10 = 1,
+        Range20 = 2,
+        Range30 = 3,
+        Range40 = 4,
+        Range50 = 5,
+        Range60 = 6,
+        Range70 = 7,
+        Range80 = 8,
+        Range90 = 9
     }
 }
