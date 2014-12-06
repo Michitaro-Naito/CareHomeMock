@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -164,6 +165,37 @@ namespace CareHomeMock.Controllers
             }
             db.SaveChanges();
             Response.Write(string.Format("Populated. {0}ms", (DateTime.UtcNow - start).TotalMilliseconds));
+            return null;
+        }
+
+        public ActionResult PopulateDummyReviews(int? careManagerId)
+        {
+            if (careManagerId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var careManager = db.CareManagers.Find(careManagerId);
+            if (careManager == null)
+                return HttpNotFound();
+
+            var rand = new Random();
+
+            for(var n=0; n<100; n++){
+                var table = TableHelper<Review>.Table;
+                var review = new Review()
+                {
+                    PartitionKey = careManager.CareManagerId.ToString(),
+                    Host = Request.UserHostName,
+                    IpAddress = Request.UserHostAddress,
+
+                    ReviewerType = new []{ ReviewerType.その他の知人, ReviewerType.医師, ReviewerType.医療スタッフ, ReviewerType.介護スタッフ, ReviewerType.要介護者の家族など, ReviewerType.要介護者本人 }[rand.Next(6)],
+                    Rating = rand.Next(5) + 1,
+                    Comment = string.Format("素晴らしい方です！{0}", n),
+                    Reply = null
+                };
+                table.Insert(review);
+            }
+
+            Response.Write("Review populated.");
             return null;
         }
 
