@@ -134,7 +134,7 @@ namespace CareHomeMock.Controllers
                 ModelState.AddModelError("Otp", "無効なOTPです。");
             if (ModelState.IsValid)
             {
-                // Updates SQL
+                // Removes Otp
                 db.Otps.Remove(otp);
                 db.ReviewRatings.Add(new ReviewRating() { CareManagerId = otp.CareManagerId, Rating = model.Rating });
                 db.SaveChanges();
@@ -142,17 +142,28 @@ namespace CareHomeMock.Controllers
                 // Updates TableStorage
                 AddReview(otp.CareManagerId, otp.ReviewerType, model.Rating, model.Message);
 
-                // Calculates CareManager.Rating and CareManager.Rating (Cached value to display)
+                // Calculates CareManager.Rating and CareManager.ReviewCount (Cached value to display)
                 var careManager = db.CareManagers.Find(otp.CareManagerId);
-                var oneMonthAgo = DateTime.UtcNow.AddMinutes(-10);//.AddMonths(-1);
-                var ratings = careManager.ReviewRatings.Where(r => r.Created > oneMonthAgo);
+                var oneYearAgo = DateTime.UtcNow.AddYears(-1);
+                var ratings = careManager.ReviewRatings.Where(r => r.Created > oneYearAgo);
                 var sum = ratings.Sum(r => r.Rating);
                 var count = ratings.Count();
+                careManager.TotalRating = sum;
                 careManager.ReviewsCount = count;
                 careManager.Rating = (double)sum / count;
-                Debug.WriteLine("sum:{0} count:{1} avg:{2}", sum, count, careManager.Rating);
-                var ratingsToRemove = db.ReviewRatings.Where(r => r.Created <= oneMonthAgo).ToList();
+
+                // Calculates CareHome.Rating and CareHome.ReviewCount
+                var home = careManager.CareHome;
+                var homeSum = home.CareManagers.Sum(m => m.TotalRating);
+                var homeCount = home.CareManagers.Sum(m => m.ReviewsCount);
+                home.ReviewCount = homeCount;
+                home.Rating = homeSum / count;
+
+                // Removes old ReviewRatings
+                var ratingsToRemove = db.ReviewRatings.Where(r => r.Created <= oneYearAgo).ToList();
                 db.ReviewRatings.RemoveRange(ratingsToRemove);
+
+                // Updates SQL
                 db.SaveChanges();
             }
             ViewBag.Rating = new SelectList(Helper.Helper.Ratings, "RatingId", "Label");
