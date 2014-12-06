@@ -297,6 +297,14 @@
     <Content Include="Content\css\fonts\myriadpro-regular.ttf" />
     <Content Include="Content\css\fonts\myriadpro-regular.woff" />
     <Content Include="Content\css\fonts\myriadpro-regular.woff2" />
+    <Content Include="Scripts\raty\fonts\raty.svg" />
+    <Content Include="Scripts\raty\images\cancel-off.png" />
+    <Content Include="Scripts\raty\images\cancel-on.png" />
+    <Content Include="Scripts\raty\images\star-half.png" />
+    <Content Include="Scripts\raty\images\star-off.png" />
+    <Content Include="Scripts\raty\images\star-on.png" />
+    <Content Include="Scripts\raty\jquery.raty.css" />
+    <Content Include="Scripts\raty\jquery.raty.js" />
     <Content Include="Views\Home\QRCode.cshtml" />
     <Content Include="App_Code\QRCode.cshtml" />
     <None Include="Properties\PublishProfiles\carehome-test.pubxml" />
@@ -538,6 +546,9 @@
     <Content Include="Views\Home\CareHomeInfo_Media.cshtml" />
     <Content Include="Views\Home\CareHomeInfo_AccessMap.cshtml" />
     <Content Include="Views\Home\CareManagerInfo.cshtml" />
+    <Content Include="Scripts\raty\fonts\raty.eot" />
+    <Content Include="Scripts\raty\fonts\raty.ttf" />
+    <Content Include="Scripts\raty\fonts\raty.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
