@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201412061229235_Edit_Otp_ReviewerType.Designer.cs">
       <DependentUpon>201412061229235_Edit_Otp_ReviewerType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412061400036_Add_ReviewRating.cs" />
+    <Compile Include="Migrations\201412061400036_Add_ReviewRating.Designer.cs">
+      <DependentUpon>201412061400036_Add_ReviewRating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -251,6 +255,7 @@
     <Compile Include="Models\SqlDatabase\License.cs" />
     <Compile Include="Models\SqlDatabase\MediaFile.cs" />
     <Compile Include="Models\SqlDatabase\Otp.cs" />
+    <Compile Include="Models\SqlDatabase\ReviewRating.cs" />
     <Compile Include="Models\SqlDatabase\StaticPage.cs" />
     <Compile Include="Models\SqlDatabase\User.cs" />
     <Compile Include="Helper\TableHelper.cs" />
@@ -589,6 +594,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412061229235_Edit_Otp_ReviewerType.resx">
       <DependentUpon>201412061229235_Edit_Otp_ReviewerType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412061400036_Add_ReviewRating.resx">
+      <DependentUpon>201412061400036_Add_ReviewRating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

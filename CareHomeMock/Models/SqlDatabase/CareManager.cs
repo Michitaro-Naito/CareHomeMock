@@ -152,6 +152,11 @@ namespace CareHomeMock.Models
         /// </summary>
         public virtual ICollection<CareManagerLicenses> CareManagerLicenses { get; set; }
 
+        /// <summary>
+        /// Cached ratings to calculate this.Rating.
+        /// </summary>
+        public virtual ICollection<ReviewRating> ReviewRatings { get; set; }
+
 
 
         public CareManager()

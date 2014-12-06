@@ -16,6 +16,7 @@ namespace CareHomeMock.Models
         public DbSet<License> Licenses { get; set; }
         public DbSet<MediaFile> MediaFiles { get; set; }
         public DbSet<Otp> Otps { get; set; }
+        public DbSet<ReviewRating> ReviewRatings { get; set; }
         public DbSet<StaticPage> StaticPage { get; set; }
 
         public ApplicationDbContext()
