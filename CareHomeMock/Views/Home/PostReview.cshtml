@@ -1,0 +1,53 @@
+﻿@model CareHomeMock.Models.HomePostReviewVM
+@{
+    ViewBag.Title = "ケアマネを評価する";
+}
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h2>ケアマネを評価する</h2>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => model.CareManagerId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Otp, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <span>ケアマネから受け取った4桁のパスワードを入力してください：</span>
+                @Html.TextBoxFor(model => model.Otp, new { @class = "form-control", placeholder = "例: 1234" })
+                @Html.ValidationMessageFor(model => model.Otp)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Rating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <span>あなたのお知り合いにこのケアマネをすすめますか？</span>
+                @Html.DropDownList("Rating", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rating)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Message, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <span>その理由をお聞かせください：</span>
+                @Html.TextAreaFor(model => model.Message, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Message)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="評価する" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

@@ -34,5 +34,23 @@ namespace CareHomeMock.Controllers
             };
             TableHelper<Log>.Table.Insert(log);
         }
+
+        protected void AddReview(int careManagerId, ReviewerType reviewerType, int rating, string comment, string reply = null)
+        {
+            var review = new Review()
+            {
+                // Layer 4
+                IpAddress = Request.UserHostAddress,
+                Host = Request.UserHostName,
+
+                // Application Layer
+                PartitionKey = careManagerId.ToString(),
+                ReviewerType = reviewerType,
+                Rating = rating,
+                Comment = comment,
+                Reply = reply
+            };
+            TableHelper<Review>.Table.Insert(review);
+        }
 	}
 }

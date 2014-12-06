@@ -506,3 +506,17 @@ footer.copyright{
     padding: 10px;
     background: #fdc;
 }
+
+/* Form */
+.form-horizontal{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+.form-horizontal .input-validation-error{
+    background: #fdd;
+}
+.form-horizontal .field-validation-error{
+    color: red;
+}

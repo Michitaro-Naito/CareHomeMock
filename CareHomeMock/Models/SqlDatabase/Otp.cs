@@ -27,7 +27,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// CareManager generated this OTP for who.
         /// </summary>
-        public ReviewerType PatientType { get; set; }
+        public ReviewerType ReviewerType { get; set; }
 
         public int CareManagerId { get; set; }
 

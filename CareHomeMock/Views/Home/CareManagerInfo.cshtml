@@ -237,7 +237,7 @@
 </div>
 
 <h2>このケアマネの評価</h2>
-<div>このケアマネを評価する</div>
+<div>@Html.ActionLink("このケアマネを評価する", "PostReview", "Home", new { id = Model.CareManagerId }, new {})</div>
 <div data-bind="foreach: reviews">
     <div class="review">
         <div class="head">

@@ -36,6 +36,13 @@ namespace CareHomeMock
                 defaults: new { controller = "Home", action = "CareManagerInfo", id = UrlParameter.Optional, careHomeName = UrlParameter.Optional, careManagerName = UrlParameter.Optional }
             );
 
+            // PostReview
+            routes.MapRoute(
+                name: "PostReview",
+                url: "評価する/{id}",
+                defaults: new { controller = "Home", action = "PostReview", id = UrlParameter.Optional }
+            );
+
             // QRCode
             routes.MapRoute(
                 name: "QRCode",

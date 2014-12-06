@@ -1,15 +1,17 @@
 ﻿using CareHomeMock.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
 namespace CareHomeMock.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -105,6 +107,39 @@ namespace CareHomeMock.Controllers
                 });
 
             return Json(new { reviews = reviews });
+        }
+
+        public ActionResult PostReview(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var careManager = db.CareManagers.Find(id);
+            if (careManager == null)
+                return HttpNotFound();
+
+            ViewBag.Rating = new SelectList(Helper.Helper.Ratings, "RatingId", "Label");
+            return View(new HomePostReviewVM(){ CareManagerId = id.Value });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PostReview(HomePostReviewVM model)
+        {
+            var now = DateTime.UtcNow;
+            var otp = db.Otps.FirstOrDefault(o => o.CareManagerId == model.CareManagerId
+                && o.VerificationCode == model.Otp
+                && o.Expires > now);
+            if(otp == null)
+                ModelState.AddModelError("Otp", "無効なOTPです。");
+            if (ModelState.IsValid)
+            {
+                db.Otps.Remove(otp);
+                db.SaveChanges();
+                AddReview(otp.CareManagerId, otp.ReviewerType, model.Rating, model.Message);
+            }
+            ViewBag.Rating = new SelectList(Helper.Helper.Ratings, "RatingId", "Label");
+            return View(model);
         }
 
         [HttpPost]

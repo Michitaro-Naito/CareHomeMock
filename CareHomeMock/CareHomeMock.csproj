@@ -229,12 +229,17 @@
     <Compile Include="Migrations\201412051617191_Add_CareManagerLicenses.Designer.cs">
       <DependentUpon>201412051617191_Add_CareManagerLicenses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412061229235_Edit_Otp_ReviewerType.cs" />
+    <Compile Include="Migrations\201412061229235_Edit_Otp_ReviewerType.Designer.cs">
+      <DependentUpon>201412061229235_Edit_Otp_ReviewerType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
     <Compile Include="Models\Enum\CompanyType.cs" />
     <Compile Include="Models\Enum\Gender.cs" />
     <Compile Include="Models\Enum\PatientType.cs" />
+    <Compile Include="Models\Enum\Rating.cs" />
     <Compile Include="Models\SqlDatabase\Application.cs" />
     <Compile Include="Models\SqlDatabase\Area.cs" />
     <Compile Include="Models\SqlDatabase\CareHome.cs" />
@@ -550,6 +555,7 @@
     <Content Include="Scripts\raty\fonts\raty.eot" />
     <Content Include="Scripts\raty\fonts\raty.ttf" />
     <Content Include="Scripts\raty\fonts\raty.woff" />
+    <Content Include="Views\Home\PostReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -580,6 +586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412051617191_Add_CareManagerLicenses.resx">
       <DependentUpon>201412051617191_Add_CareManagerLicenses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412061229235_Edit_Otp_ReviewerType.resx">
+      <DependentUpon>201412061229235_Edit_Otp_ReviewerType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
