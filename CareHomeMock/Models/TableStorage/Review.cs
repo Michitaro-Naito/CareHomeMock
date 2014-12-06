@@ -18,7 +18,17 @@ namespace CareHomeMock.Models
         public string IpAddress { get; set; }
         public string Host { get; set; }
 
-        public ReviewerType ReviewerType { get; set; }
+        public int ReviewerTypeId { get; set; }
+        public ReviewerType ReviewerType {
+            get
+            {
+                return (ReviewerType)ReviewerTypeId;
+            }
+            set
+            {
+                ReviewerTypeId = (int)value;
+            }
+        }
         public int Rating { get; set; }
         public string Comment { get; set; }
         public string Reply { get; set; }

@@ -305,6 +305,7 @@
     <Content Include="Scripts\raty\images\star-on.png" />
     <Content Include="Scripts\raty\jquery.raty.css" />
     <Content Include="Scripts\raty\jquery.raty.js" />
+    <Content Include="Scripts\utility.js" />
     <Content Include="Views\Home\QRCode.cshtml" />
     <Content Include="App_Code\QRCode.cshtml" />
     <None Include="Properties\PublishProfiles\carehome-test.pubxml" />

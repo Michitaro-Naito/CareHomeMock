@@ -86,6 +86,28 @@ namespace CareHomeMock.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetReviews(int? id, string afterThisRowKey)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var table = TableHelper<Review>.Table;
+            var idString = id.Value.ToString();
+            var reviews = table.CreateQuery<Review>().Where(r => r.PartitionKey == idString && r.RowKey.CompareTo(afterThisRowKey) > 0).Take(50).ToList()
+                .Select(r => new {
+                    RowKey = r.RowKey,
+                    Created = r.Created,
+                    ReviewerType = r.ReviewerType.ToString(),
+                    Rating = r.Rating,
+                    Comment = r.Comment,
+                    IpAddress = Helper.Helper.GetMd5Hash(r.IpAddress),
+                    Reply = r.Reply
+                });
+
+            return Json(new { reviews = reviews });
+        }
+
+        [HttpPost]
         [OutputCache(Duration=300)]
         public ActionResult GetSelectOptions()
         {

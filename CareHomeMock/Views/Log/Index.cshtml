@@ -4,12 +4,6 @@
 
 @section scripts{
     <script>
-        function fmDate(str) {
-            // /Date(1417328685970)/
-            var regex = /\/Date([0-9]*)\//;
-            return new Date(parseInt(str.match(/[0-9]+/)));
-        }
-
         $(document).ready(function () {
 
             function Level(name, value) {

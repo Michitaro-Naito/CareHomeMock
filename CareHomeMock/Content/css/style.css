@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 /* #Reset & Basics (Inspired by E. Meyers)  */
@@ -474,4 +474,35 @@ footer.copyright{
 	.copyright .col-md-5,.copyright .col-md-7{
 		text-align: center;
 	}
+}
+
+
+
+.hash{
+    font-size: 10px;
+    color: #CCC;
+}
+
+.review{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+.review .head{
+}
+.review .head .reviewerType{
+    font-weight: bold;
+}
+.review .head .datetime{
+    float: right;
+}
+.review .body{
+    padding: 10px;
+    background: white;
+}
+.review .reply{
+    margin-top: 10px;
+    padding: 10px;
+    background: #fdc;
 }

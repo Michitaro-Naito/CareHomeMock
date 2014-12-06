@@ -4,6 +4,7 @@
 }
 
 @section scripts{
+    <script src="~/Scripts/raty/jquery.raty.js"></script>
     <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/amcharts.js"></script>
     <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/radar.js"></script>
     <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/themes/patterns.js"></script>
@@ -71,6 +72,55 @@
                 ]
             }
         );
+    </script>
+    <script>
+        $(document).ready(function(){
+
+            function AppModel(){
+                var s = this;
+
+                s.oldestRowKey = ko.observable(null);
+                s.reviews = ko.observableArray([]);
+                s.noMore = ko.observable(false);
+
+                s.ActivateRaty = function(){
+                    $('.rating').raty({
+                        score: function () {
+                            return $(this).attr('data-score');
+                        },
+                        path: '/Scripts/raty/images'
+                    });
+                }
+
+                s.GetMoreReviews = function(){
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Home/GetReviews',
+                        data: {
+                            id: @Model.CareManagerId,
+                            afterThisRowKey: s.oldestRowKey()
+                        }
+                    }).done(function(data){
+                        console.info(data);
+                        if(data.reviews.length > 0){
+                            var last = Enumerable.From(data.reviews).Last();
+                            s.oldestRowKey(last.RowKey);
+                            for(var n=0; n<data.reviews.length; n++){
+                                s.reviews.push(data.reviews[n]);
+                            }
+                            s.ActivateRaty();
+                        }else{
+                            s.noMore(true);
+                        }
+                    });
+                }
+            }
+
+            var model = new AppModel();
+            ko.applyBindings(model);
+            model.GetMoreReviews();
+        });
     </script>
 }
 
@@ -187,4 +237,21 @@
 </div>
 
 <h2>このケアマネの評価</h2>
-<div>工事中</div>
+<div>このケアマネを評価する</div>
+<div data-bind="foreach: reviews">
+    <div class="review">
+        <div class="head">
+            <span data-bind="text: ReviewerType" class="reviewerType"></span>
+            <span class="hash">ID:<span data-bind="text: IpAddress" class="hash"></span></span>
+            <span data-bind="text: fmDateTime(Created)" class="datetime"></span>
+        </div>
+        <div class="body">
+            <div data-bind="attr: { 'data-score': Rating }" class="rating"></div>
+            <div data-bind="text: Comment"></div>
+        </div>
+        <div data-bind="visible: Reply != null" class="reply">
+            <span data-bind="text: Reply"></span>
+        </div>
+    </div>
+</div>
+<button type="button" data-bind="visible: !noMore(), click: GetMoreReviews" class="btn btn-default">さらに読み込む</button>
