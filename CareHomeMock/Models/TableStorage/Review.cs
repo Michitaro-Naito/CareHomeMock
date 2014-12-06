@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.Storage.Table;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +9,7 @@ namespace CareHomeMock.Models
     /// <summary>
     /// Represents a Review which has been posted by Visitor.
     /// </summary>
-    public class Review
+    public class Review : TableEntity
     {
         // PartitionKey = CareManagerId
         // RowKey = TimeStamp + GUID
