@@ -514,6 +514,9 @@ footer.copyright{
 	padding: 15px;
 	margin-bottom: 15px;
 }
+.form-horizontal .validation-summary-errors{
+    color: red;
+}
 .form-horizontal .input-validation-error{
     background: #fdd;
 }

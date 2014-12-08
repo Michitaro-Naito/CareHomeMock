@@ -57,6 +57,13 @@ namespace CareHomeMock
                 defaults: new { controller = "File", action = "Download", fileName = UrlParameter.Optional }
             );
 
+            // MediaFiles (Virtual directory like feature. Uploaded by Users.)
+            routes.MapRoute(
+                name: "MediaFiles",
+                url: "MediaFiles/{fileName}",
+                defaults: new { controller = "MediaFile", action = "Download", fileName = UrlParameter.Optional }
+            );
+
             // Default
             routes.MapRoute(
                 name: "Default",

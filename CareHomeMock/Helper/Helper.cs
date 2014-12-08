@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CareHomeMock.Helper
 {
@@ -23,6 +24,19 @@ namespace CareHomeMock.Helper
                 ratings.Add(new Rating { RatingId = 2, Label = "2. あまりすすめない" });
                 ratings.Add(new Rating { RatingId = 1, Label = "1. すすめない" });
                 return ratings;
+            }
+        }
+
+        public static SelectList MediaFileTypes
+        {
+            get
+            {
+                var types = new[]
+                {
+                    new { id = MediaFile.MediaFileType.Image, name = "画像" },
+                    new { id = MediaFile.MediaFileType.Youtube, name = "Youtube動画" }
+                };
+                return new SelectList(types, "id", "name");
             }
         }
 

@@ -15,7 +15,10 @@ namespace CareHomeMock.Models
     {
         public enum MediaFileType
         {
+            [Display(Name="画像")]
             Image = 0,
+
+            [Display(Name="動画")]
             Youtube = 1
         }
 
@@ -33,5 +36,17 @@ namespace CareHomeMock.Models
         public MediaFileType Type { get; set; }
 
         public string RowKey { get; set; }
+
+        public string YoutubeUrl { get; set; }
+
+        public string Description { get; set; }
+
+
+
+        public MediaFile()
+        {
+            Created = DateTime.UtcNow;
+            Updated = DateTime.UtcNow;
+        }
     }
 }

@@ -7,16 +7,10 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("追加する", "Upload")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CareHome.CareHomeCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Updated)
         </th>
@@ -27,19 +21,14 @@
             @Html.DisplayNameFor(model => model.Type)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RowKey)
+            @Html.DisplayNameFor(model => model.RowKey)/@Html.DisplayNameFor(m => m.YoutubeUrl)
         </th>
+        <th>@Html.DisplayNameFor(m => m.Description)</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CareHome.CareHomeCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Updated)
         </td>
@@ -50,11 +39,25 @@
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RowKey)
+            @if (item.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
+            {
+                @Html.DisplayFor(modelItem => item.RowKey)
+            }else
+            {
+                @Html.DisplayFor(modelItem => item.YoutubeUrl)
+            }
         </td>
+        <td>@Html.DisplayFor(modelItem => item.Description)</td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MediaFileId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MediaFileId }) |
+            @if (item.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
+            {
+                @Html.ActionLink("表示", "Download", new { fileName = item.RowKey }, new { target = "_blank" });
+            }
+            else
+            {
+                <a href="@string.Format("https://youtube.com/watch?v={0}", item.YoutubeUrl)" target="_blank">表示</a>
+            } |
+            @Html.ActionLink("編集", "Upload", new { careHomeId = item.CareHomeId, mediaFileId = item.MediaFileId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.MediaFileId })
         </td>
     </tr>
