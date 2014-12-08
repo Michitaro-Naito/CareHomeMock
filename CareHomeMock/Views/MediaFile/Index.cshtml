@@ -3,11 +3,44 @@
 @{
     ViewBag.Title = "Index";
 }
+@section scripts{
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sortable').sortable().disableSelection();
+            $('#SaveOrder').click(function () {
+                var orderedIds = [];
+                $('#sortable tr').each(function (n, element) {
+                    var id = parseInt($(element).find('.MediaFileId').text());
+                    orderedIds.push(id);
+                });
+                console.info(orderedIds);
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    url: '/MediaFile/SaveOrder',
+                    contentType: 'application/json; charset=utf-8',
+                    /*data: {
+                        orderedIds: orderedIds
+                    }*/
+                    data: JSON.stringify({
+                        orderedIds: orderedIds
+                    })
+                }).done(function (data) {
+                    console.info(data);
+                });
+            });
+        });
+    </script>
+}
+
+
 
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("追加する", "Upload")
+    <button type="button" id="SaveOrder" class="btn btn-default">並び順を保存する</button>
 </p>
 <table class="table">
     <tr>
@@ -27,40 +60,44 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Updated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Order)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @if (item.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
-            {
-                @Html.DisplayFor(modelItem => item.RowKey)
-            }else
-            {
-                @Html.DisplayFor(modelItem => item.YoutubeUrl)
-            }
-        </td>
-        <td>@Html.DisplayFor(modelItem => item.Description)</td>
-        <td>
-            @if (item.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
-            {
-                @Html.ActionLink("表示", "Download", new { fileName = item.RowKey }, new { target = "_blank" });
-            }
-            else
-            {
-                <a href="@string.Format("https://youtube.com/watch?v={0}", item.YoutubeUrl)" target="_blank">表示</a>
-            } |
-            @Html.ActionLink("編集", "Upload", new { careHomeId = item.CareHomeId, mediaFileId = item.MediaFileId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MediaFileId })
-        </td>
-    </tr>
-}
-
+    <tbody id="sortable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span class="MediaFileId">@Html.DisplayFor(m => item.MediaFileId)</span>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @if (item.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
+                    {
+                        @Html.DisplayFor(modelItem => item.RowKey)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.YoutubeUrl)
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>
+                    @if (item.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
+                    {
+                        @Html.ActionLink("表示", "Download", new { fileName = item.RowKey }, new { target = "_blank" });
+                    }
+                    else
+                    {
+                        <a href="@string.Format("https://youtube.com/watch?v={0}", item.YoutubeUrl)" target="_blank">表示</a>
+                    } |
+                    @Html.ActionLink("編集", "Upload", new { careHomeId = item.CareHomeId, mediaFileId = item.MediaFileId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MediaFileId })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

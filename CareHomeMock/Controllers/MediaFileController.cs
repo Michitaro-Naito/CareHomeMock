@@ -33,7 +33,7 @@ namespace CareHomeMock.Controllers
             if (home == null)
                 return HttpNotFound();
 
-            var mediafiles = home.MediaFiles.OrderByDescending(f=>f.Updated).ToList();
+            var mediafiles = home.MediaFiles.OrderBy(f=>f.Order).ThenByDescending(f=>f.Updated).ToList();
             return View(mediafiles);
         }
 
@@ -41,9 +41,23 @@ namespace CareHomeMock.Controllers
         /// CareHome arranges it's files. AJAX.
         /// </summary>
         /// <returns></returns>
-        public ActionResult Arrange()
+        public ActionResult SaveOrder(int[] orderedIds)
         {
-            return View();
+            // TODO: check UserRole.
+            var rows = db.MediaFiles.Where(f => orderedIds.Contains(f.MediaFileId)).ToList();
+            var nextOrder = 0;
+            foreach (var id in orderedIds)
+            {
+                var row = rows.FirstOrDefault(r => r.MediaFileId == id);
+                if (row != null)
+                {
+                    row.Order = nextOrder;
+                    nextOrder++;
+                }
+            }
+            db.SaveChanges();
+
+            return Json(new { result = "success" });
         }
 
         /// <summary>
