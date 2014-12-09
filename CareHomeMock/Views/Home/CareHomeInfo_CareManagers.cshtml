@@ -1,15 +1,57 @@
 ﻿@model CareHomeMock.Models.CareHome
 @{
-    ViewBag.Title = "CareHomeInfo_CareManagers";
+    ViewBag.Title = Model.CompanyName + " ケアマネ一覧";
+}
+@section scripts{
+    <script src="~/Scripts/raty/jquery.raty.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.rating').raty({
+                score: function () {
+                    return $(this).attr('data-score');
+                },
+                path: '/Scripts/raty/images'
+            });
+        });
+    </script>
 }
 
-<h2>CareHomeInfo_CareManagers</h2>
-<ul>
+<h2>@Model.CompanyName ケアマネ一覧</h2>
+@Html.Partial("_CareHomeInfoMenu", Model)
+
+<div>
     @foreach (var m in Model.CareManagers)
     {
-        <li>
-            <span>@m.Name</span>
-            <span>@Html.ActionLink("詳細", "CareManagerInfo", "Home", new { id = m.CareManagerId }, new { target = "_blank" })</span>
-        </li>
+        <div class="search-rslt col-md-12">
+            <div class="row">
+                <div class="col-md-4"><img alt="" src="~/Content/images/search-img01.png"></div>
+                <div class="col-md-8">
+                    <h3><a href="@Url.Action("CareManagerInfo", "Home", new { id = m.CareManagerId })" target="_blank">@m.Name</a></h3>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><i class="fa fa-calendar"></i></td>
+                                <td>経験年数:</td>
+                                <td><span>@m.Years</span>年</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-comments"></i></td>
+                                <td>評価件数:</td>
+                                <td><span>@m.ReviewsCount</span>件</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-star-half-full"></i></td>
+                                <td>平均得点:</td>
+                                <td style="font-size: 11px;">
+                                    <span data-score="@m.Rating" class="rating"></span>
+                                    <span><span>@Math.Round(m.Rating, 1)</span>点</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div data-bind="text: data.Messages" class="col-md-12"></div>
+            </div>
+        </div>
     }
-</ul>
+</div>

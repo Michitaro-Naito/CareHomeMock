@@ -523,3 +523,38 @@ footer.copyright{
 .form-horizontal .field-validation-error{
     color: red;
 }
+
+.carehomeinfo-menu{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
+.carehomeinfo-tableouter{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+.carehomeinfo-table{
+    background: white;
+}
+
+.carehomeinfo-boxouter{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
+.mediafile{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+.mediafile .description{
+    padding: 15px;
+    background: white;
+}

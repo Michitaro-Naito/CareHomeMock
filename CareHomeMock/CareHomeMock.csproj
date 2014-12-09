@@ -570,6 +570,7 @@
     <Content Include="Scripts\raty\fonts\raty.woff" />
     <Content Include="Views\Home\PostReview.cshtml" />
     <Content Include="Views\MediaFile\Upload.cshtml" />
+    <Content Include="Views\Shared\_CareHomeInfoMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

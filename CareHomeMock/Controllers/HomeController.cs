@@ -35,13 +35,15 @@ namespace CareHomeMock.Controllers
             return View();
         }
 
-        public ActionResult CareHomeInfo_BasicInfo(int? id)
+        public ActionResult CareHomeInfo_BasicInfo(int? id, string name)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var careHome = db.CareHomes.Find(id);
             if (careHome == null)
                 return HttpNotFound();
+            if (name != careHome.CompanyName)
+                return RedirectToAction("CareHomeInfo_BasicInfo", new { id = id, name = careHome.CompanyName });
             return View(careHome);
         }
 

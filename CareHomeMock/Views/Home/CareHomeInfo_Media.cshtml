@@ -1,7 +1,38 @@
-﻿
+﻿@model CareHomeMock.Models.CareHome
 @{
-    ViewBag.Title = "CareHomeInfo_Media";
+    var title = Model.CompanyName + " 写真と動画";
+    ViewBag.Title = title;
 }
 
-<h2>CareHomeInfo_Media</h2>
+<h2>@title</h2>
+@Html.Partial("_CareHomeInfoMenu", Model)
 
+<div class="mediafiles">
+    @foreach (var f in Model.MediaFiles.OrderBy(f=>f.Order).ThenByDescending(f=>f.Updated))
+    {
+        <div class="mediafile">
+            <div class="row">
+                <div class="col-md-6">
+                    @if (f.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
+                    {
+                        <a href="@Url.Action("Download", "MediaFile", new { fileName = f.RowKey })" target="_blank">
+                            <img style="max-width: 263px;" src="@Url.Action("Download", "MediaFile", new { fileName = f.RowKey })" />
+                        </a>
+                    }
+                    else
+                    {
+                        <iframe width="263" src="//www.youtube.com/embed/HcaCc0VNBXg" frameborder="0" allowfullscreen></iframe>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <!-- MediaFileId: @f.MediaFileId -->
+                    <!-- RowKey: @f.RowKey -->
+                    @if (!string.IsNullOrEmpty(f.Description))
+                    {
+                        <p class="description">@f.Description</p>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

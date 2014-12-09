@@ -1,0 +1,10 @@
+﻿@model CareHomeMock.Models.CareHome
+
+
+
+<div class="carehomeinfo-menu">
+    @Html.ActionLink("基本情報", "CareHomeInfo_BasicInfo", new { id = Model.CareHomeId, name = Model.CompanyName })
+    @Html.ActionLink("ケアマネ一覧", "CareHomeInfo_CareManagers", new { id = Model.CareHomeId, name = Model.CompanyName })
+    @Html.ActionLink("写真と動画", "CareHomeInfo_Media", new { id = Model.CareHomeId, name = Model.CompanyName })
+    @Html.ActionLink("周辺地図", "CareHomeInfo_AccessMap", new { id = Model.CareHomeId, name = Model.CompanyName })
+</div>

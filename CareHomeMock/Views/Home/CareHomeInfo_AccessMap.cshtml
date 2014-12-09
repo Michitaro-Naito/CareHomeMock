@@ -1,11 +1,12 @@
 ﻿@model CareHomeMock.Models.CareHome
 @{
-    ViewBag.Title = "CareHomeInfo_AccessMap";
+    var title = Model.CompanyName + " 周辺地図";
+    ViewBag.Title = title;
 }
 @section scripts{
     <style type="text/css">
         #map-canvas {
-            width: 400px;
+            width: 100%;
             height: 400px;
             margin: 0;
             padding: 0;
@@ -17,7 +18,7 @@
         function initialize() {
             var mapOptions = {
                 center: { lat: @Model.Latitude, lng: @Model.Longitude },
-                zoom: 8
+                zoom: 12
             };
             var map = new google.maps.Map(document.getElementById('map-canvas'),
                 mapOptions);
@@ -26,5 +27,7 @@
     </script>
 }
 
-<h2>CareHomeInfo_AccessMap</h2>
+<h2>@title</h2>
+@Html.Partial("_CareHomeInfoMenu", Model)
+<p>@Model.Area.PrefectureName @Model.Area.CityName @Model.Address</p>
 <div id="map-canvas"></div>

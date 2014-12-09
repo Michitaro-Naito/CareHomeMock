@@ -1,6 +1,7 @@
 ﻿@model CareHomeMock.Models.CareHome
 @{
-    ViewBag.Title = "CareHomeInfo_BasicInfo";
+    var title = Model.CompanyName + " 基本情報";
+    ViewBag.Title = title;
 }
 @section scripts{
     <!-- amCharts javascript sources -->
@@ -132,173 +133,177 @@
     </script>
 }
 
-<h2>@Model.CompanyName 基本情報</h2>
 
-@Html.ActionLink("基本情報", "CareHomeInfo_BasicInfo", new { id = Model.CareHomeId })
-@Html.ActionLink("ケアマネ一覧", "CareHomeInfo_CareManagers", new { id = Model.CareHomeId })
-@Html.ActionLink("写真と動画", "CareHomeInfo_Media", new { id = Model.CareHomeId })
-@Html.ActionLink("周辺地図", "CareHomeInfo_AccessMap", new { id = Model.CareHomeId })
+
+<h2>@title</h2>
+@Html.Partial("_CareHomeInfoMenu", Model)
 
 <div class="row">
     <div class="col-md-6">
-        <table class="table table-condensed">
-            <tbody>
-                <tr>
-                    <td>事業所ID</td>
-                    <td>@Model.CareHomeCode</td>
-                </tr>
-                <tr>
-                    <td>郵便番号</td>
-                    <td>@Model.Zip</td>
-                </tr>
-                <tr>
-                    <td>所在地</td>
-                    <td>@Model.Address</td>
-                </tr>
-                <tr>
-                    <td>Tel</td>
-                    <td>@Model.Tel</td>
-                </tr>
-                <tr>
-                    <td>Fax</td>
-                    <td>@Model.Fax</td>
-                </tr>
-                <tr>
-                    <td>ホームページ</td>
-                    <td>@Model.WebsiteUrl</td>
-                </tr>
-                <tr>
-                    <td>開業日</td>
-                    <td>@Model.Established</td>
-                </tr>
-                <tr>
-                    <td>法人区分</td>
-                    <td>@Model.CompanyType</td>
-                </tr>
-                <tr>
-                    <td>法人名称</td>
-                    <td>@Model.CompanyName</td>
-                </tr>
-                <tr>
-                    <td>施設管理者氏名</td>
-                    <td>@Model.ChiefName</td>
-                </tr>
-                <tr>
-                    <td>施設管理者職名</td>
-                    <td>@Model.ChiefJobTitle</td>
-                </tr>
-                <tr>
-                    <td>情報更新日</td>
-                    <td>@Model.DataUpdated</td>
-                </tr>
+        <div class="carehomeinfo-tableouter">
+            <table class="table table-condensed carehomeinfo-table">
+                <tbody>
+                    <tr>
+                        <td>事業所ID</td>
+                        <td>@Model.CareHomeCode</td>
+                    </tr>
+                    <tr>
+                        <td>郵便番号</td>
+                        <td>@Model.Zip</td>
+                    </tr>
+                    <tr>
+                        <td>所在地</td>
+                        <td>@Model.Address</td>
+                    </tr>
+                    <tr>
+                        <td>Tel</td>
+                        <td>@Model.Tel</td>
+                    </tr>
+                    <tr>
+                        <td>Fax</td>
+                        <td>@Model.Fax</td>
+                    </tr>
+                    <tr>
+                        <td>ホームページ</td>
+                        <td>@Model.WebsiteUrl</td>
+                    </tr>
+                    <tr>
+                        <td>開業日</td>
+                        <td>@Model.Established</td>
+                    </tr>
+                    <tr>
+                        <td>法人区分</td>
+                        <td>@Model.CompanyType</td>
+                    </tr>
+                    <tr>
+                        <td>法人名称</td>
+                        <td>@Model.CompanyName</td>
+                    </tr>
+                    <tr>
+                        <td>施設管理者氏名</td>
+                        <td>@Model.ChiefName</td>
+                    </tr>
+                    <tr>
+                        <td>施設管理者職名</td>
+                        <td>@Model.ChiefJobTitle</td>
+                    </tr>
+                    <tr>
+                        <td>情報更新日</td>
+                        <td>@Model.DataUpdated</td>
+                    </tr>
 
-                <tr>
-                    <td>介護支援専門員在席人数</td>
-                    <td>@Model.介護支援専門員在席人数</td>
-                </tr>
-                <tr>
-                    <td>介護支援専門員常勤換算</td>
-                    <td>@Model.介護支援専門員常勤換算</td>
-                </tr>
-                <tr>
-                    <td>事務員在席人数</td>
-                    <td>@Model.事務員在席人数</td>
-                </tr>
-                <tr>
-                    <td>事務員常勤換算</td>
-                    <td>@Model.事務員常勤換算</td>
-                </tr>
-                <tr>
-                    <td>その他在席人数</td>
-                    <td>@Model.その他在席人数</td>
-                </tr>
-                <tr>
-                    <td>その他常勤換算</td>
-                    <td>@Model.その他常勤換算</td>
-                </tr>
-                <tr>
-                    <td>全職員在席人数</td>
-                    <td>@Model.全職員在席人数</td>
-                </tr>
-                <tr>
-                    <td>全職員常勤換算</td>
-                    <td>@Model.全職員常勤換算</td>
-                </tr>
-                <tr>
-                    <td>経験5年以上割合</td>
-                    <td>@Model.経験5年以上割合</td>
-                </tr>
+                    <tr>
+                        <td>介護支援専門員在席人数</td>
+                        <td>@Model.介護支援専門員在席人数</td>
+                    </tr>
+                    <tr>
+                        <td>介護支援専門員常勤換算</td>
+                        <td>@Model.介護支援専門員常勤換算</td>
+                    </tr>
+                    <tr>
+                        <td>事務員在席人数</td>
+                        <td>@Model.事務員在席人数</td>
+                    </tr>
+                    <tr>
+                        <td>事務員常勤換算</td>
+                        <td>@Model.事務員常勤換算</td>
+                    </tr>
+                    <tr>
+                        <td>その他在席人数</td>
+                        <td>@Model.その他在席人数</td>
+                    </tr>
+                    <tr>
+                        <td>その他常勤換算</td>
+                        <td>@Model.その他常勤換算</td>
+                    </tr>
+                    <tr>
+                        <td>全職員在席人数</td>
+                        <td>@Model.全職員在席人数</td>
+                    </tr>
+                    <tr>
+                        <td>全職員常勤換算</td>
+                        <td>@Model.全職員常勤換算</td>
+                    </tr>
+                    <tr>
+                        <td>経験5年以上割合</td>
+                        <td>@Model.経験5年以上割合</td>
+                    </tr>
 
 
-                <tr>
-                    <td>要介護5</td>
-                    <td>@Model.要介護5</td>
-                </tr>
-                <tr>
-                    <td>要介護4</td>
-                    <td>@Model.要介護4</td>
-                </tr>
-                <tr>
-                    <td>要介護3</td>
-                    <td>@Model.要介護3</td>
-                </tr>
-                <tr>
-                    <td>要介護2</td>
-                    <td>@Model.要介護2</td>
-                </tr>
-                <tr>
-                    <td>要介護1</td>
-                    <td>@Model.要介護1</td>
-                </tr>
-                <tr>
-                    <td>要支援2</td>
-                    <td>@Model.要支援2</td>
-                </tr>
-                <tr>
-                    <td>要支援1</td>
-                    <td>@Model.要支援1</td>
-                </tr>
-                <tr>
-                    <td>自立</td>
-                    <td>@Model.自立</td>
-                </tr>
+                    <tr>
+                        <td>要介護5</td>
+                        <td>@Model.要介護5</td>
+                    </tr>
+                    <tr>
+                        <td>要介護4</td>
+                        <td>@Model.要介護4</td>
+                    </tr>
+                    <tr>
+                        <td>要介護3</td>
+                        <td>@Model.要介護3</td>
+                    </tr>
+                    <tr>
+                        <td>要介護2</td>
+                        <td>@Model.要介護2</td>
+                    </tr>
+                    <tr>
+                        <td>要介護1</td>
+                        <td>@Model.要介護1</td>
+                    </tr>
+                    <tr>
+                        <td>要支援2</td>
+                        <td>@Model.要支援2</td>
+                    </tr>
+                    <tr>
+                        <td>要支援1</td>
+                        <td>@Model.要支援1</td>
+                    </tr>
+                    <tr>
+                        <td>自立</td>
+                        <td>@Model.自立</td>
+                    </tr>
 
-                <tr>
-                    <td>利用者の権利擁護</td>
-                    <td>@Model.利用者の権利擁護</td>
-                </tr>
-                <tr>
-                    <td>サービスの質の確保</td>
-                    <td>@Model.サービスの質の確保</td>
-                </tr>
-                <tr>
-                    <td>相談・苦情等への対応</td>
-                    <td>@Model.相談苦情等への対応</td>
-                </tr>
-                <tr>
-                    <td>外部機関等との連携</td>
-                    <td>@Model.外部機関等との連携</td>
-                </tr>
-                <tr>
-                    <td>事業運営・管理</td>
-                    <td>@Model.事業運営管理</td>
-                </tr>
-                <tr>
-                    <td>安全・衛生管理等</td>
-                    <td>@Model.安全衛生管理等</td>
-                </tr>
-                <tr>
-                    <td>従業者の研修等</td>
-                    <td>@Model.従業者の研修等</td>
-                </tr>
-            </tbody>
-        </table>
+                    <tr>
+                        <td>利用者の権利擁護</td>
+                        <td>@Model.利用者の権利擁護</td>
+                    </tr>
+                    <tr>
+                        <td>サービスの質の確保</td>
+                        <td>@Model.サービスの質の確保</td>
+                    </tr>
+                    <tr>
+                        <td>相談・苦情等への対応</td>
+                        <td>@Model.相談苦情等への対応</td>
+                    </tr>
+                    <tr>
+                        <td>外部機関等との連携</td>
+                        <td>@Model.外部機関等との連携</td>
+                    </tr>
+                    <tr>
+                        <td>事業運営・管理</td>
+                        <td>@Model.事業運営管理</td>
+                    </tr>
+                    <tr>
+                        <td>安全・衛生管理等</td>
+                        <td>@Model.安全衛生管理等</td>
+                    </tr>
+                    <tr>
+                        <td>従業者の研修等</td>
+                        <td>@Model.従業者の研修等</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="col-md-6">
-        <div>画像</div>
-        <div id="chartdiv" style="width: 100%; height: 200px; background-color: #FFFFFF;"></div>
-        <div id="chartdiv-radar" style="width: 100%; height: 240px; background-color: #FFFFFF;"></div>
-        <div>SNS</div>
-        <p>登録してください！</p>
+        <div class="carehomeinfo-boxouter">
+            <div class="carehomeinfo-box">
+                <div>画像</div>
+                <div id="chartdiv" style="width: 100%; height: 200px; background-color: #FFFFFF;"></div>
+                <div id="chartdiv-radar" style="width: 100%; height: 240px; background-color: #FFFFFF;"></div>
+                <div>SNS</div>
+                <p>登録してください！</p>
+            </div>
+        </div>
     </div>
 </div>
