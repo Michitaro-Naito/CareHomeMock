@@ -25,6 +25,9 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Business key.
         /// </summary>
+        [Required]
+        [MaxLength(255)]
+        [Index(IsUnique=true)]
         public string CareHomeCode { get; set; }
 
         /// <summary>

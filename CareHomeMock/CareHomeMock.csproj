@@ -245,6 +245,10 @@
     <Compile Include="Migrations\201412081307313_Add_MediaFile_YoutubeUrl.Designer.cs">
       <DependentUpon>201412081307313_Add_MediaFile_YoutubeUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412091329351_Index_CareHome_CareHomeCode.cs" />
+    <Compile Include="Migrations\201412091329351_Index_CareHome_CareHomeCode.Designer.cs">
+      <DependentUpon>201412091329351_Index_CareHome_CareHomeCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -613,6 +617,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412081307313_Add_MediaFile_YoutubeUrl.resx">
       <DependentUpon>201412081307313_Add_MediaFile_YoutubeUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412091329351_Index_CareHome_CareHomeCode.resx">
+      <DependentUpon>201412091329351_Index_CareHome_CareHomeCode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
