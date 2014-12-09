@@ -20,6 +20,10 @@
 @Html.Partial("_CareHomeInfoMenu", Model)
 
 <div>
+    @if (Model.CareManagers.Count == 0)
+    {
+        <p>この事業所はまだケアマネ情報を掲載していません。</p>
+    }
     @foreach (var m in Model.CareManagers)
     {
         <div class="search-rslt col-md-12">

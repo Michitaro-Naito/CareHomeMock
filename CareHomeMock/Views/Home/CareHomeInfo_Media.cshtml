@@ -8,6 +8,10 @@
 @Html.Partial("_CareHomeInfoMenu", Model)
 
 <div class="mediafiles">
+    @if (Model.MediaFiles.Count == 0)
+    {
+        <p>この事業所はまだ写真や動画を掲載していません。</p>
+    }
     @foreach (var f in Model.MediaFiles.OrderBy(f=>f.Order).ThenByDescending(f=>f.Updated))
     {
         <div class="mediafile">
