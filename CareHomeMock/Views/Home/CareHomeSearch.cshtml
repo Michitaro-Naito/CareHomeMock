@@ -12,7 +12,7 @@
                 var s = this;
                 s.data = data;
                 s.cpHref = ko.computed(function () {
-                    return '/Home/CareHomeInfo_BasicInfo/' + s.data.CareHomeId;
+                    return '/事業所/' + s.data.CareHomeCode;
                 });
             }
 

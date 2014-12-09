@@ -32,36 +32,36 @@ namespace CareHomeMock
             // CareHomeInfo_BasicInfo
             routes.MapRoute(
                 name: "CareHomeInfo_BasicInfo",
-                url: "事業所/{id}/{name}/基本情報",
-                defaults: new { controller = "Home", action = "CareHomeInfo_BasicInfo", id = UrlParameter.Optional, name = UrlParameter.Optional }
+                url: "事業所/{code}/{name}/基本情報",
+                defaults: new { controller = "Home", action = "CareHomeInfo_BasicInfo", code = UrlParameter.Optional, name = UrlParameter.Optional }
             );
 
             // CareHomeInfo_CareManagers
             routes.MapRoute(
                 name: "CareHomeInfo_CareManagers",
-                url: "事業所/{id}/{name}/ケアマネ一覧",
-                defaults: new { controller = "Home", action = "CareHomeInfo_CareManagers", id = UrlParameter.Optional, name = UrlParameter.Optional }
+                url: "事業所/{code}/{name}/ケアマネ一覧",
+                defaults: new { controller = "Home", action = "CareHomeInfo_CareManagers", code = UrlParameter.Optional, name = UrlParameter.Optional }
             );
 
             // CareHomeInfo_Media
             routes.MapRoute(
                 name: "CareHomeInfo_Media",
-                url: "事業所/{id}/{name}/写真と動画",
-                defaults: new { controller = "Home", action = "CareHomeInfo_Media", id = UrlParameter.Optional, name = UrlParameter.Optional }
+                url: "事業所/{code}/{name}/写真と動画",
+                defaults: new { controller = "Home", action = "CareHomeInfo_Media", code = UrlParameter.Optional, name = UrlParameter.Optional }
             );
 
             // CareHomeInfo_AccessMap
             routes.MapRoute(
                 name: "CareHomeInfo_AccessMap",
-                url: "事業所/{id}/{name}/周辺地図",
-                defaults: new { controller = "Home", action = "CareHomeInfo_AccessMap", id = UrlParameter.Optional, name = UrlParameter.Optional }
+                url: "事業所/{code}/{name}/周辺地図",
+                defaults: new { controller = "Home", action = "CareHomeInfo_AccessMap", code = UrlParameter.Optional, name = UrlParameter.Optional }
             );
 
             // CareHomeInfo_BasicInfo2
             routes.MapRoute(
                 name: "CareHomeInfo_BasicInfo2",
-                url: "事業所/{id}",
-                defaults: new { controller = "Home", action = "CareHomeInfo_BasicInfo", id = UrlParameter.Optional }
+                url: "事業所/{code}",
+                defaults: new { controller = "Home", action = "CareHomeInfo_BasicInfo", code = UrlParameter.Optional }
             );
 
             // CareManagerInfo

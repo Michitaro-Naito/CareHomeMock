@@ -35,43 +35,43 @@ namespace CareHomeMock.Controllers
             return View();
         }
 
-        public ActionResult CareHomeInfo_BasicInfo(int? id, string name)
+        public ActionResult CareHomeInfo_BasicInfo(string code, string name)
         {
-            if (id == null)
+            if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var careHome = db.CareHomes.Find(id);
+            var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
             if (name != careHome.CompanyName)
-                return RedirectToAction("CareHomeInfo_BasicInfo", new { id = id, name = careHome.CompanyName });
+                return RedirectToAction("CareHomeInfo_BasicInfo", new { code = code, name = careHome.CompanyName });
             return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_CareManagers(int? id)
+        public ActionResult CareHomeInfo_CareManagers(string code)
         {
-            if (id == null)
+            if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var careHome = db.CareHomes.Find(id);
+            var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
             return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_Media(int? id)
+        public ActionResult CareHomeInfo_Media(string code)
         {
-            if (id == null)
+            if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var careHome = db.CareHomes.Find(id);
+            var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
             return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_AccessMap(int? id)
+        public ActionResult CareHomeInfo_AccessMap(string code)
         {
-            if (id == null)
+            if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var careHome = db.CareHomes.Find(id);
+            var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
             return View(careHome);
@@ -324,6 +324,7 @@ namespace CareHomeMock.Controllers
             var careHomes = rows.Skip(offset).Take(limit).ToList().Select(h => new
                 {
                     CareHomeId = h.CareHomeId,
+                    CareHomeCode = h.CareHomeCode,
                     CompanyName = h.CompanyName,
                     Address = h.Area.PrefectureName + h.Area.CityName + h.Address,
                     Years = h.Years,
