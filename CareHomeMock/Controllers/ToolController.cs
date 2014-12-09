@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace CareHomeMock.Controllers
 {
-    public class ToolController : Controller
+    public class ToolController : BaseController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -196,6 +197,50 @@ namespace CareHomeMock.Controllers
             }
 
             Response.Write("Review populated.");
+            return null;
+        }
+
+        public async Task<ActionResult> RegisterDummyCareHomeUser(string name, string careHomeCode)
+        {
+            var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == careHomeCode);
+            if (careHome == null)
+                throw new InvalidOperationException("CareHome not found.");
+            if (careHome.User != null)
+                throw new InvalidOperationException("The CareHome has an owner already.");
+
+            var user = new User() { UserName = name };
+            var result = await UserManager.CreateAsync(user, "abcdefg");
+            if (result.Succeeded)
+            {
+                db.Users.FirstOrDefault(u => u.UserName == name).CareHomes.Add(careHome);
+                db.SaveChanges();
+
+                Response.Write("Registered.");
+            }
+            else
+            {
+                throw new Exception("Could not register.");
+            }
+
+            return null;
+        }
+
+        public async Task<ActionResult> RegisterFirstAdmin(string password)
+        {
+            var user = new User() { UserName = "Admin" };
+            var result = await UserManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                await RoleManager.CreateAsync(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Admin"));
+                var admin = db.Users.FirstOrDefault(u => u.UserName == "Admin");
+                await UserManager.AddToRoleAsync(admin.Id, "Admin");
+
+                Response.Write("Registered.");
+            }
+            else
+            {
+                throw new Exception("Could not register.");
+            }
             return null;
         }
 

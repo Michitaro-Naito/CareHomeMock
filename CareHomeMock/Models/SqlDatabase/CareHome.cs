@@ -178,6 +178,18 @@ namespace CareHomeMock.Models
         public string Messages { get; set; }
 
         /// <summary>
+        /// UserId of Owner.
+        /// </summary>
+        [ForeignKey("User")]
+        [MaxLength(128)]
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// Owner who owns this CareHome. Nullable.
+        /// </summary>
+        public virtual User User { get; set; }
+
+        /// <summary>
         /// CareManagers belongs to this CareHome.
         /// </summary>
         public virtual ICollection<CareManager> CareManagers { get; set; }

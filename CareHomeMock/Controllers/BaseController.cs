@@ -6,11 +6,35 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CareHomeMock.Helper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CareHomeMock.Controllers
 {
     public class BaseController : Controller
     {
+        UserManager<User> _userManager = null;
+        public UserManager<User> UserManager
+        {
+            get
+            {
+                if (_userManager == null)
+                    _userManager = new UserManager<User>(new UserStore<User>(new ApplicationDbContext()));
+                return _userManager;
+            }
+        }
+
+        RoleManager<IdentityRole> _roleManager = null;
+        public RoleManager<IdentityRole> RoleManager
+        {
+            get
+            {
+                if(_roleManager == null)
+                    _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                return _roleManager;
+            }
+        }
+
         protected void Log(LogType level, string userId, string action, object data)
         {
             var log = new Log()
