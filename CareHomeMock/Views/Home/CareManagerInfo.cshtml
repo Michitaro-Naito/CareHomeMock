@@ -1,6 +1,7 @@
 ﻿@model CareHomeMock.Models.CareManager
 @{
-    ViewBag.Title = "CareManagerInfo";
+    var title = Model.CareHome.CompanyName + " " + Model.Name;
+    ViewBag.Title = title;
 }
 
 @section scripts{
