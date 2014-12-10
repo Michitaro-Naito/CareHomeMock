@@ -35,6 +35,21 @@ namespace CareHomeMock.Controllers
             }
         }
 
+        /// <summary>
+        /// Shows a short message to Visitor on the next page.
+        /// Uses Cookie.
+        /// </summary>
+        /// <param name="message"></param>
+        protected void Flash(string message)
+        {
+            var currentMessage = "";
+            var currentCookie = Request.Cookies["__FlashMessage"];
+            if (currentCookie != null)
+                currentMessage += currentCookie.Value;
+            currentMessage += message;
+            Response.Cookies.Add(new HttpCookie("__FlashMessage", currentMessage));
+        }
+
         protected void Log(LogType level, string userId, string action, object data)
         {
             var log = new Log()

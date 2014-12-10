@@ -13,7 +13,7 @@ namespace CareHomeMock.Controllers
     /// <summary>
     /// Admin accepts / denies applications here.
     /// </summary>
-    public class ApplicationController : Controller
+    public class ApplicationController : BaseController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -36,6 +36,7 @@ namespace CareHomeMock.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Send(ApplicationSendVM model)
         {
+            Flash("Sent.");
             return View(model);
         }
 

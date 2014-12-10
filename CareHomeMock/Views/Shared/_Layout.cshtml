@@ -160,13 +160,32 @@
         
     </div><!-- End wrap -->
 
+    <!-- Flash Modal -->
+    <div class="modal fade" id="FlashModal" tabindex="-1" role="dialog" aria-labelledby="FlashModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="FlashModalLabel">お知らせ</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <script src="~/Scripts/linq.min.js"></script>
     @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
-    <script src="~/Scripts/utility.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/utility.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

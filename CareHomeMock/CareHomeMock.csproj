@@ -325,6 +325,7 @@
     <Content Include="Content\css\fonts\myriadpro-regular.ttf" />
     <Content Include="Content\css\fonts\myriadpro-regular.woff" />
     <Content Include="Content\css\fonts\myriadpro-regular.woff2" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\raty\fonts\raty.svg" />
     <Content Include="Scripts\raty\images\cancel-off.png" />
     <Content Include="Scripts\raty\images\cancel-on.png" />

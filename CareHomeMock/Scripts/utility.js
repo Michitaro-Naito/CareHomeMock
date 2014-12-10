@@ -15,3 +15,13 @@ function fmDateTime(str) {
         minutes = '0' + minutes;
     return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay() + ' ' + date.getHours() + ':' + minutes;
 }
+
+$(document).ready(function () {
+    var message = $.cookie('__FlashMessage');
+    $.removeCookie('__FlashMessage', { path: '/' });
+    if (message != null) {
+        var modal = $('#FlashModal');
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+    }
+});
