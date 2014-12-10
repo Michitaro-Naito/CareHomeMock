@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - マイ ASP.NET アプリケーション</title>
+    <title>@ViewBag.Title - ケアマネ情報局</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="right">
-                            <div class="left"><button class="login-btn"><i class="fa fa-sign-in"></i>Login</button></div>
+                            <div class="left">@Html.Partial("_LoginPartial")</div>
                             <div class="social-ul">
                                 <ul>
                                     <li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>

@@ -3,20 +3,13 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
-
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("ハロー  " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "管理" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">ログオフ</a></li>
-    </ul>
+        @Html.AntiForgeryToken()
+        <span>ID:<span>@User.Identity.Name</span></span>
+        
+        <button class="login-btn" onclick="document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out"></i>Logout</button>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("登録", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("ログイン", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+    <button class="login-btn" onclick="location.href='/Account/Login?id=loginLink'"><i class="fa fa-sign-in"></i>Login</button>
 }

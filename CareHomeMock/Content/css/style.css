@@ -218,7 +218,7 @@ background-color: #A83A06!important;
 .search-blo h1 i{
 	padding-right: 5px;
 }
-input{
+.search-blo input[type='text']{
 	border:1px solid #ddd;
 	padding: 8px 12px;
 	color: #666;
