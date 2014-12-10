@@ -3,6 +3,9 @@
     var title = "事業所登録申請";
     ViewBag.Title = title;
 }
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 @using (Html.BeginForm())
 {

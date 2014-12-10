@@ -22,9 +22,14 @@ namespace CareHomeMock.Controllers
         /// He receives ID and password if accepted.
         /// </summary>
         /// <returns></returns>
-        public ActionResult Send()
+        public ActionResult Send(string careHomeCode)
         {
-            return View(new ApplicationSendVM());
+            if (string.IsNullOrEmpty(careHomeCode))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var home = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == careHomeCode);
+            if (home == null)
+                return HttpNotFound();
+            return View(new ApplicationSendVM() { CareHomeCode = home.CareHomeCode, CareHomeName = home.CompanyName });
         }
 
         [HttpPost]
