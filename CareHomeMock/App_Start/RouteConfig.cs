@@ -64,6 +64,13 @@ namespace CareHomeMock
                 defaults: new { controller = "Home", action = "CareHomeInfo_BasicInfo", code = UrlParameter.Optional }
             );
 
+            // Application_Send
+            routes.MapRoute(
+                name: "Application_Send",
+                url: "事業所登録申請/{careHomeCode}",
+                defaults: new { controller = "Application", action = "Send", careHomeCode = UrlParameter.Optional }
+            );
+
             // CareManagerInfo
             routes.MapRoute(
                 name: "CareManagerInfo",

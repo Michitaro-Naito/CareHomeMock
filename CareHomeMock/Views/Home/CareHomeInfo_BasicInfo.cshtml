@@ -304,7 +304,7 @@
                 <div>SNS</div>
                 @if (Model.User == null)
                 {
-                    <p>登録してください！</p>
+                    <p>@Html.ActionLink("この事業所の方ですか？ 登録してください！", "Send", new { controller = "Application", careHomeCode = Model.CareHomeCode })</p>
                 }
                 else
                 {

@@ -36,7 +36,31 @@ namespace CareHomeMock.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Send(ApplicationSendVM model)
         {
-            Flash("Sent.");
+            if (model.CareHomeCode == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var home = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == model.CareHomeCode);
+            if (home == null)
+                return HttpNotFound();
+            if (home.User != null)
+                ModelState.AddModelError("CareHomeCode", "この事業所会員はすでに登録されています。");
+
+            if (ModelState.IsValid)
+            {
+                // Storeas an application.
+                var application = new Application()
+                {
+                    CareHome = home,
+                    IpAddress = Request.UserHostAddress,
+                    Email = model.EmailPersonInCharge,
+                    Name = model.NamePersonInCharge,
+                    Note = model.Note
+                };
+                db.Applications.Add(application);
+                db.SaveChanges();
+                Flash("登録申請を送信しました。後ほど管理者がご連絡を差し上げます。");
+                return RedirectToAction("CareHomeInfo_BasicInfo", "Home", new { code = home.CareHomeCode });
+            }
             return View(model);
         }
 

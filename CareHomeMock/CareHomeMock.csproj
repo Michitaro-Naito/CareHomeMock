@@ -255,6 +255,10 @@
     <Compile Include="Migrations\201412091512102_UserHasManyCareHomesAndCareManagers.Designer.cs">
       <DependentUpon>201412091512102_UserHasManyCareHomesAndCareManagers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412101948245_Add_Application_IpAddress.cs" />
+    <Compile Include="Migrations\201412101948245_Add_Application_IpAddress.Designer.cs">
+      <DependentUpon>201412101948245_Add_Application_IpAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -632,6 +636,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412091512102_UserHasManyCareHomesAndCareManagers.resx">
       <DependentUpon>201412091512102_UserHasManyCareHomesAndCareManagers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412101948245_Add_Application_IpAddress.resx">
+      <DependentUpon>201412101948245_Add_Application_IpAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

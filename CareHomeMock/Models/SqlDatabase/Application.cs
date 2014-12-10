@@ -30,6 +30,11 @@ namespace CareHomeMock.Models
         public virtual CareHome CareHome { get; set; }
 
         /// <summary>
+        /// IPAddress of sender like 192.168.100.1.
+        /// </summary>
+        public string IpAddress { get; set; }
+
+        /// <summary>
         /// Email address of sender.
         /// </summary>
         public string Email { get; set; }
