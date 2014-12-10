@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace CareHomeMock.Helper
@@ -26,6 +27,14 @@ namespace CareHomeMock.Helper
                 dic.Add(key, collection[key]);
             }
             return dic;
+        }
+
+        public static string GetPropertyName<TModel, TItem>(this Expression<Func<TModel, TItem>> expression)
+        {
+            var member = expression.Body as MemberExpression;
+            var propertyInfo = member.Member as System.Reflection.PropertyInfo;
+            var propertyName = propertyInfo.Name;
+            return propertyInfo.Name;
         }
     }
 }

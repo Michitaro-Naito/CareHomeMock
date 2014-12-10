@@ -1,0 +1,27 @@
+﻿@model CareHomeMock.Models.ApplicationSendVM
+@{
+    var title = "事業所登録申請";
+    ViewBag.Title = title;
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h2>@title</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        @MyHelper.EditorFor(Html, m => m.CareHomeCode)
+        @MyHelper.EditorFor(Html, m => m.CareHomeName)
+        @MyHelper.EditorFor(Html, m => m.EmailPersonInCharge)
+        @MyHelper.EditorFor(Html, m => m.NamePersonInCharge)
+        @MyHelper.EditorFor(Html, m => m.Note, MyHelper.EditorType.TextArea)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="送信する" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

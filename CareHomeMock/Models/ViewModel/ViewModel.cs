@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CareHomeMock.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -90,5 +91,28 @@ namespace CareHomeMock.Models
         /// Description of this file like "We are doing like this!".
         /// </summary>
         public string Description { get; set; }
+    }
+
+    public class ApplicationSendVM
+    {
+        [Display(Name="事業所ID")]
+        [DetailedDisplay(Readonly=true)]
+        public string CareHomeCode { get; set; }
+
+        [Display(Name="事業所名")]
+        [DetailedDisplay(Readonly=true)]
+        public string CareHomeName { get; set; }
+
+        [Display(Name="担当者メールアドレス", Description="ご担当者様のメールアドレスを入力してください：")]
+        [DetailedDisplay(Placeholder="例: care@example.com")]
+        public string EmailPersonInCharge { get; set; }
+
+        [Display(Name="担当者氏名", Description="ご担当者様の氏名を入力してください：")]
+        [DetailedDisplay(Placeholder="例: 田中一郎")]
+        public string NamePersonInCharge { get; set; }
+
+        [Display(Name="備考", Description="管理者へ送信する備考を入力してください：")]
+        [DetailedDisplay(Placeholder="例: ○○の折にお会いした××です。")]
+        public string Note { get; set; }
     }
 }

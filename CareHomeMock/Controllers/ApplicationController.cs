@@ -17,6 +17,23 @@ namespace CareHomeMock.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        /// <summary>
+        /// Visitor sends an application to Admin.
+        /// He receives ID and password if accepted.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Send()
+        {
+            return View(new ApplicationSendVM());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Send(ApplicationSendVM model)
+        {
+            return View(model);
+        }
+
         // GET: /Application/
         public ActionResult Index()
         {

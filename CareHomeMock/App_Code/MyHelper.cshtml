@@ -1,0 +1,80 @@
+﻿@helper HelperName(string name) {
+    // たとえば、ヘルパーにはコードまたはマークアップ (あるいはその両方) を使用できます。
+    // var msg = "ハロー " + name;
+    // <p>@msg</p>
+    // 詳細については、http://go.microsoft.com/fwlink/?LinkID=204658 を参照してください
+}
+
+@helper Foo()
+{
+    <span>Foo!</span>
+}
+
+@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+@using System.Linq.Expressions;
+@using CareHomeMock.Helper;
+@functions
+{
+    public enum EditorType
+    {
+        TextBox,
+        TextArea
+    }
+    
+    public static HelperResult EditorFor<TModel, TItem>(HtmlHelper<TModel> html, Expression<Func<TModel, TItem>> expr, EditorType? editorType = null)
+    {
+        // Gets property name.
+        var propertyName = expr.GetPropertyName();
+        
+        // Gets description and placeholder.
+        var description = "";
+        var placeholder = "";
+        bool readOnly = false;
+        var displayAttr = (System.ComponentModel.DataAnnotations.DisplayAttribute)Attribute.GetCustomAttribute(typeof(TModel).GetProperty(propertyName), typeof(System.ComponentModel.DataAnnotations.DisplayAttribute));
+        if(displayAttr != null)
+            description = displayAttr.Description;
+        var detailedAttr = (CareHomeMock.Helper.DetailedDisplayAttribute)Attribute.GetCustomAttribute(typeof(TModel).GetProperty(propertyName), typeof(CareHomeMock.Helper.DetailedDisplayAttribute));
+        if (detailedAttr != null)
+        {
+            placeholder = detailedAttr.Placeholder;
+            readOnly = detailedAttr.Readonly;
+        }
+        
+        // Generates HTML.
+        var label = html.LabelFor(expr, new { @class = "control-label col-md-2" });
+        object htmlAttributes = new { @class = "form-control", placeholder = placeholder };
+        if(readOnly)
+            htmlAttributes = new { @class = "form-control", placeholder = placeholder, @readonly = "readonly" };
+        MvcHtmlString editor;
+        switch (editorType)
+        {
+            case EditorType.TextBox:
+            default:
+                editor = html.TextBoxFor(expr, htmlAttributes);
+                break;
+                
+            case EditorType.TextArea:
+                editor = html.TextAreaFor(expr, htmlAttributes);
+                break;
+        }
+        var validationMessage = html.ValidationMessageFor(expr);
+        
+        // Calls view helper.
+        return TheThingToDo(label, editor, validationMessage, description);
+    }
+}
+@helper TheThingToDo(MvcHtmlString label, MvcHtmlString textbox, MvcHtmlString validationMessage, string description)
+{
+    <div class="form-group">
+        @label
+        <div class="col-md-10">
+            @if (!string.IsNullOrEmpty(description))
+            {
+                <span>@description</span>
+            }
+            @textbox
+            @validationMessage
+        </div>
+    </div>
+}

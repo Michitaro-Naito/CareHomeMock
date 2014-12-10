@@ -203,8 +203,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\DetailedDisplayAttribute.cs" />
     <Compile Include="Helper\Extension.cs" />
     <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\HtmlHelperExtension.cs" />
     <Compile Include="Migrations\201412021244573_Init.cs" />
     <Compile Include="Migrations\201412021244573_Init.Designer.cs">
       <DependentUpon>201412021244573_Init.cs</DependentUpon>
@@ -334,6 +336,7 @@
     <Content Include="Scripts\utility.js" />
     <Content Include="Views\Home\QRCode.cshtml" />
     <Content Include="App_Code\QRCode.cshtml" />
+    <Content Include="App_Code\MyHelper.cshtml" />
     <None Include="Properties\PublishProfiles\carehome-test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -579,6 +582,7 @@
     <Content Include="Views\Home\PostReview.cshtml" />
     <Content Include="Views\MediaFile\Upload.cshtml" />
     <Content Include="Views\Shared\_CareHomeInfoMenu.cshtml" />
+    <Content Include="Views\Application\Send.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
