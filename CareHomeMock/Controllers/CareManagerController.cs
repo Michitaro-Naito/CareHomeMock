@@ -161,6 +161,9 @@ namespace CareHomeMock.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditAdditionalData(CareManager model, HttpPostedFileBase file)
         {
+            if (file != null && file.ContentLength > 200000)
+                ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
+
             if (ModelState.IsValid)
             {
                 var careManager = CurrentUser.CareManager.FirstOrDefault();
