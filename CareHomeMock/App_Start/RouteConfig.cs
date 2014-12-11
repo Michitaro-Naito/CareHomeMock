@@ -106,6 +106,25 @@ namespace CareHomeMock
                 defaults: new { controller = "MediaFile", action = "Download", fileName = UrlParameter.Optional }
             );
 
+
+
+            // CareManagerIndex
+            routes.MapRoute(
+                name: "CareManagerIndex",
+                url: "事業所管理/{code}/ケアマネ",
+                defaults: new { controller = "CareManager", action = "Index", code = UrlParameter.Optional }
+            );
+
+            // CareManagerEdit
+            routes.MapRoute(
+                name: "CareManagerEdit",
+                url: "事業所管理/{code}/ケアマネ/編集/{careManagerId}",
+                defaults: new { controller = "CareManager", action = "Edit", code = UrlParameter.Optional, careManagerId = UrlParameter.Optional }
+            );
+
+
+
+
             // Default
             routes.MapRoute(
                 name: "Default",

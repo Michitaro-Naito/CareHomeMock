@@ -10,80 +10,84 @@ using CareHomeMock.Models;
 
 namespace CareHomeMock.Controllers
 {
-    public class CareManagerController : Controller
+    public class CareManagerController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: /CareManager/
-        public ActionResult Index(int? careHomeId)
+        /// <summary>
+        /// CareHome manages it's CareManagers here.
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        [Authorize]
+        public ActionResult Index(string code)
         {
-            if (careHomeId == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (CurrentUser == null)
+                throw new Exception("会員情報が見つかりません。");
 
-            var home = db.CareHomes.FirstOrDefault(h => h.CareHomeId == careHomeId);
+            CareHome home = null;
+            if (code == null)
+            {
+                home = CurrentUser.CareHomes.FirstOrDefault();
+                if (home == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", new { code = home.CareHomeCode });
+            }
+
+            home = CurrentUser.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (home == null)
                 return HttpNotFound();
 
             var careManagers = home.CareManagers.ToList();
 
-            //var caremanagers = db.CareManagers.Where(m=>m.CareHomeId == careHomeId).Include(c => c.CareHome);
-
             return View(new CareManagerIndexVM() {
-                CareHomeId = careHomeId.Value,
+                CareHomeId = home.CareHomeId,
+                CareHomeCode = home.CareHomeCode,
                 CareManagers = careManagers
             });
         }
 
-        // GET: /CareManager/Create
-        public ActionResult Create(int? careHomeId)
+        /// <summary>
+        /// CareHome adds/edits it's CareManager info.
+        /// </summary>
+        /// <param name="careHomeId"></param>
+        /// <param name="careManagerId"></param>
+        /// <returns></returns>
+        [Authorize]
+        public ActionResult Edit(string code, int? careManagerId)
         {
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip");
-            return View();
-        }
-
-        // POST: /CareManager/Create
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CareManagerId,CareHomeId,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager)
-        {
-            if (ModelState.IsValid)
-            {
-                db.CareManagers.Add(caremanager);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
-            return View(caremanager);
-        }
-
-        // GET: /CareManager/Edit/5
-        public ActionResult Edit(int?careHomeId, int? careManagerId)
-        {
-            if (careHomeId == null)
+            if (code == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (careManagerId != null && !CurrentUser.CareHomes.Any(h => h.CareManagers.Any(c => c.CareManagerId == careManagerId)))
+                // Not owned
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var careManager = new CareManager();
-            if(careManagerId != null)
+            if (careManagerId == null)
+            {
+                // Add
+                var home = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
+                if (home == null)
+                    return HttpNotFound();
+                careManager.CareHomeId = home.CareHomeId;
+            }
+            else
             {
                 // Edit
-                careManager = db.CareManagers.FirstOrDefault(m => m.CareHomeId == careHomeId && m.CareManagerId == careManagerId);
+                careManager = db.CareManagers.FirstOrDefault(m => m.CareHome.CareHomeCode == code && m.CareManagerId == careManagerId);
                 if (careManager == null)
                     return HttpNotFound();
             }
 
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", careManager.CareHomeId);
+            //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", careManager.CareHomeId);
             return View(careManager);
         }
 
         // POST: /CareManager/Edit/5
         // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
         // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CareManagerId,CareHomeId,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager)
+        public ActionResult Edit(string code, [Bind(Include="CareManagerId,CareHomeId,Email,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager)
         {
             if (ModelState.IsValid)
             {
@@ -91,16 +95,22 @@ namespace CareHomeMock.Controllers
                 {
                     // Add
                     db.CareManagers.Add(caremanager);
+                    var verification = new EmailVerification() { CareManager = caremanager, Email = caremanager.Email };
+                    db.EmailVerifications.Add(verification);
+                    db.SaveChanges();
+
+                    // Notifies CareManager to verify.
+                    SendEmail(caremanager.Email, "[ケアマネ情報局] ケアマネ会員認証", "URL" + verification.VerificationCode);
                 }
                 else
                 {
                     // Edit
                     db.Entry(caremanager).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
+            //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
             return View(caremanager);
         }
 
@@ -130,13 +140,48 @@ namespace CareHomeMock.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+
+
+        /// <summary>
+        /// CareManager edits his additional info.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        public ActionResult EditAdditionalData()
         {
-            if (disposing)
+            var careManager = CurrentUser.CareManager.FirstOrDefault();
+            if (careManager == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return View(careManager);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAdditionalData(CareManager model)
+        {
+            if (ModelState.IsValid)
             {
-                db.Dispose();
+                var careManager = CurrentUser.CareManager.FirstOrDefault();
+                if (careManager == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                careManager.CurrentPatients = model.CurrentPatients;
+                careManager.AllowNewPatient = model.AllowNewPatient;
+                careManager.Career = model.Career;
+                careManager.Messages = model.Messages;
+                careManager.BlogUrls = model.BlogUrls;
+                careManager.企画立案力 = model.企画立案力;
+                careManager.行動実践力 = model.行動実践力;
+                careManager.関係構築力 = model.関係構築力;
+                careManager.マネジメント力 = model.マネジメント力;
+                careManager.医療知識 = model.医療知識;
+                careManager.介護知識 = model.介護知識;
+                db.SaveChanges();
+
+                Flash("保存されました。");
             }
-            base.Dispose(disposing);
+            return View(model);
         }
     }
 }

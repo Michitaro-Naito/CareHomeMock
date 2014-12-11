@@ -16,6 +16,8 @@ namespace CareHomeMock.Models
         /// </summary>
         public int EmailVerificationId { get; set; }
 
+        public string Email { get; set; }
+
         public DateTime Expires { get; set; }
 
         /// <summary>
@@ -30,5 +32,13 @@ namespace CareHomeMock.Models
         /// </summary>
         [ForeignKey("CareManagerId")]
         public virtual CareManager CareManager { get; set; }
+
+
+
+        public EmailVerification()
+        {
+            Expires = DateTime.UtcNow.AddYears(1);
+            VerificationCode = Guid.NewGuid().ToString();
+        }
     }
 }

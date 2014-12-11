@@ -1,0 +1,35 @@
+﻿@model CareHomeMock.Models.CareManager
+@{
+    var title = "ケアマネ追加情報";
+    ViewBag.Title = title;
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h2>@title</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        @*Licenses*@
+        @MyHelper.EditorFor(Html, m => m.CurrentPatients)
+        @MyHelper.EditorFor(Html, m => m.AllowNewPatient)
+        @MyHelper.EditorFor(Html, m => m.Career, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.Messages, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.BlogUrls, MyHelper.EditorType.TextArea)
+
+        @MyHelper.EditorFor(Html, m => m.企画立案力)
+        @MyHelper.EditorFor(Html, m => m.行動実践力)
+        @MyHelper.EditorFor(Html, m => m.関係構築力)
+        @MyHelper.EditorFor(Html, m => m.マネジメント力)
+        @MyHelper.EditorFor(Html, m => m.医療知識)
+        @MyHelper.EditorFor(Html, m => m.介護知識)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="保存する" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

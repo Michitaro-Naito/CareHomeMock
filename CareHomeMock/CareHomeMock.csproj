@@ -194,6 +194,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CareHomeController.cs" />
     <Compile Include="Controllers\CareManagerController.cs" />
+    <Compile Include="Controllers\EmailVerificationController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
@@ -262,6 +263,10 @@
     <Compile Include="Migrations\201412110742426_Add_User_Email_and_Name.cs" />
     <Compile Include="Migrations\201412110742426_Add_User_Email_and_Name.Designer.cs">
       <DependentUpon>201412110742426_Add_User_Email_and_Name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412111247501_Add_EmailVerification_Email.cs" />
+    <Compile Include="Migrations\201412111247501_Add_EmailVerification_Email.Designer.cs">
+      <DependentUpon>201412111247501_Add_EmailVerification_Email.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
@@ -595,10 +600,12 @@
     <Content Include="Views\Application\Reject.cshtml" />
     <Content Include="Views\Application\Approve.cshtml" />
     <Content Include="Views\Tool\FlashMessage.cshtml" />
+    <Content Include="Views\CareManager\EditAdditionalData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\EmailVerification\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -649,6 +656,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412110742426_Add_User_Email_and_Name.resx">
       <DependentUpon>201412110742426_Add_User_Email_and_Name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412111247501_Add_EmailVerification_Email.resx">
+      <DependentUpon>201412111247501_Add_EmailVerification_Email.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

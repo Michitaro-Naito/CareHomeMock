@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CareHomeMock.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,26 +39,35 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Email address like foo@example.com
         /// </summary>
+        [Display(Name="メールアドレス")]
+        [DetailedDisplay(Placeholder="例: foo@example.com")]
         public string Email { get; set; }
 
         /// <summary>
         /// Birthday of this CareManager. Date only like 2014/1/1 0:00:00.
         /// </summary>
+        [Display(Name="生年月日")]
+        [DetailedDisplay(Placeholder="例: 2014/1/1")]
         public DateTime Birthday { get; set; }
 
         /// <summary>
         /// Name of this CareManager like "田中太郎".
         /// </summary>
+        [Display(Name="氏名")]
+        [DetailedDisplay(Placeholder="例: 田中一郎")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gender of this CareManager.
         /// </summary>
+        [Display(Name="性別")]
+        [DetailedDisplay(Placeholder="例: 男性")]
         public Gender Gender { get; set; }
 
         /// <summary>
         /// Age of this CareManager like 24.
         /// </summary>
+        [Display(Name="年齢")]
         public int Age
         {
             get
@@ -70,11 +80,14 @@ namespace CareHomeMock.Models
         /// <summary>
         /// When this CareManager has been licensed.
         /// </summary>
+        [Display(Name="ケアマネ資格取得年月日")]
+        [DetailedDisplay(Placeholder="例: 2014/1/1")]
         public DateTime Licensed { get; set; }
 
         /// <summary>
         /// How many full years passed sinse licensed.
         /// </summary>
+        [Display(Name="経験年数")]
         public int Years
         {
             get
@@ -92,29 +105,36 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Amount of current patients.
         /// </summary>
+        [Display(Name="現在の患者数")]
+        [DetailedDisplay(Placeholder="例: 12")]
         public int CurrentPatients { get; set; }
 
         /// <summary>
         /// Does this CareManager allows new patient?
         /// </summary>
+        [Display(Name="新規対応可")]
         public bool AllowNewPatient { get; set; }
 
         /// <summary>
         /// Career of this CareManager.
         /// </summary>
+        [Display(Name="経歴")]
         public string Career { get; set; }
 
         /// <summary>
         /// Messages from this CareManager.
         /// </summary>
+        [Display(Name="メッセージ")]
         public string Messages { get; set; }
 
         /// <summary>
         /// Blog URLs of this CareManager.
         /// </summary>
+        [Display(Name="ブログのURLなど")]
         public string BlogUrls { get; set; }
 
         // ----- Professional Parameters to Display -----
+        [Range(1, 5)]
         public double 企画立案力 { get; set; }
         public double 行動実践力 { get; set; }
         public double 関係構築力 { get; set; }
@@ -174,9 +194,18 @@ namespace CareHomeMock.Models
 
         public CareManager()
         {
+            Licensed = DateTime.UtcNow;
+            Birthday = DateTime.UtcNow;
             Otps = new List<Otp>();
             EmailVerifications = new List<EmailVerification>();
             CareManagerLicenses = new List<CareManagerLicenses>();
+
+            企画立案力 = 1;
+            行動実践力 = 1;
+            関係構築力 = 1;
+            マネジメント力 = 1;
+            医療知識 = 1;
+            介護知識 = 1;
         }
     }
 }

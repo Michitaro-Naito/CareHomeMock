@@ -7,7 +7,7 @@
 <h2>ケアマネ一覧</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Edit", new { careHomeId = Model.CareHomeId, careManagerId = (int?)null })
+    @Html.ActionLink("ケアマネ情報を追加する", "Edit", new { code = Model.CareHomeCode, careManagerId = (int?)null })
 </p>
 <table class="table">
     <tr>
@@ -26,12 +26,7 @@
         <th>
             @Html.DisplayNameFor(model => model.CareManagers.First().AllowNewPatient)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CareManagers.First().ReviewsCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CareManagers.First().Rating)
-        </th>
+        <th>メール確認済み</th>
         <th></th>
     </tr>
 
@@ -53,14 +48,18 @@
             @Html.DisplayFor(modelItem => item.AllowNewPatient)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ReviewsCount)
+            @if (item.User != null)
+            {
+                <span>はい</span>
+            }
+            else
+            {
+                <span>いいえ</span>
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Rating)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { careManagerId = item.CareManagerId }) |
-            @Html.ActionLink("Delete", "Delete", new { careManagerId = item.CareManagerId })
+            @Html.ActionLink("編集", "Edit", new { careHomeId = item.CareHome.CareHomeId, careManagerId = item.CareManagerId }) |
+            @Html.ActionLink("削除", "Delete", new { careManagerId = item.CareManagerId })
         </td>
     </tr>
 }

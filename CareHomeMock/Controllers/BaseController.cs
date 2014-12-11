@@ -15,6 +15,8 @@ namespace CareHomeMock.Controllers
 {
     public class BaseController : Controller
     {
+        protected ApplicationDbContext db = new ApplicationDbContext();
+
         UserManager<User> _userManager = null;
         public UserManager<User> UserManager
         {
@@ -35,6 +37,31 @@ namespace CareHomeMock.Controllers
                     _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
                 return _roleManager;
             }
+        }
+
+        bool _queried = false;
+        User _user = null;
+        public User CurrentUser
+        {
+            get
+            {
+                if (!_queried)
+                {
+                    _user = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                    _queried = true;
+                }
+                return _user;
+            }
+        }
+
+        // ----- Override -----
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         /// <summary>

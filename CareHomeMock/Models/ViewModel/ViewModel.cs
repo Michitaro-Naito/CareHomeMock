@@ -11,6 +11,7 @@ namespace CareHomeMock.Models
     public class CareManagerIndexVM
     {
         public int CareHomeId { get; set; }
+        public string CareHomeCode { get; set; }
         public List<CareHomeMock.Models.CareManager> CareManagers { get; set; }
     }
 
