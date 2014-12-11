@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CareHomeMock.Models;
+using CareHomeMock.Helper;
 
 namespace CareHomeMock.Controllers
 {
@@ -158,7 +159,7 @@ namespace CareHomeMock.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAdditionalData(CareManager model)
+        public ActionResult EditAdditionalData(CareManager model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -166,17 +167,15 @@ namespace CareHomeMock.Controllers
                 if (careManager == null)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                careManager.CurrentPatients = model.CurrentPatients;
-                careManager.AllowNewPatient = model.AllowNewPatient;
-                careManager.Career = model.Career;
-                careManager.Messages = model.Messages;
-                careManager.BlogUrls = model.BlogUrls;
-                careManager.企画立案力 = model.企画立案力;
-                careManager.行動実践力 = model.行動実践力;
-                careManager.関係構築力 = model.関係構築力;
-                careManager.マネジメント力 = model.マネジメント力;
-                careManager.医療知識 = model.医療知識;
-                careManager.介護知識 = model.介護知識;
+                // Uploads Image
+                if (file != null)
+                {
+                    BlobHelper.DeleteIfExists("mediafile", careManager.MediaFileDataId);
+                    careManager.MediaFileDataId = BlobHelper.Upload("mediafile", file, file.FileName);
+                }
+
+                // Updates SQL
+                model.CopyTo(ref careManager, "CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,企画立案力,行動実践力,関係構築力,マネジメント力,医療知識,介護知識");
                 db.SaveChanges();
 
                 Flash("保存されました。");

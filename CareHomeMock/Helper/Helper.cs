@@ -57,6 +57,29 @@ namespace CareHomeMock.Helper
             }
         }
 
+        /*class Foo
+        {
+            public int a, b, c;
+        }
+        public static void CopyTo<T>(ref T dest, T src, string commaSeparatedMembers)
+        {
+            var members = commaSeparatedMembers.Split(',');
+            foreach (var m in members)
+            {
+                var fieldInfo = typeof(T).GetField(m);
+                var propertyInfo = typeof(T).GetProperty(m);
+
+                if (fieldInfo == null && propertyInfo == null)
+                    throw new InvalidOperationException("Invalid field or property name: " + m);
+
+                if(fieldInfo != null)
+                    fieldInfo.SetValue(dest, fieldInfo.GetValue(src));
+                if (propertyInfo != null)
+                    propertyInfo.SetValue(dest, propertyInfo.GetValue(src));
+            }
+            return;
+        }*/
+
         /*public static PropertyInfo GetPropertyInfo<TSource, TProperty>(
             TSource source,
             Expression<Func<TSource, TProperty>> propertyLambda)

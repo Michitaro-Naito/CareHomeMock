@@ -27,13 +27,13 @@
             </div>
         </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.MediaFileDataId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaFileDataId)
                 @Html.ValidationMessageFor(model => model.MediaFileDataId)
             </div>
-        </div>
+        </div>*@
 
         @MyHelper.EditorFor(Html, m => m.Name)
 
@@ -62,11 +62,11 @@
                 @Html.ValidationMessageFor(model => model.Licenses)
             </div>
         </div>
-        @MyHelper.EditorFor(Html, m => m.CurrentPatients)
+        @*@MyHelper.EditorFor(Html, m => m.CurrentPatients)
         @MyHelper.EditorFor(Html, m => m.AllowNewPatient)
         @MyHelper.EditorFor(Html, m => m.Career, MyHelper.EditorType.TextArea)
         @MyHelper.EditorFor(Html, m => m.Messages, MyHelper.EditorType.TextArea)
-        @MyHelper.EditorFor(Html, m => m.BlogUrls, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.BlogUrls, MyHelper.EditorType.TextArea)*@
 
         @*<div class="form-group">
             @Html.LabelFor(model => model.TotalRating, new { @class = "control-label col-md-2" })

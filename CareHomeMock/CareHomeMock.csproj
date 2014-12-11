@@ -204,10 +204,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\BlobHelper.cs" />
     <Compile Include="Helper\DetailedDisplayAttribute.cs" />
     <Compile Include="Helper\Extension.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\HtmlHelperExtension.cs" />
+    <Compile Include="Helper\TagAttribute.cs" />
     <Compile Include="Migrations\201412021244573_Init.cs" />
     <Compile Include="Migrations\201412021244573_Init.Designer.cs">
       <DependentUpon>201412021244573_Init.cs</DependentUpon>
