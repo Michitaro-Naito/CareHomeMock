@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using CareHomeMock.Models;
 using System.Diagnostics;
 using CsvHelper;
+using CareHomeMock.Helper;
 
 namespace CareHomeMock.Controllers
 {
@@ -232,6 +233,7 @@ namespace CareHomeMock.Controllers
         /// CareHomeUser edits it's additional info.
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult EditAdditionalInfo(int? careHomeId)
         {
             if (careHomeId == null)
@@ -243,9 +245,17 @@ namespace CareHomeMock.Controllers
 
             return View(careHome);
         }
+
+        [Authorize]
         [HttpPost]
-        public ActionResult EditAdditionalInfo([Bind(Include = "CareHomeId,MediaFileDataId,Region,Traits,Messages")]CareHome careHome)
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAdditionalInfo(CareHome careHome, HttpPostedFileBase file)
         {
+            if (file != null && file.ContentLength > 200000)
+                ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
+
+            ModelState.Remove("CareHomeCode");
+
             if (ModelState.IsValid)
             {
                 var home = db.CareHomes.Find(careHome.CareHomeId);
@@ -253,7 +263,13 @@ namespace CareHomeMock.Controllers
                 home.Region = careHome.Region;
                 home.Traits = careHome.Traits;
                 home.Messages = careHome.Messages;
-                //db.Entry(careHome).State = EntityState.Modified;
+
+                if (file != null)
+                {
+                    BlobHelper.DeleteIfExists("mediafile", home.MediaFileDataId);
+                    home.MediaFileDataId = BlobHelper.Upload("mediafile", file, file.FileName);
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
