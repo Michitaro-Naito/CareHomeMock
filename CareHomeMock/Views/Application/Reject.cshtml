@@ -1,13 +1,13 @@
 ﻿@model CareHomeMock.Models.Application
 
 @{
-    var title = "削除";
+    var title = "拒否";
     ViewBag.Title = title;
 }
 
 <h2>@title</h2>
 
-<h3>この申請をただ削除します。申請者には通知されません。よろしいですか？</h3>
+<h3>この申請を拒否します。拒否された旨が申請者に通知されます。よろしいですか？</h3>
 <div>
     <h4>申請内容</h4>
     <hr />
@@ -73,8 +73,10 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
+        @Html.TextArea("noteForSender", new { @class = "form-control", placeholder = "例: 該当する施設は既に登録されております。" })
+
         <div class="form-actions no-color">
-            <input type="submit" value="削除する" class="btn btn-default" /> |
+            <input type="submit" value="拒否する" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

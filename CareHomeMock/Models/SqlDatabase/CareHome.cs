@@ -20,6 +20,7 @@ namespace CareHomeMock.Models
         /// Surrogate key.
         /// </summary>
         [Key]
+        [Display(Name="事業所通し番号")]
         public int CareHomeId { get; set; }
 
         /// <summary>
@@ -28,11 +29,13 @@ namespace CareHomeMock.Models
         [Required]
         [MaxLength(255)]
         [Index(IsUnique=true)]
+        [Display(Name="事業所ID")]
         public string CareHomeCode { get; set; }
 
         /// <summary>
         /// Is deactivated by Admin?
         /// </summary>
+        [Display(Name="無効化")]
         public bool Deactivated { get; set; }
 
         public int AreaId { get; set; }
@@ -51,11 +54,13 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Japanese address. City, street and more.
         /// </summary>
+        [Display(Name="所在地")]
         public string Address { get; set; }
 
         /// <summary>
         /// Telephone number like 090-1111-1111.
         /// </summary>
+        [Display(Name="Tel")]
         public string Tel { get; set; }
 
         /// <summary>
@@ -90,6 +95,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Name of company like "Foo Corporation".
         /// </summary>
+        [Display(Name="法人名称")]
         public string CompanyName { get; set; }
 
         /// <summary>

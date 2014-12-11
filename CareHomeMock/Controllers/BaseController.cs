@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using CareHomeMock.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net.Mail;
+using System.Net;
 
 namespace CareHomeMock.Controllers
 {
@@ -90,6 +92,22 @@ namespace CareHomeMock.Controllers
                 Reply = reply
             };
             TableHelper<Review>.Table.Insert(review);
+        }
+
+        protected void SendEmail(string to, string subject, string body)
+        {
+            var from = "info@carehome.jp";
+
+            var message = new MailMessage(from, to, subject, body);
+            message.BodyEncoding = System.Text.Encoding.GetEncoding(50220); // Shift-JIS
+            var smtp = new SmtpClient("hospia.jp", 587);
+            smtp.Credentials = new NetworkCredential("info@hospia.jp", "mgr57553830");
+            smtp.Send(message);
+        }
+
+        protected void SendEmailToAdmin(string subject, string body)
+        {
+            SendEmail("m-naito@amlitek.com", subject, body);
         }
 	}
 }

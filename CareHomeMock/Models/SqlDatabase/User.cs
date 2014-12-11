@@ -14,6 +14,16 @@ namespace CareHomeMock.Models
     /// </summary>
     public class User : Microsoft.AspNet.Identity.EntityFramework.IdentityUser
     {
+        /// <summary>
+        /// Email address of this User.
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Real full name of this User.
+        /// </summary>
+        public string Name { get; set; }
+
         public virtual ICollection<CareHome> CareHomes { get; set; }
 
         public virtual ICollection<CareManager> CareManager { get; set; }

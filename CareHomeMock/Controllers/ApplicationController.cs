@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CareHomeMock.Models;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace CareHomeMock.Controllers
 {
@@ -58,93 +60,128 @@ namespace CareHomeMock.Controllers
                 };
                 db.Applications.Add(application);
                 db.SaveChanges();
+                SendEmailToAdmin("[ケアマネ情報局] 事業所会員登録申請がありました", "先ほど申請を受理いたしました。管理画面をご確認ください。");
                 Flash("登録申請を送信しました。後ほど管理者がご連絡を差し上げます。");
                 return RedirectToAction("CareHomeInfo_BasicInfo", "Home", new { code = home.CareHomeCode });
             }
             return View(model);
         }
 
-        // GET: /Application/
+        /// <summary>
+        /// Admin views Applications.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles="Admin")]
         public ActionResult Index()
         {
             var applications = db.Applications.Include(a => a.CareHome);
             return View(applications.ToList());
         }
 
-        // GET: /Application/Details/5
-        public ActionResult Details(int? id)
+        /// <summary>
+        /// Admin confirms to approve.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        public ActionResult Approve(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Application application = db.Applications.Find(id);
+            var application = db.Applications.Find(id);
             if (application == null)
-            {
                 return HttpNotFound();
-            }
             return View(application);
         }
 
-        // GET: /Application/Create
-        public ActionResult Create()
-        {
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip");
-            return View();
-        }
-
-        // POST: /Application/Create
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
-        [HttpPost]
+        /// <summary>
+        /// Confirmed. Approve and notify.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        [HttpPost, ActionName("Approve")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ApplicationId,CareHomeId,Email,Name,Note")] Application application)
+        public async Task<ActionResult> ApproveConfirmed(int id, string noteForSender)
         {
-            if (ModelState.IsValid)
-            {
-                db.Applications.Add(application);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var application = db.Applications.Find(id);
+            if (application == null)
+                return HttpNotFound();
 
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", application.CareHomeId);
-            return View(application);
+            if (application.CareHome.User != null)
+                throw new InvalidOperationException("該当する事業所会員は既に登録されています。");
+
+            // Generates username and password.
+            var username = "carehome" + application.CareHome.CareHomeCode;
+            var password = System.Web.Security.Membership.GeneratePassword(12, 1);
+
+            // Registers CareHomeUser.
+            var user = new User() { UserName = username, Email = application.Email, Name = application.Name };
+            var result = await UserManager.CreateAsync(user, password);
+            if (!result.Succeeded)
+                throw new Exception("会員を登録できませんでした。");
+
+            var registeredUser = db.Users.FirstOrDefault(u => u.UserName == username);
+            if (registeredUser == null)
+                throw new Exception("登録されたはずの会員が見つかりませんでした。");
+
+            // Adds CareHome and deletes Application.
+            registeredUser.CareHomes.Add(application.CareHome);
+            db.Applications.Remove(application);
+            db.SaveChanges();
+
+            // Notifies Sender.
+            SendEmail(registeredUser.Email, "[ケアマネ情報局] 事業所会員として承認されました", string.Format("ID:{0} password:{1} 備考:{2}", username, password, noteForSender));
+
+            Flash(string.Format("承認されました。ID:{0}", username));
+            Debug.WriteLine(password);
+            return RedirectToAction("Index");
         }
 
-        // GET: /Application/Edit/5
-        public ActionResult Edit(int? id)
+        /// <summary>
+        /// Admin confirms to reject.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        public ActionResult Reject(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Application application = db.Applications.Find(id);
+            var application = db.Applications.Find(id);
             if (application == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", application.CareHomeId);
             return View(application);
         }
 
-        // POST: /Application/Edit/5
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
-        [HttpPost]
+        /// <summary>
+        /// Confirmed. Reject and notify.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        [HttpPost, ActionName("Reject")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ApplicationId,CareHomeId,Email,Name,Note")] Application application)
+        public ActionResult RejectConfirmed(int id, string noteForSender)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(application).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", application.CareHomeId);
-            return View(application);
+            var application = db.Applications.Find(id);
+            db.Applications.Remove(application);
+            db.SaveChanges();
+
+            // Notifies Sender.
+            SendEmail(application.Email, "[ケアマネ情報局] 事業所会員として承認されませんでした", string.Format("備考:{0}", noteForSender));
+
+            Flash("拒否されました。");
+
+            return RedirectToAction("Index");
         }
 
-        // GET: /Application/Delete/5
+        /// <summary>
+        /// Admin confirms just to delete.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -159,7 +196,12 @@ namespace CareHomeMock.Controllers
             return View(application);
         }
 
-        // POST: /Application/Delete/5
+        /// <summary>
+        /// Confirmed. Just delete and notify nobody.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -167,6 +209,7 @@ namespace CareHomeMock.Controllers
             Application application = db.Applications.Find(id);
             db.Applications.Remove(application);
             db.SaveChanges();
+            Flash("削除されました。");
             return RedirectToAction("Index");
         }
 

@@ -32,21 +32,25 @@ namespace CareHomeMock.Models
         /// <summary>
         /// IPAddress of sender like 192.168.100.1.
         /// </summary>
+        [Display(Name="IPアドレス")]
         public string IpAddress { get; set; }
 
         /// <summary>
         /// Email address of sender.
         /// </summary>
+        [Display(Name="ご担当者メールアドレス")]
         public string Email { get; set; }
 
         /// <summary>
         /// Fullnames of sender.
         /// </summary>
+        [Display(Name="ご担当者氏名")]
         public string Name { get; set; }
 
         /// <summary>
         /// Notes from sender to Admin.
         /// </summary>
+        [Display(Name="備考")]
         public string Note { get; set; }
     }
 }

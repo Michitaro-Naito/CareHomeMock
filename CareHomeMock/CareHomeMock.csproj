@@ -259,6 +259,10 @@
     <Compile Include="Migrations\201412101948245_Add_Application_IpAddress.Designer.cs">
       <DependentUpon>201412101948245_Add_Application_IpAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412110742426_Add_User_Email_and_Name.cs" />
+    <Compile Include="Migrations\201412110742426_Add_User_Email_and_Name.Designer.cs">
+      <DependentUpon>201412110742426_Add_User_Email_and_Name.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -588,6 +592,9 @@
     <Content Include="Views\MediaFile\Upload.cshtml" />
     <Content Include="Views\Shared\_CareHomeInfoMenu.cshtml" />
     <Content Include="Views\Application\Send.cshtml" />
+    <Content Include="Views\Application\Reject.cshtml" />
+    <Content Include="Views\Application\Approve.cshtml" />
+    <Content Include="Views\Tool\FlashMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -639,6 +646,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412101948245_Add_Application_IpAddress.resx">
       <DependentUpon>201412101948245_Add_Application_IpAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412110742426_Add_User_Email_and_Name.resx">
+      <DependentUpon>201412110742426_Add_User_Email_and_Name.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

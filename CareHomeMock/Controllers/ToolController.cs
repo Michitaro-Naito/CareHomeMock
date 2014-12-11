@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -14,6 +15,12 @@ namespace CareHomeMock.Controllers
     public class ToolController : BaseController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult FlashMessage(string message)
+        {
+            Flash(message);
+            return View();
+        }
 
         //
         // GET: /Tool/
