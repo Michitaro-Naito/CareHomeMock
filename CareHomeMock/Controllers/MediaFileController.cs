@@ -12,6 +12,10 @@ using System.Diagnostics;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using System.Drawing.Imaging;
+using CareHomeMock.Helper;
+using System.IO;
 
 namespace CareHomeMock.Controllers
 {
@@ -235,30 +239,30 @@ namespace CareHomeMock.Controllers
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public ActionResult Download(string fileName)
+        public ActionResult Download(string fileName, int maxWidth = 0, int maxHeight = 0)
         {
             if (fileName == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Debug.WriteLine("Downloading: " + fileName);
-            //var file = db.Files.Find(fileName);
-            //if (file == null)
-            //    return HttpNotFound();
-
-            // TODO: cache this
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = blobClient.GetContainerReference("mediafile");
-            container.CreateIfNotExists();
-
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
-            if (!blockBlob.Exists())
-                return HttpNotFound();
-
-            using (var mem = new System.IO.MemoryStream())
+            if (maxWidth != 0 || maxHeight != 0)
             {
-                blockBlob.DownloadToStream(mem);
-                return File(mem.ToArray(), blockBlob.Properties.ContentType);
+                // Returns thumbnail.
+                var bitmap = BlobHelper.DownloadAsBitmap("mediafile", fileName, maxWidth, maxHeight);
+                if (bitmap == null)
+                    return HttpNotFound();
+                using (var mem = new MemoryStream())
+                {
+                    bitmap.Save(mem, ImageFormat.Jpeg);
+                    return File(mem.ToArray(), "image/jpeg");
+                }
+            }
+            else
+            {
+                // Returns raw file.
+                var blob = BlobHelper.Download("mediafile", fileName);
+                if (blob == null)
+                    return HttpNotFound();
+                return File(blob.Item1, blob.Item2);
             }
         }
 

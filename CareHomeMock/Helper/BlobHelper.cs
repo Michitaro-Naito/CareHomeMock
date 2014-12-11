@@ -3,6 +3,8 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -131,6 +133,96 @@ namespace CareHomeMock.Helper
             var container = GetContainer(containerName);
             var blobToDelete = container.GetBlockBlobReference(filename);
             blobToDelete.DeleteIfExists();
+        }
+
+        /// <summary>
+        /// Downloads a raw file as a set of byte array and content type.
+        /// </summary>
+        /// <param name="containerName"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public static Tuple<byte[], string> Download(string containerName, string filename)
+        {
+            var container = GetContainer(containerName);
+            var blob = container.GetBlockBlobReference(filename);
+            if (!blob.Exists())
+                return null;
+
+            using (var mem = new MemoryStream())
+            {
+                blob.DownloadToStream(mem);
+                return Tuple.Create(mem.ToArray(), blob.Properties.ContentType);
+            }
+        }
+
+        /// <summary>
+        /// Downloads a file as an image.
+        /// Capable to resize.
+        /// </summary>
+        /// <param name="containerName"></param>
+        /// <param name="filename"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        public static Bitmap DownloadAsBitmap(string containerName, string filename, int maxWidth = 0, int maxHeight = 0)
+        {
+            var container = GetContainer(containerName);
+            var blob = container.GetBlockBlobReference(filename);
+            if (!blob.Exists())
+                return null;
+
+            switch (blob.Properties.ContentType)
+            {
+                case "image/jpeg":
+                case "image/png":
+                case "image/gif":
+                    break;
+
+                default:
+                    // This is not an image.
+                    return null;
+            }
+
+            Bitmap bitmap = null;
+            using (var mem = new MemoryStream())
+            {
+                try
+                {
+                    blob.DownloadToStream(mem);
+                    bitmap = new Bitmap(mem);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            if (maxWidth != 0 || maxHeight != 0)
+            {
+                // Resize
+                var w = (double)bitmap.Width;
+                var h = (double)bitmap.Height;
+                var aspect = w / h;
+
+                if (maxWidth != 0 && maxWidth < w)
+                {
+                    var scale = (maxWidth / w);
+                    w *= scale;
+                    h *= scale;
+                }
+
+                if (maxHeight != 0 && maxHeight < h)
+                {
+                    var scale = (maxHeight / h);
+                    w *= scale;
+                    h *= scale;
+                }
+
+                if(w != bitmap.Width || h != bitmap.Height)
+                    bitmap = new Bitmap(bitmap, new Size((int)w, (int)h));
+            }
+
+            return bitmap;
         }
     }
 }
