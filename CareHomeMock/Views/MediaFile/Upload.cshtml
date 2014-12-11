@@ -27,7 +27,7 @@
             @Html.LabelFor(m => m.File, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <span>アップロードする画像ファイルを選択してください：</span>
-                <input type="file" name="File" id="File" />
+                <input type="file" name="File" id="File" accept="image/jpeg, image/jpg, image/png, image/gif" />
                 @Html.ValidationMessageFor(m=>m.File)
             </div>
         </div>

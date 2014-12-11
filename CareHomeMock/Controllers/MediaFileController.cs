@@ -38,7 +38,7 @@ namespace CareHomeMock.Controllers
                 return HttpNotFound();
 
             var mediafiles = home.MediaFiles.OrderBy(f=>f.Order).ThenByDescending(f=>f.Updated).ToList();
-            return View(mediafiles);
+            return View(new MediaFileIndexVM() { CareHomeId = careHomeId.Value, MediaFiles = mediafiles });
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace CareHomeMock.Controllers
         /// If id is specified, overwrites an existing file.
         /// </summary>
         /// <returns></returns>
-        public ActionResult Upload(int careHomeId, int mediaFileId)
+        public ActionResult Upload(int careHomeId, int mediaFileId = 0)
         {
             if (careHomeId == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -101,6 +101,9 @@ namespace CareHomeMock.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(MediaFileUploadVM model)
         {
+            if (model.File != null && model.File.ContentLength > 200000)
+                ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
+
             MediaFile existing = null;
             if (model.MediaFileId != 0)
             {

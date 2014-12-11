@@ -125,4 +125,10 @@ namespace CareHomeMock.Models
         [DetailedDisplay(Placeholder="例: ○○の折にお会いした××です。")]
         public string Note { get; set; }
     }
+
+    public class MediaFileIndexVM
+    {
+        public int CareHomeId { get; set; }
+        public List<MediaFile> MediaFiles { get; set; }
+    }
 }

@@ -1,7 +1,8 @@
-﻿@model IEnumerable<CareHomeMock.Models.MediaFile>
+﻿@model CareHomeMock.Models.MediaFileIndexVM
 
 @{
-    ViewBag.Title = "Index";
+    var title = "写真と動画の管理";
+    ViewBag.Title = title;
 }
 @section scripts{
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -20,14 +21,12 @@
                     type: 'POST',
                     url: '/MediaFile/SaveOrder',
                     contentType: 'application/json; charset=utf-8',
-                    /*data: {
-                        orderedIds: orderedIds
-                    }*/
                     data: JSON.stringify({
                         orderedIds: orderedIds
                     })
                 }).done(function (data) {
                     console.info(data);
+                    location.reload();
                 });
             });
         });
@@ -36,32 +35,32 @@
 
 
 
-<h2>Index</h2>
+<h2>@title</h2>
 
 <p>
-    @Html.ActionLink("追加する", "Upload")
+    @Html.ActionLink("追加する", "Upload", new { careHomeId = Model.CareHomeId })
     <button type="button" id="SaveOrder" class="btn btn-default">並び順を保存する</button>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Updated)
+            @Html.DisplayNameFor(model => model.MediaFiles[0].Updated)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Order)
+            @Html.DisplayNameFor(model => model.MediaFiles[0].Order)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.MediaFiles[0].Type)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RowKey)/@Html.DisplayNameFor(m => m.YoutubeUrl)
+            @Html.DisplayNameFor(model => model.MediaFiles[0].RowKey)/@Html.DisplayNameFor(m => m.MediaFiles[0].YoutubeUrl)
         </th>
-        <th>@Html.DisplayNameFor(m => m.Description)</th>
+        <th>@Html.DisplayNameFor(m => m.MediaFiles[0].Description)</th>
         <th></th>
     </tr>
 
     <tbody id="sortable">
-        @foreach (var item in Model)
+        @foreach (var item in Model.MediaFiles)
         {
             <tr>
                 <td>
