@@ -331,7 +331,8 @@ namespace CareHomeMock.Controllers
                     CareManagerCount = h.CareManagers.Count,
                     ReviewCount = h.ReviewCount,
                     Rating = h.Rating,
-                    Messages = h.Messages
+                    Messages = h.Messages,
+                    MediaFileDataId = h.MediaFileDataId
                 }).ToList();
 
             return Json(new { count = count, careHomes = careHomes });
@@ -425,7 +426,8 @@ namespace CareHomeMock.Controllers
                 CareManagerName = m.Name,
                 Years = m.Years,
                 ReviewCount = m.ReviewsCount,
-                Rating = m.Rating
+                Rating = m.Rating,
+                MediaFileDataId = m.MediaFileDataId
             }).ToList();
 
             return Json(new 
