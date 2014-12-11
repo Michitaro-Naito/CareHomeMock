@@ -20,7 +20,7 @@
                     @if (f.Type == CareHomeMock.Models.MediaFile.MediaFileType.Image)
                     {
                         <a href="@Url.Action("Download", "MediaFile", new { fileName = f.RowKey })" target="_blank">
-                            <img style="max-width: 263px;" src="@Url.Action("Download", "MediaFile", new { fileName = f.RowKey })" />
+                            <img style="max-width: 263px;" src="@Url.Action("Download", "MediaFile", new { fileName = f.RowKey, maxWidth = 263, maxHeight = 263 })" />
                         </a>
                     }
                     else
