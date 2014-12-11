@@ -78,3 +78,25 @@
         </div>
     </div>
 }
+
+@helper MainImage(string fileName, int maxWidth, int maxHeight, bool link = false)
+{
+    var url = new System.Web.Mvc.UrlHelper(Context.Request.RequestContext);
+    if (!string.IsNullOrEmpty(fileName))
+    {
+        if (link)
+        {
+            <a href="@url.Action("Download", "MediaFile", new { fileName = fileName })" target="_blank">
+                <img src="@url.Action("Download", "MediaFile", new { fileName = fileName, maxWidth = maxWidth, maxHeight = maxHeight })" />
+            </a>
+        }
+        else
+        {
+            <img src="@url.Action("Download", "MediaFile", new { fileName = fileName, maxWidth = maxWidth, maxHeight = maxHeight })" />
+        }
+    }
+    else
+    {
+        <span>No Image</span>
+    }
+}

@@ -29,14 +29,7 @@
         <div class="search-rslt col-md-12">
             <div class="row">
                 <div class="col-md-4">
-                    @if (!string.IsNullOrEmpty(m.MediaFileDataId))
-                    {
-                        <img style="max-width: 263px;" src="@Url.Action("Download", "MediaFile", new { fileName = m.MediaFileDataId, maxWidth = 190, maxHeight = 190 })" />
-                    }
-                    else
-                    {
-                        <span>No Image</span>
-                    }
+                    @MyHelper.MainImage(m.MediaFileDataId, 190, 190, false)
                 </div>
                 <div class="col-md-8">
                     <h3><a href="@Url.Action("CareManagerInfo", "Home", new { id = m.CareManagerId })" target="_blank">@m.Name</a></h3>
