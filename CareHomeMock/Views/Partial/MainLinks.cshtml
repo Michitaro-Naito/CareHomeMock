@@ -1,0 +1,11 @@
+﻿@model List<CareHomeMock.Models.StaticPage>
+@{
+    Layout = null;
+}
+
+<ul>
+    @foreach (var p in Model)
+    {
+        <li><a href="@Url.Action("Details", "StaticPage", new{ id = p.StaticPageId })"><i class="fa fa-angle-double-right"></i>@p.Title</a></li>
+    }
+</ul>

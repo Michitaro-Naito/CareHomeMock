@@ -83,13 +83,7 @@
                         <!--right navigation start-->
                         <div class="right-navigation">
                             <h3>Main Links</h3>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>About us</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Press release</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Terms of service</a></li></a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Privacy Policy</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Careers</a></li>
-                            </ul>
+                            <div>@Html.Action("MainLinks", "Partial")</div>
                         </div>
                         <!--right navigation end-->
                         <!--right add-->
@@ -124,15 +118,7 @@
                     </div>
                     <div class="col-md-4">
                         <h4>Main Links</h4>
-                        <div class="ftr-navigation">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>About us</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Press release</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Terms of service</a></li></a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Privacy Policy</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>Careers</a></li>
-                            </ul>
-                        </div>
+                        <div class="ftr-navigation">@Html.Action("MainLinks", "Partial")</div>
                     </div>
                     <div class="col-md-4">
                         <h4>Follow us</h4>

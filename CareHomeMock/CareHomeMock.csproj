@@ -199,6 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MediaFileController.cs" />
+    <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Global.asax.cs">
@@ -597,6 +598,7 @@
     <Content Include="Views\Home\AdminMenu.cshtml" />
     <Content Include="Views\Home\CareHomeMenu.cshtml" />
     <Content Include="Views\Home\CareManagerMenu.cshtml" />
+    <Content Include="Views\Partial\MainLinks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
