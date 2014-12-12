@@ -92,5 +92,40 @@ namespace CareHomeMock.Helper
                 }
             }
         }
+
+        /// <summary>
+        /// Converts UTC to JST(Japan Standard Time).
+        /// </summary>
+        /// <param name="utc"></param>
+        /// <returns></returns>
+        public static DateTime ToJst(this DateTime utc)
+        {
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
+            var jst = TimeZoneInfo.ConvertTimeFromUtc(utc, timeZone);
+            return jst;
+            //Console.WriteLine("UTC: " + utc.ToString("G") + " -> JST: " + jst2.ToString("G"));
+        }
+
+        /// <summary>
+        /// Converts UTC DateTime to JST string like "2014/1/1 0:00:00 +000" => "2014/1/1 9:00"
+        /// </summary>
+        /// <param name="utc"></param>
+        /// <returns></returns>
+        public static string ToJstString(this DateTime utc)
+        {
+            var jst = utc.ToJst();
+            return jst.ToString("yyyy/MM/dd h:mm");
+        }
+
+        /// <summary>
+        /// Converts UTC DateTime to JST string like "2014/1/1 0:00:00 +000" => "2014/1/1"
+        /// </summary>
+        /// <param name="utc"></param>
+        /// <returns></returns>
+        public static string ToJstDateString(this DateTime utc)
+        {
+            var jst = utc.ToJst();
+            return jst.ToString("yyyy/MM/dd");
+        }
     }
 }

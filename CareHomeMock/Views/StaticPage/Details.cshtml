@@ -1,5 +1,7 @@
 ﻿@model CareHomeMock.Models.StaticPage
-
+@{
+    ViewBag.Title = Model.Title;
+}
 <h2>@Model.Title</h2>
-<p>作成:@Model.Created 更新:@Model.Updated</p>
+<p>作成:@Model.Created.ToJstString() 更新:@Model.Updated.ToJstString()</p>
 <div>@Html.Raw(Model.Html)</div>
