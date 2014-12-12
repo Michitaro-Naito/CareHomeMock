@@ -37,17 +37,15 @@
 
 <h2>@title</h2>
 
+<p>行をドラッグ＆ドロップで並べ替えられます。</p>
 <p>
-    @Html.ActionLink("追加する", "Upload", new { careHomeId = Model.CareHomeId })
+    <a href="@Url.Action("Upload", new { code = Model.CareHomeCode })" class="btn btn-default">追加する</a>
     <button type="button" id="SaveOrder" class="btn btn-default">並び順を保存する</button>
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.MediaFiles[0].Updated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaFiles[0].Order)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MediaFiles[0].Type)
@@ -64,11 +62,7 @@
         {
             <tr>
                 <td>
-                    <span class="MediaFileId">@Html.DisplayFor(m => item.MediaFileId)</span>
                     @Html.DisplayFor(modelItem => item.Updated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Type)
@@ -93,10 +87,12 @@
                     {
                         <a href="@string.Format("https://youtube.com/watch?v={0}", item.YoutubeUrl)" target="_blank">表示</a>
                     } |
-                    @Html.ActionLink("編集", "Upload", new { careHomeId = item.CareHomeId, mediaFileId = item.MediaFileId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.MediaFileId })
+                    @Html.ActionLink("編集", "Upload", new { mediaFileId = item.MediaFileId }) |
+                    @Html.ActionLink("削除", "Delete", new { mediaFileId = item.MediaFileId })
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<div>@Html.ActionLink("Back to Menu", "CareHomeMenu", "Home")</div>

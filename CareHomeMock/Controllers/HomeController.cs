@@ -13,7 +13,41 @@ namespace CareHomeMock.Controllers
 {
     public class HomeController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        [Authorize]
+        public ActionResult GotoMenu()
+        {
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("AdminMenu");
+
+            if (CurrentUser.CareHomes.Count > 0)
+            {
+                var home = CurrentUser.CareHomes.First();
+                return RedirectToAction("CareHomeMenu", new { code = home.CareHomeCode });
+            }
+
+            if (CurrentUser.CareManager.Count > 0)
+            {
+                var careManager = CurrentUser.CareManager.First();
+                return RedirectToAction("CareManagerMenu", new { careManagerId = careManager.CareManagerId });
+            }
+
+            return HttpNotFound();
+        }
+
+        public ActionResult AdminMenu()
+        {
+            return View();
+        }
+
+        public ActionResult CareHomeMenu()
+        {
+            return View();
+        }
+
+        public ActionResult CareManagerMenu()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Map Search
@@ -440,15 +474,6 @@ namespace CareHomeMock.Controllers
         public ActionResult QRCode()
         {
             return View();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿@model CareHomeMock.Models.CareManagerIndexVM
 
 @{
-    ViewBag.Title = "Index";
+    var title = "ケアマネ一覧";
+    ViewBag.Title = title;
 }
 
-<h2>ケアマネ一覧</h2>
+<h2>@title</h2>
 
 <p>
     @Html.ActionLink("ケアマネ情報を追加する", "Edit", new { code = Model.CareHomeCode, careManagerId = (int?)null })
@@ -58,10 +59,14 @@
             }
         </td>
         <td>
-            @Html.ActionLink("編集", "Edit", new { careHomeId = item.CareHome.CareHomeId, careManagerId = item.CareManagerId }) |
-            @Html.ActionLink("削除", "Delete", new { careManagerId = item.CareManagerId })
+            @Html.ActionLink("編集", "Edit", new { code = item.CareHome.CareHomeCode, careManagerId = item.CareManagerId }) |
+            @Html.ActionLink("削除", "Delete", new { code = item.CareHome.CareHomeCode, careManagerId = item.CareManagerId })
         </td>
     </tr>
 }
 
 </table>
+
+<div>
+    @Html.ActionLink("Back to Menu", "CareHomeMenu", "Home")
+</div>

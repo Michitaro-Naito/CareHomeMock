@@ -15,6 +15,8 @@ namespace CareHomeMock
 
             routes.RouteExistingFiles = true;
 
+
+
             // CareHomeSearch
             routes.MapRoute(
                 name: "CareHomeSearch",
@@ -108,18 +110,76 @@ namespace CareHomeMock
 
 
 
-            // CareManagerIndex
+
+            // ----- Admin -----
+
+            routes.MapRoute(
+                name: "Admin",
+                url: "管理者メニュー",
+                defaults: new { controller = "Home", action = "AdminMenu" }
+            );
+
+
+
+            // ----- CareHome -----
+
+            routes.MapRoute(
+                name: "CareHomeMenu",
+                url: "事業所管理/{code}",
+                defaults: new { controller = "Home", action = "CareHomeMenu", code = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
                 name: "CareManagerIndex",
                 url: "事業所管理/{code}/ケアマネ",
                 defaults: new { controller = "CareManager", action = "Index", code = UrlParameter.Optional }
             );
 
-            // CareManagerEdit
             routes.MapRoute(
                 name: "CareManagerEdit",
                 url: "事業所管理/{code}/ケアマネ/編集/{careManagerId}",
                 defaults: new { controller = "CareManager", action = "Edit", code = UrlParameter.Optional, careManagerId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "CareManager.Delete",
+                url: "事業所管理/{code}/ケアマネ/削除/{careManagerId}",
+                defaults: new { controller = "CareManager", action = "Delete", code = UrlParameter.Optional, careManagerId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "MediaFile.Index",
+                url: "事業所管理/{code}/写真動画",
+                defaults: new { controller = "MediaFile", action = "Index", code = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "MediaFile.Upload",
+                url: "事業所管理/{code}/写真動画/編集/{mediaFileId}",
+                defaults: new { controller = "MediaFile", action = "Upload", code = UrlParameter.Optional, mediaFileId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "MediaFile.Delete",
+                url: "事業所管理/{code}/写真動画/削除/{mediaFileId}",
+                defaults: new { controller = "MediaFile", action = "Delete", code = UrlParameter.Optional, mediaFileId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "CareHome.EditAdditionalInfo",
+                url: "事業所管理/{code}/追加情報編集",
+                defaults: new { controller = "CareHome", action = "EditAdditionalInfo", code = UrlParameter.Optional }
+            );
+
+
+
+
+            // ----- CareManager -----
+
+            routes.MapRoute(
+                name: "CareManagerMenu",
+                url: "ケアマネ管理/{careManagerId}",
+                defaults: new { controller = "Home", action = "CareManagerMenu", careManagerId = UrlParameter.Optional }
             );
 
 

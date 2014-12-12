@@ -26,19 +26,19 @@ namespace CareHomeMock.Controllers
         /// <summary>
         /// CareHome views and arranges it's files.
         /// </summary>
-        /// <param name="careHomeId"></param>
+        /// <param name="code"></param>
         /// <returns></returns>
-        public ActionResult Index(int? careHomeId)
+        public ActionResult Index(string code)
         {
-            if (careHomeId == null)
+            if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var home = db.CareHomes.Find(careHomeId);
+            var home = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (home == null)
                 return HttpNotFound();
 
             var mediafiles = home.MediaFiles.OrderBy(f=>f.Order).ThenByDescending(f=>f.Updated).ToList();
-            return View(new MediaFileIndexVM() { CareHomeId = careHomeId.Value, MediaFiles = mediafiles });
+            return View(new MediaFileIndexVM() { CareHomeCode = code, MediaFiles = mediafiles });
         }
 
         /// <summary>
@@ -69,12 +69,12 @@ namespace CareHomeMock.Controllers
         /// If id is specified, overwrites an existing file.
         /// </summary>
         /// <returns></returns>
-        public ActionResult Upload(int careHomeId, int mediaFileId = 0)
+        public ActionResult Upload(string code, int mediaFileId = 0)
         {
-            if (careHomeId == 0)
+            if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var careHome = db.CareHomes.Find(careHomeId);
+            var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
 
@@ -86,7 +86,7 @@ namespace CareHomeMock.Controllers
                     return HttpNotFound();
             }
 
-            var model = new MediaFileUploadVM() { MediaFileId = mediaFileId, CareHomeId = careHomeId };
+            var model = new MediaFileUploadVM() { MediaFileId = mediaFileId, CareHomeId = careHome.CareHomeId };
             if (existing != null)
             {
                 model.MediaFileType = existing.Type;
@@ -272,15 +272,15 @@ namespace CareHomeMock.Controllers
         /// <summary>
         /// CareHome deletes it's file.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="mediaFileId"></param>
         /// <returns></returns>
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? mediaFileId)
         {
-            if (id == null)
+            if (mediaFileId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MediaFile mediafile = db.MediaFiles.Find(id);
+            MediaFile mediafile = db.MediaFiles.Find(mediaFileId);
             if (mediafile == null)
             {
                 return HttpNotFound();
@@ -290,9 +290,9 @@ namespace CareHomeMock.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int mediaFileId)
         {
-            MediaFile mediafile = db.MediaFiles.Find(id);
+            MediaFile mediafile = db.MediaFiles.Find(mediaFileId);
 
             // Removes from Blob
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));

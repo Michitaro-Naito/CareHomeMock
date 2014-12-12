@@ -116,13 +116,13 @@ namespace CareHomeMock.Controllers
         }
 
         // GET: /CareManager/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? careManagerId)
         {
-            if (id == null)
+            if (careManagerId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CareManager caremanager = db.CareManagers.Find(id);
+            CareManager caremanager = db.CareManagers.Find(careManagerId);
             if (caremanager == null)
             {
                 return HttpNotFound();
@@ -133,9 +133,9 @@ namespace CareHomeMock.Controllers
         // POST: /CareManager/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int careManagerId)
         {
-            CareManager caremanager = db.CareManagers.Find(id);
+            CareManager caremanager = db.CareManagers.Find(careManagerId);
             db.CareManagers.Remove(caremanager);
             db.SaveChanges();
             return RedirectToAction("Index");

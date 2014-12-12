@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201412111247501_Add_EmailVerification_Email.Designer.cs">
       <DependentUpon>201412111247501_Add_EmailVerification_Email.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412120105378_Required_CareManager_Email.cs" />
+    <Compile Include="Migrations\201412120105378_Required_CareManager_Email.Designer.cs">
+      <DependentUpon>201412120105378_Required_CareManager_Email.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -545,9 +549,7 @@
     <Content Include="Views\StaticPage\Delete.cshtml" />
     <Content Include="Views\StaticPage\Edit.cshtml" />
     <Content Include="Views\StaticPage\Index.cshtml" />
-    <Content Include="Views\CareManager\Create.cshtml" />
     <Content Include="Views\CareManager\Delete.cshtml" />
-    <Content Include="Views\CareManager\Details.cshtml" />
     <Content Include="Views\CareManager\Edit.cshtml" />
     <Content Include="Views\CareManager\Index.cshtml" />
     <Content Include="Views\Application\Create.cshtml" />
@@ -580,10 +582,7 @@
     <Content Include="Views\CareHome\Index.cshtml" />
     <Content Include="Views\CareHome\UploadCsv.cshtml" />
     <Content Include="Views\CareHome\EditAdditionalInfo.cshtml" />
-    <Content Include="Views\MediaFile\Create.cshtml" />
     <Content Include="Views\MediaFile\Delete.cshtml" />
-    <Content Include="Views\MediaFile\Details.cshtml" />
-    <Content Include="Views\MediaFile\Edit.cshtml" />
     <Content Include="Views\MediaFile\Index.cshtml" />
     <Content Include="Views\Home\CareHomeSearch.cshtml" />
     <Content Include="Views\Home\CareManagerSearch.cshtml" />
@@ -603,6 +602,9 @@
     <Content Include="Views\Application\Approve.cshtml" />
     <Content Include="Views\Tool\FlashMessage.cshtml" />
     <Content Include="Views\CareManager\EditAdditionalData.cshtml" />
+    <Content Include="Views\Home\AdminMenu.cshtml" />
+    <Content Include="Views\Home\CareHomeMenu.cshtml" />
+    <Content Include="Views\Home\CareManagerMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -661,6 +663,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412111247501_Add_EmailVerification_Email.resx">
       <DependentUpon>201412111247501_Add_EmailVerification_Email.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412120105378_Required_CareManager_Email.resx">
+      <DependentUpon>201412120105378_Required_CareManager_Email.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

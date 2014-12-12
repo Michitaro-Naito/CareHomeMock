@@ -39,6 +39,8 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Email address like foo@example.com
         /// </summary>
+        [Required]
+        [EmailAddress]
         [Display(Name="メールアドレス")]
         [DetailedDisplay(Placeholder="例: foo@example.com")]
         public string Email { get; set; }

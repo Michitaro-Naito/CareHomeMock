@@ -1,9 +1,10 @@
 ﻿@model CareHomeMock.Models.CareHome
 @{
-    ViewBag.Title = "EditAdditionalInfo";
+    var title = "追加情報編集";
+    ViewBag.Title = title;
 }
 
-<h2>EditAdditionalInfo</h2>
+<h2>@title</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new{ enctype = "multipart/form-data" }))
 {
@@ -15,37 +16,9 @@
         @Html.ValidationSummary(false)
         @Html.HiddenFor(model => model.CareHomeId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MediaFileDataId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MediaFileDataId)
-                @Html.ValidationMessageFor(model => model.MediaFileDataId)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Region, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Region)
-                @Html.ValidationMessageFor(model => model.Region)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Traits, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Traits)
-                @Html.ValidationMessageFor(model => model.Traits)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Messages, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Messages)
-                @Html.ValidationMessageFor(model => model.Messages)
-            </div>
-        </div>
+        @MyHelper.EditorFor(Html, m => m.Region, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.Traits, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.Messages, MyHelper.EditorType.TextArea)
 
         <div class="form-group">
             <label class="control-label col-md-2">メイン画像</label>
@@ -57,8 +30,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="保存する" class="btn btn-primary btn-block" />
             </div>
         </div>
     </div>
 }
+
+<div>@Html.ActionLink("Back to Menu", "CareHomeMenu", "Home")</div>

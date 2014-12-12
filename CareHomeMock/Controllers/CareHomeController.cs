@@ -13,7 +13,7 @@ using CareHomeMock.Helper;
 
 namespace CareHomeMock.Controllers
 {
-    public class CareHomeController : Controller
+    public class CareHomeController : BaseController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -21,7 +21,7 @@ namespace CareHomeMock.Controllers
         public ActionResult Index()
         {
             var carehomes = db.CareHomes.Include(c => c.Area);
-            return View(carehomes.ToList());
+            return View(carehomes.Take(50).ToList());
         }
 
         // GET: /CareHome/Create
@@ -234,12 +234,12 @@ namespace CareHomeMock.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        public ActionResult EditAdditionalInfo(int? careHomeId)
+        public ActionResult EditAdditionalInfo(string code)
         {
-            if (careHomeId == null)
+            if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var careHome = db.CareHomes.Find(careHomeId);
+            var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
 
@@ -271,7 +271,9 @@ namespace CareHomeMock.Controllers
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+
+                Flash("保存しました。");
+                return RedirectToAction("CareHomeMenu", "Home");
             }
             return View(careHome);
         }

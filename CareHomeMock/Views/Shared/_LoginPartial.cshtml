@@ -4,8 +4,7 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        <span>ID:<span>@User.Identity.Name</span></span>
-        
+        @Html.ActionLink("ID: " + User.Identity.Name, "GotoMenu", "Home")
         <button class="login-btn" onclick="document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out"></i>Logout</button>
     }
 }

@@ -1,12 +1,13 @@
 ﻿@model CareHomeMock.Models.MediaFileUploadVM
 @{
-    ViewBag.Title = "Upload";
+    var title = "写真/動画を編集する";
+    ViewBag.Title = title;
 }
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">
-        <h2>画像/動画を追加する</h2>
+        <h2>@title</h2>
 
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -52,8 +53,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="保存する" class="btn btn-primary" />
+                <input type="submit" value="保存する" class="btn btn-primary btn-block" />
             </div>
         </div>
     </div>
 }
+
+<div>@Html.ActionLink("Back to List", "Index")</div>

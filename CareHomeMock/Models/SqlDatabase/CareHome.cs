@@ -171,16 +171,19 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Region of service.
         /// </summary>
+        [Display(Name="対応可能地域")]
         public string Region { get; set; }
 
         /// <summary>
         /// Traits and points of this CareHome.
         /// </summary>
+        [Display(Name="特徴・セールスポイント")]
         public string Traits { get; set; }
 
         /// <summary>
         /// Messages from this CareHome.
         /// </summary>
+        [Display(Name="メッセージ")]
         public string Messages { get; set; }
 
         /// <summary>

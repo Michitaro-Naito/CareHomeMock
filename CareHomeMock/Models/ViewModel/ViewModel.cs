@@ -128,7 +128,7 @@ namespace CareHomeMock.Models
 
     public class MediaFileIndexVM
     {
-        public int CareHomeId { get; set; }
+        public string CareHomeCode { get; set; }
         public List<MediaFile> MediaFiles { get; set; }
     }
 }
