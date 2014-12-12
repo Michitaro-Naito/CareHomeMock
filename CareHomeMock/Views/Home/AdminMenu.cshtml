@@ -1,7 +1,12 @@
-﻿<h2>管理メニュー</h2>
+﻿@{
+    var title = "管理メニュー";
+    ViewBag.Title = title;
+}
+<h2>@title</h2>
 
 <ul>
     <li>@Html.ActionLink("事業所管理", "Index", "CareHome")</li>
+    <li>@Html.ActionLink("申請管理", "Index", "Application")</li>
     <li>@Html.ActionLink("ページ管理", "Index", "StaticPage")</li>
     <li>@Html.ActionLink("ログ管理", "Index", "Log")</li>
 </ul>

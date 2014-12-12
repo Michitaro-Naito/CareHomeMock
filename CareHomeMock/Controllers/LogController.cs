@@ -15,6 +15,7 @@ namespace CareHomeMock.Controllers
     /// <summary>
     /// Admin controls Logs here.
     /// </summary>
+    [Authorize(Roles = "Admin")]
     public class LogController : BaseController
     {
         //

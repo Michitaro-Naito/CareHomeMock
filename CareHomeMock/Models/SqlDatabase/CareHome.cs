@@ -38,6 +38,7 @@ namespace CareHomeMock.Models
         [Display(Name="無効化")]
         public bool Deactivated { get; set; }
 
+        [Display(Name="市区町村")]
         public int AreaId { get; set; }
 
         /// <summary>
@@ -49,6 +50,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Japanese ZIP address.
         /// </summary>
+        [Display(Name="郵便番号")]
         public string Zip { get; set; }
 
         /// <summary>
@@ -71,13 +73,16 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Website URL of this CareHome like "http://example.com/".
         /// </summary>
+        [Display(Name="公式サイトURL")]
         public string WebsiteUrl { get; set; }
 
         /// <summary>
         /// When this CareHome established.
         /// </summary>
+        [Display(Name="開業日")]
         public DateTime Established { get; set; }
 
+        [Display(Name="運営年数")]
         public int Years
         {
             get
@@ -90,6 +95,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Type of company like "営利法人(Corporation)", "非営利法人(NPO)", "自営業(Individual Company)" etc.
         /// </summary>
+        [Display(Name="法人種別")]
         public CompanyType CompanyType { get; set; }
 
         /// <summary>
@@ -101,11 +107,13 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Name of chief like "田中太郎".
         /// </summary>
+        [Display(Name="施設管理者氏名")]
         public string ChiefName { get; set; }
 
         /// <summary>
         /// Title of chief like "施設長", "最高経営責任者" etc.
         /// </summary>
+        [Display(Name="施設管理者職名")]
         public string ChiefJobTitle { get; set; }
 
         // For CityCode, see above.
@@ -113,16 +121,19 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Longitude of this CareHome. "fX" in CSV.
         /// </summary>
+        [Display(Name="経度")]
         public double Longitude { get; set; }
 
         /// <summary>
         /// Latitude of this CareHome. "fY" in CSV.
         /// </summary>
+        [Display(Name="緯度")]
         public double Latitude { get; set; }
 
         /// <summary>
         /// When this information is updated. (NOT record.)
         /// </summary>
+        [Display(Name="情報更新日")]
         public DateTime DataUpdated { get; set; }
 
         // ----- Professional parameters to display -----
@@ -161,6 +172,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Email address like foo@example.com
         /// </summary>
+        [Display(Name="メールアドレス")]
         public string Email { get; set; }
 
         /// <summary>

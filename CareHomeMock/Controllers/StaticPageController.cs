@@ -18,12 +18,14 @@ namespace CareHomeMock.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /StaticPage/
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.StaticPage.ToList());
         }
 
         // GET: /StaticPage/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             StaticPage staticPage;
@@ -44,6 +46,7 @@ namespace CareHomeMock.Controllers
         // POST: /StaticPage/Edit/5
         // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
         // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="StaticPageId,Created,Updated,Order,Title,Html")] StaticPage staticpage)
@@ -67,6 +70,7 @@ namespace CareHomeMock.Controllers
         }
 
         // GET: /StaticPage/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -82,6 +86,7 @@ namespace CareHomeMock.Controllers
         }
 
         // POST: /StaticPage/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
