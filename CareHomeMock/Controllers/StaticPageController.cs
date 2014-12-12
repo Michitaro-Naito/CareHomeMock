@@ -17,6 +17,14 @@ namespace CareHomeMock.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult Details(int? id)
+        {
+            var page = db.StaticPage.Find(id);
+            if (page == null)
+                return HttpNotFound();
+            return View(page);
+        }
+
         // GET: /StaticPage/
         [Authorize(Roles = "Admin")]
         public ActionResult Index()

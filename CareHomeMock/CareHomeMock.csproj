@@ -599,6 +599,7 @@
     <Content Include="Views\Home\CareHomeMenu.cshtml" />
     <Content Include="Views\Home\CareManagerMenu.cshtml" />
     <Content Include="Views\Partial\MainLinks.cshtml" />
+    <Content Include="Views\StaticPage\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

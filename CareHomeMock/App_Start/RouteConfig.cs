@@ -108,6 +108,11 @@ namespace CareHomeMock
                 defaults: new { controller = "MediaFile", action = "Download", fileName = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "StaticPage.Details",
+                url: "ページ/{id}",
+                defaults: new { controller = "StaticPage", action = "Details", id = UrlParameter.Optional }
+            );
 
 
 

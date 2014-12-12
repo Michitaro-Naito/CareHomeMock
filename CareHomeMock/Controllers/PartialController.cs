@@ -15,7 +15,7 @@ namespace CareHomeMock.Controllers
             {
                 var pages = db.StaticPage
                     .OrderBy(p => p.Order)
-                    .ThenByDescending(p => p.Created)
+                    .ThenByDescending(p => p.Updated)
                     .ToList();
 
                 return View(pages);
