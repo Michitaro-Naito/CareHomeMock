@@ -83,12 +83,12 @@ namespace CareHomeMock.Controllers
         /// <param name="message"></param>
         protected void Flash(string message)
         {
-            var currentMessage = "";
-            var currentCookie = Request.Cookies["__FlashMessage"];
-            if (currentCookie != null)
-                currentMessage += currentCookie.Value;
-            currentMessage += message;
-            Response.Cookies.Add(new HttpCookie("__FlashMessage", currentMessage));
+            //var currentMessage = "";
+            //var currentCookie = Request.Cookies["__FlashMessage"];
+            //if (currentCookie != null)
+            //    currentMessage += currentCookie.Value;
+            //currentMessage += message;
+            Response.Cookies.Add(new HttpCookie("__FlashMessage", HttpUtility.UrlEncode(message)));
         }
 
         /// <summary>
