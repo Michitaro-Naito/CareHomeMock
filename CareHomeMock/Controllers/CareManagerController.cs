@@ -101,12 +101,18 @@ namespace CareHomeMock.Controllers
                     db.SaveChanges();
 
                     // Notifies CareManager to verify.
-                    SendEmail(caremanager.Email, "[ケアマネ情報局] ケアマネ会員認証", "URL" + verification.VerificationCode);
+                    SendEmail(caremanager.Email, "[ケアマネ情報局] ケアマネ会員認証", "URL: " + Url.Action("Verify", "EmailVerification", new { verificationCode = verification.VerificationCode}, Request.Url.Scheme));
                 }
                 else
                 {
                     // Edit
-                    db.Entry(caremanager).State = EntityState.Modified;
+                    var entry = db.Entry(caremanager);
+                    entry.State = EntityState.Unchanged;
+                    entry.Property(p => p.Email).IsModified = true;
+                    entry.Property(p => p.Name).IsModified = true;
+                    entry.Property(p => p.Gender).IsModified = true;
+                    entry.Property(p => p.Licensed).IsModified = true;
+                    entry.Property(p => p.Birthday).IsModified = true;
                     db.SaveChanges();
                 }
                 return RedirectToAction("Index");

@@ -60,6 +60,8 @@ namespace CareHomeMock.Controllers
                 {
                     // Edit
                     db.Entry(carehome).State = EntityState.Modified;
+                    db.Entry(carehome).Property(h => h.UserId).IsModified = false;
+                    db.Entry(carehome).Property(h => h.CareManagers).IsModified = false;
                 }
                 db.SaveChanges();
                 return RedirectToAction("Index");
