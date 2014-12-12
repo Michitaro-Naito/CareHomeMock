@@ -62,7 +62,7 @@ namespace CareHomeMock.Controllers
             return View();
         }
 
-        [OutputCache(Duration=300)]
+        //[OutputCache(Duration=300)]
         public ActionResult CareHomeSearch()
         {
             return View();
@@ -211,7 +211,7 @@ namespace CareHomeMock.Controllers
         }
 
         [HttpPost]
-        [OutputCache(Duration=300)]
+        //[OutputCache(Duration=300)]
         public ActionResult GetSelectOptions()
         {
             var prefectures = db.Areas
@@ -299,7 +299,7 @@ namespace CareHomeMock.Controllers
         }
 
         [HttpPost]
-        [OutputCache(Duration = 300, VaryByParam = "prefectureCode;cityCode;companyType;keyword;page;sortField;descending")]
+        //[OutputCache(Duration = 300, VaryByParam = "prefectureCode;cityCode;companyType;keyword;page;sortField;descending")]
         public ActionResult GetCareHomes(int? prefectureCode, int? cityCode, CompanyType? companyType, string keyword, int? page, string sortField, bool descending = false)
         {
             // Active

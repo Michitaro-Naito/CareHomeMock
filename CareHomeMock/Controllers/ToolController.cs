@@ -251,6 +251,11 @@ namespace CareHomeMock.Controllers
             return null;
         }
 
+        public void EmailTest()
+        {
+            SendEmailToAdmin("Hi", "Hello");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -156,12 +156,12 @@ namespace CareHomeMock.Controllers
         /// <param name="body"></param>
         protected void SendEmail(string to, string subject, string body)
         {
-            var from = "info@carehome.jp";
+            var from = "hospia-debug@amlitek.com";
 
             var message = new MailMessage(from, to, subject, body);
             message.BodyEncoding = System.Text.Encoding.GetEncoding(50220); // Shift-JIS
-            var smtp = new SmtpClient("hospia.jp", 587);
-            smtp.Credentials = new NetworkCredential("info@hospia.jp", "mgr57553830");
+            var smtp = new SmtpClient("smtp.lolipop.jp", 587);
+            smtp.Credentials = new NetworkCredential("hospia-debug@amlitek.com", "Qom72demean");
             smtp.Send(message);
         }
 

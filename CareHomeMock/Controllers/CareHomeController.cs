@@ -277,7 +277,6 @@ namespace CareHomeMock.Controllers
             if (ModelState.IsValid)
             {
                 var home = db.CareHomes.Find(careHome.CareHomeId);
-                home.MediaFileDataId = careHome.MediaFileDataId;
                 home.Region = careHome.Region;
                 home.Traits = careHome.Traits;
                 home.Messages = careHome.Messages;
