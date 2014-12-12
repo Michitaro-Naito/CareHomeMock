@@ -23,16 +23,19 @@ namespace CareHomeMock.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /File/
+        [Authorize(Roles="Admin")]
         public ActionResult Index()
         {
             return View(db.Files.ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Upload()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
@@ -112,6 +115,7 @@ namespace CareHomeMock.Controllers
         }
 
         // GET: /File/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -127,6 +131,7 @@ namespace CareHomeMock.Controllers
         }
 
         // POST: /File/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id)

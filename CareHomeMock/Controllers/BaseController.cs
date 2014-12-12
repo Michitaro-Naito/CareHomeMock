@@ -18,6 +18,10 @@ namespace CareHomeMock.Controllers
         protected ApplicationDbContext db = new ApplicationDbContext();
 
         UserManager<User> _userManager = null;
+
+        /// <summary>
+        /// Manages ASP.NET Users.
+        /// </summary>
         public UserManager<User> UserManager
         {
             get
@@ -29,6 +33,10 @@ namespace CareHomeMock.Controllers
         }
 
         RoleManager<IdentityRole> _roleManager = null;
+
+        /// <summary>
+        /// Manages ASP.NET Roles.
+        /// </summary>
         public RoleManager<IdentityRole> RoleManager
         {
             get
@@ -41,6 +49,10 @@ namespace CareHomeMock.Controllers
 
         bool _queried = false;
         User _user = null;
+
+        /// <summary>
+        /// Gets a record of current User.
+        /// </summary>
         public User CurrentUser
         {
             get
@@ -79,6 +91,13 @@ namespace CareHomeMock.Controllers
             Response.Cookies.Add(new HttpCookie("__FlashMessage", currentMessage));
         }
 
+        /// <summary>
+        /// Logs an user activity to TableStorage.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="userId"></param>
+        /// <param name="action"></param>
+        /// <param name="data"></param>
         protected void Log(LogType level, string userId, string action, object data)
         {
             var log = new Log()
@@ -103,6 +122,14 @@ namespace CareHomeMock.Controllers
             TableHelper<Log>.Table.Insert(log);
         }
 
+        /// <summary>
+        /// Adds a review to CareManager
+        /// </summary>
+        /// <param name="careManagerId"></param>
+        /// <param name="reviewerType"></param>
+        /// <param name="rating"></param>
+        /// <param name="comment"></param>
+        /// <param name="reply"></param>
         protected void AddReview(int careManagerId, ReviewerType reviewerType, int rating, string comment, string reply = null)
         {
             var review = new Review()
@@ -121,6 +148,12 @@ namespace CareHomeMock.Controllers
             TableHelper<Review>.Table.Insert(review);
         }
 
+        /// <summary>
+        /// Sends an email using outer SMTP server.
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
         protected void SendEmail(string to, string subject, string body)
         {
             var from = "info@carehome.jp";
@@ -132,6 +165,11 @@ namespace CareHomeMock.Controllers
             smtp.Send(message);
         }
 
+        /// <summary>
+        /// Sends an email to Admin.
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
         protected void SendEmailToAdmin(string subject, string body)
         {
             SendEmail("m-naito@amlitek.com", subject, body);

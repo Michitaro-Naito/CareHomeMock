@@ -17,8 +17,6 @@ namespace CareHomeMock.Controllers
     /// </summary>
     public class ApplicationController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         /// <summary>
         /// Visitor sends an application to Admin.
         /// He receives ID and password if accepted.
@@ -211,15 +209,6 @@ namespace CareHomeMock.Controllers
             db.SaveChanges();
             Flash("削除されました。");
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

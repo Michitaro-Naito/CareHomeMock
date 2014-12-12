@@ -10,6 +10,11 @@ namespace CareHomeMock.Controllers
 {
     public class EmailVerificationController : BaseController
     {
+        /// <summary>
+        /// CareManager verifies here.
+        /// </summary>
+        /// <param name="verificationCode"></param>
+        /// <returns></returns>
         public async Task<ActionResult> Verify(string verificationCode)
         {
             var row = db.EmailVerifications.FirstOrDefault(v => v.VerificationCode == verificationCode);

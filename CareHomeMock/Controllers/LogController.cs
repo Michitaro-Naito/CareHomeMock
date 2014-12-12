@@ -22,18 +22,6 @@ namespace CareHomeMock.Controllers
         // GET: /Log/
         public ActionResult Index()
         {
-            /*var table = TableHelper<Log>.Table;
-
-            var logs = table.CreateQuery<Log>()
-                .Where(l => l.PartitionKey == "CareHome"
-                    //&& l.RowKey.CompareTo("2519849844367280569_e3c286ec-8129-417c-a2e7-879f54917f44") > 0
-                    //&& l.RowKey.CompareTo("2519849846612192995_981ae14c-c068-44e8-990f-3519a99d50b4") < 0
-                    )
-                .Take(10)
-                .ToList();*/
-
-            //Log(LogType.CareHome, "Foo", "ログイン", null);
-
             return View();
         }
 

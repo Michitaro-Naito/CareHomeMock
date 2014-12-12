@@ -13,6 +13,10 @@ namespace CareHomeMock.Controllers
 {
     public class HomeController : BaseController
     {
+        /// <summary>
+        /// Redirects any User to the right menu.
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public ActionResult GotoMenu()
         {

@@ -15,9 +15,10 @@ namespace CareHomeMock.Controllers
 {
     public class CareHomeController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: /CareHome/
+        /// <summary>
+        /// Admin views CareHomes.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles="Admin")]
         public ActionResult Index()
         {
@@ -25,52 +26,24 @@ namespace CareHomeMock.Controllers
             return View(carehomes.Take(50).ToList());
         }
 
-        /*// GET: /CareHome/Create
-        public ActionResult Create()
-        {
-            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "PrefectureName");
-            return View();
-        }
-
-        // POST: /CareHome/Create
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CareHomeId,AreaId,Zip,Address,Tel,Fax,WebsiteUrl,Established,CompanyType,CompanyName,ChiefName,ChiefJobTitle,Longitude,Latitude,DataUpdated,介護支援専門員在席人数,介護支援専門員常勤換算,事務員在席人数,事務員常勤換算,その他在席人数,その他常勤換算,全職員在席人数,全職員常勤換算,経験5年以上割合,要介護5,要介護4,要介護3,要介護2,要介護1,要支援2,要支援1,自立,利用者の権利擁護,サービスの質の確保,相談苦情等への対応,外部機関等との連携,事業運営管理,安全衛生管理等,従業者の研修等,MediaFileDataId,Region,Traits,Messages")] CareHome carehome)
-        {
-            if (ModelState.IsValid)
-            {
-                db.CareHomes.Add(carehome);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "PrefectureName", carehome.AreaId);
-            return View(carehome);
-        }*/
-
-        // GET: /CareHome/Edit/5
+        /// <summary>
+        /// Admin adds/edits CareHome here.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-            /*if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CareHome carehome = db.CareHomes.Find(id);
-            if (carehome == null)
-            {
-                return HttpNotFound();
-            }*/
             var carehome = db.CareHomes.Find(id) ?? new CareHome();
             ViewBag.AreaId = new SelectList(db.Areas.Select(a => new { AreaId = a.AreaId, CityName = a.PrefectureName + a.CityName }), "AreaId", "CityName", carehome.AreaId);
             return View(carehome);
         }
 
-        // POST: /CareHome/Edit/5
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
+        /// <summary>
+        /// Add/Edit confirmed.
+        /// </summary>
+        /// <param name="carehome"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,6 +68,12 @@ namespace CareHomeMock.Controllers
             return View(carehome);
         }
 
+        /// <summary>
+        /// Admin deactivates CareHome.
+        /// Deactivated CareHome is invisible at frontend.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -108,6 +87,12 @@ namespace CareHomeMock.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Admin activates CareHome.
+        /// Activated CareHome is visible at frontend.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -121,6 +106,10 @@ namespace CareHomeMock.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Admin downloads CareHomes as CSV here.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public ActionResult DownloadCareHomes()
         {
@@ -163,12 +152,21 @@ namespace CareHomeMock.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Admin uploads CSV to update CareHomes.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public ActionResult UploadCsv()
         {
             return View();
         }
 
+        /// <summary>
+        /// CSV is uploaded to update CareHomes.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult UploadCsv(HttpPostedFileBase file)
@@ -296,15 +294,6 @@ namespace CareHomeMock.Controllers
                 return RedirectToAction("CareHomeMenu", "Home");
             }
             return View(careHome);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

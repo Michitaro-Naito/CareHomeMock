@@ -552,15 +552,9 @@
     <Content Include="Views\CareManager\Delete.cshtml" />
     <Content Include="Views\CareManager\Edit.cshtml" />
     <Content Include="Views\CareManager\Index.cshtml" />
-    <Content Include="Views\Application\Create.cshtml" />
     <Content Include="Views\Application\Delete.cshtml" />
-    <Content Include="Views\Application\Details.cshtml" />
-    <Content Include="Views\Application\Edit.cshtml" />
     <Content Include="Views\Application\Index.cshtml" />
-    <Content Include="Views\File\Create.cshtml" />
     <Content Include="Views\File\Delete.cshtml" />
-    <Content Include="Views\File\Details.cshtml" />
-    <Content Include="Views\File\Edit.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
@@ -575,9 +569,7 @@
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Views\File\Upload.cshtml" />
     <Content Include="Views\Tool\ImportArea.cshtml" />
-    <Content Include="Views\CareHome\Create.cshtml" />
     <Content Include="Views\CareHome\Delete.cshtml" />
-    <Content Include="Views\CareHome\Details.cshtml" />
     <Content Include="Views\CareHome\Edit.cshtml" />
     <Content Include="Views\CareHome\Index.cshtml" />
     <Content Include="Views\CareHome\UploadCsv.cshtml" />
