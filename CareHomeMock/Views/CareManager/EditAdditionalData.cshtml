@@ -10,7 +10,8 @@
         <h2>@title</h2>
 
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
+        @Html.ValidationSummary(false)
+        @Html.HiddenFor(m => m.CareManagerId)
 
         @*Licenses*@
         @MyHelper.EditorFor(Html, m => m.CurrentPatients)
@@ -36,8 +37,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="保存する" class="btn btn-default" />
+                <input type="submit" value="保存する" class="btn btn-primary btn-block" />
             </div>
         </div>
     </div>
 }
+
+<div>@Html.ActionLink("Back to Menu", "CareManagerMenu", "Home")</div>

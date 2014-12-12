@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CareHomeMock.Models;
 using CareHomeMock.Helper;
+using System.Diagnostics;
 
 namespace CareHomeMock.Controllers
 {
@@ -167,6 +168,16 @@ namespace CareHomeMock.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditAdditionalData(CareManager model, HttpPostedFileBase file)
         {
+            var allow = "CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,企画立案力,行動実践力,関係構築力,マネジメント力,医療知識,介護知識";
+            
+            // Removes fields from ModelState which are not incoming.
+            var allowedFields = allow.Split(',');
+            var fieldsToRemove = ModelState.Keys
+                .Where(key => !allowedFields.Contains(key))
+                .ToList();
+            fieldsToRemove.ForEach(f => ModelState.Remove(f));
+
+            // Checks file size.
             if (file != null && file.ContentLength > 200000)
                 ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
 
@@ -184,7 +195,7 @@ namespace CareHomeMock.Controllers
                 }
 
                 // Updates SQL
-                model.CopyTo(ref careManager, "CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,企画立案力,行動実践力,関係構築力,マネジメント力,医療知識,介護知識");
+                model.CopyTo(ref careManager, allow);   // Copies fields only which are incoding.
                 db.SaveChanges();
 
                 Flash("保存されました。");
