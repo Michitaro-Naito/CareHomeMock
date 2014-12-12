@@ -390,7 +390,7 @@ namespace CareHomeMock.Controllers
                 q = q.Where(h => h.Area.CityCode == cityCode.Value);
 
             // CareManagers
-            var mq = q.SelectMany(h => h.CareManagers);
+            var mq = q.SelectMany(h => h.CareManagers).Where(m => m.UserId != null);    // Email verified CareManagers who belongs to these CareHomes.
 
             // Gender
             if(gender != null)
