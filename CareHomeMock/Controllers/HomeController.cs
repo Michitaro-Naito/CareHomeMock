@@ -328,35 +328,36 @@ namespace CareHomeMock.Controllers
                 offset = limit * page.Value;
             var count = q.Count();
             IQueryable<CareHome> rows;
+            var ordered = q.OrderBy(h => h.UserId == null); // Registered CareHome always first.
             switch (sortField)
             {
                 case "Years":
                     if (descending)
-                        rows = q.OrderBy(h => h.Established);
+                        rows = ordered.ThenBy(h => h.Established);
                     else
-                        rows = q.OrderByDescending(h => h.Established);
+                        rows = ordered.ThenByDescending(h => h.Established);
                     break;
 
                 case "CareManagerCount":
                     if (descending)
-                        rows = q.OrderByDescending(h => h.CareManagers.Count);
+                        rows = ordered.ThenByDescending(h => h.CareManagers.Count);
                     else
-                        rows = q.OrderBy(h => h.CareManagers.Count);
+                        rows = ordered.ThenBy(h => h.CareManagers.Count);
                     break;
 
                 case "ReviewCount":
                 default:
                     if (descending)
-                        rows = q.OrderByDescending(h => h.ReviewCount);
+                        rows = ordered.ThenByDescending(h => h.ReviewCount);
                     else
-                        rows = q.OrderBy(h => h.ReviewCount);
+                        rows = ordered.ThenBy(h => h.ReviewCount);
                     break;
 
                 case "Rating":
                     if (descending)
-                        rows = q.OrderByDescending(h => h.Rating);
+                        rows = ordered.ThenByDescending(h => h.Rating);
                     else
-                        rows = q.OrderBy(h => h.Rating);
+                        rows = ordered.ThenBy(h => h.Rating);
                     break;
             }
             var careHomes = rows.Skip(offset).Take(limit).ToList().Select(h => new
