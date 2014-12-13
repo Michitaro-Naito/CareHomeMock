@@ -29,19 +29,6 @@ namespace CareHomeMock.Helper
             }
         }
 
-        public static SelectList MediaFileTypes
-        {
-            get
-            {
-                var types = new[]
-                {
-                    new { id = MediaFile.MediaFileType.Image, name = "画像" },
-                    new { id = MediaFile.MediaFileType.Youtube, name = "Youtube動画" }
-                };
-                return new SelectList(types, "id", "name");
-            }
-        }
-
         public static string GenerateRowKey(DateTime dateTime)
         {
             return string.Format("{0:D19}_{1}", (DateTime.MaxValue.Ticks - dateTime.Ticks), Guid.NewGuid());

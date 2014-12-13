@@ -19,7 +19,8 @@
     public enum EditorType
     {
         TextBox,
-        TextArea
+        TextArea,
+        DropDownList
     }
     
     public static HelperResult EditorFor<TModel, TItem>(HtmlHelper<TModel> html, Expression<Func<TModel, TItem>> expr, EditorType? editorType = null)
@@ -56,6 +57,10 @@
                 
             case EditorType.TextArea:
                 editor = html.TextAreaFor(expr, htmlAttributes);
+                break;
+                
+            case EditorType.DropDownList:
+                editor = html.DropDownListFor(expr, null, htmlAttributes);
                 break;
         }
         var validationMessage = html.ValidationMessageFor(expr);

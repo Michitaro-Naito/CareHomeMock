@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Helper\BlobHelper.cs" />
     <Compile Include="Helper\DetailedDisplayAttribute.cs" />
+    <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\Extension.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\HtmlHelperExtension.cs" />

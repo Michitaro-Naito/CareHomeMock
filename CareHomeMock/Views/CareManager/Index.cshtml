@@ -8,63 +8,66 @@
 <h2>@title</h2>
 
 <p>
-    @Html.ActionLink("ケアマネ情報を追加する", "Edit", new { code = Model.CareHomeCode, careManagerId = (int?)null })
+    @Html.ActionLink("ケアマネ情報を追加する", "Edit", new { code = Model.CareHomeCode, careManagerId = (int?)null }, new { @class = "btn btn-default" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CareManagers.First().Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CareManagers.First().Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CareManagers.First().Age)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CareManagers.First().CurrentPatients)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CareManagers.First().AllowNewPatient)
-        </th>
-        <th>メール確認済み</th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model.CareManagers) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Age)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentPatients)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AllowNewPatient)
-        </td>
-        <td>
-            @if (item.User != null)
-            {
-                <span>はい</span>
-            }
-            else
-            {
-                <span>いいえ</span>
-            }
-        </td>
-        <td>
-            @Html.ActionLink("編集", "Edit", new { code = item.CareHome.CareHomeCode, careManagerId = item.CareManagerId }) |
-            @Html.ActionLink("削除", "Delete", new { code = item.CareHome.CareHomeCode, careManagerId = item.CareManagerId })
-        </td>
-    </tr>
-}
-
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CareManagers.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareManagers.First().Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareManagers.First().Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareManagers.First().CurrentPatients)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareManagers.First().AllowNewPatient)
+            </th>
+            <th>メール確認済み</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CareManagers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentPatients)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AllowNewPatient)
+                </td>
+                <td>
+                    @if (item.User != null)
+                    {
+                        <span>はい</span>
+                    }
+                    else
+                    {
+                        <span>いいえ</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("編集", "Edit", new { code = item.CareHome.CareHomeCode, careManagerId = item.CareManagerId }) |
+                    @Html.ActionLink("削除", "Delete", new { code = item.CareHome.CareHomeCode, careManagerId = item.CareManagerId })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 <div>

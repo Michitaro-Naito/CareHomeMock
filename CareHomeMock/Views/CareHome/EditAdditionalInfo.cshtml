@@ -4,14 +4,12 @@
     ViewBag.Title = title;
 }
 
-<h2>@title</h2>
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new{ enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>CareHome</h4>
+        <h3>@title</h3>
         <hr />
         @Html.ValidationSummary(false)
         @Html.HiddenFor(model => model.CareHomeId)

@@ -80,6 +80,7 @@ namespace CareHomeMock.Controllers
             }
 
             //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", careManager.CareHomeId);
+            ViewBag.Gender = EnumHelper<Gender>.GetSelectList(careManager.Gender);
             return View(careManager);
         }
 
@@ -119,6 +120,7 @@ namespace CareHomeMock.Controllers
                 return RedirectToAction("Index");
             }
             //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
+            ViewBag.Gender = EnumHelper<Gender>.GetSelectList(caremanager.Gender);
             return View(caremanager);
         }
 

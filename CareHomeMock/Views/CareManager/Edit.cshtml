@@ -4,6 +4,18 @@
     var title = "ケアマネ情報編集";
     ViewBag.Title = title;
 }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script>
+        $('#Licensed,#Birthday').datepicker({
+            dateFormat: 'yy/mm/dd'
+        });
+    </script>
+}
+
+
 
 @using (Html.BeginForm())
 {
@@ -20,13 +32,7 @@
 
         @MyHelper.EditorFor(Html, m => m.Name)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Gender)
-                @Html.ValidationMessageFor(model => model.Gender)
-            </div>
-        </div>
+        @MyHelper.EditorFor(Html, m => m.Gender, MyHelper.EditorType.DropDownList)
 
         @MyHelper.EditorFor(Html, m => m.Licensed)
 
@@ -43,7 +49,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

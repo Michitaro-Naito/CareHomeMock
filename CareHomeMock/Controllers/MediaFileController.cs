@@ -93,7 +93,7 @@ namespace CareHomeMock.Controllers
                 model.Description = existing.Description;
             }
 
-            ViewBag.MediaFileType = Helper.Helper.MediaFileTypes;
+            ViewBag.MediaFileType = EnumHelper<CareHomeMock.Models.MediaFile.MediaFileType>.GetSelectList(model.MediaFileType);
             return View(model);
         }
 
@@ -233,7 +233,7 @@ namespace CareHomeMock.Controllers
                 return RedirectToAction("Index", new { careHomeId = model.CareHomeId });
             }
 
-            ViewBag.MediaFileType = Helper.Helper.MediaFileTypes;
+            ViewBag.MediaFileType = EnumHelper<CareHomeMock.Models.MediaFile.MediaFileType>.GetSelectList(model.MediaFileType);
             return View(model);
         }
 

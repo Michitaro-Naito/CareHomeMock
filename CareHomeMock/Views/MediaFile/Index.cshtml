@@ -42,21 +42,22 @@
     <a href="@Url.Action("Upload", new { code = Model.CareHomeCode })" class="btn btn-default">追加する</a>
     <button type="button" id="SaveOrder" class="btn btn-default">並び順を保存する</button>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaFiles[0].Updated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaFiles[0].Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaFiles[0].RowKey)/@Html.DisplayNameFor(m => m.MediaFiles[0].YoutubeUrl)
-        </th>
-        <th>@Html.DisplayNameFor(m => m.MediaFiles[0].Description)</th>
-        <th></th>
-    </tr>
-
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MediaFiles[0].Updated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MediaFiles[0].Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MediaFiles[0].RowKey)/@Html.DisplayNameFor(m => m.MediaFiles[0].YoutubeUrl)
+            </th>
+            <th>@Html.DisplayNameFor(m => m.MediaFiles[0].Description)</th>
+            <th></th>
+        </tr>
+    </thead>
     <tbody id="sortable">
         @foreach (var item in Model.MediaFiles)
         {
