@@ -3,6 +3,25 @@
     var title = "ケアマネ追加情報";
     ViewBag.Title = title;
 }
+@section scripts{
+    <script src="~/Scripts/raty/jquery.raty.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.raty').each(function (index, Element) {
+                var target = $(Element).find('input');
+                $(Element).raty({
+                    path: '/Scripts/raty/images',
+                    score: target.val(),
+                    click: function (score, evt) {
+                        target.val(score);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -15,17 +34,17 @@
 
         @*Licenses*@
         @MyHelper.EditorFor(Html, m => m.CurrentPatients)
-        @MyHelper.EditorFor(Html, m => m.AllowNewPatient)
+        @MyHelper.CheckBoxFor(Html, m => m.AllowNewPatient)
         @MyHelper.EditorFor(Html, m => m.Career, MyHelper.EditorType.TextArea)
         @MyHelper.EditorFor(Html, m => m.Messages, MyHelper.EditorType.TextArea)
         @MyHelper.EditorFor(Html, m => m.BlogUrls, MyHelper.EditorType.TextArea)
 
-        @MyHelper.EditorFor(Html, m => m.企画立案力)
-        @MyHelper.EditorFor(Html, m => m.行動実践力)
-        @MyHelper.EditorFor(Html, m => m.関係構築力)
-        @MyHelper.EditorFor(Html, m => m.マネジメント力)
-        @MyHelper.EditorFor(Html, m => m.医療知識)
-        @MyHelper.EditorFor(Html, m => m.介護知識)
+        @MyHelper.EditorFor(Html, m => m.企画立案力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.行動実践力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.関係構築力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.マネジメント力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.医療知識, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.介護知識, MyHelper.EditorType.Raty)
 
         <div class="form-group">
             <label class="control-label col-md-2">メイン画像</label>

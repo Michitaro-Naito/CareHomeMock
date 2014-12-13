@@ -20,7 +20,39 @@
     {
         TextBox,
         TextArea,
-        DropDownList
+        DropDownList,
+        Raty
+    }
+
+    public static HelperResult CheckBoxFor<TModel>(HtmlHelper<TModel> html, Expression<Func<TModel, bool>> expr)
+    {
+        // Gets property name.
+        var propertyName = expr.GetPropertyName();
+
+        // Gets description and placeholder.
+        var description = "";
+        var placeholder = "";
+        bool readOnly = false;
+        var displayAttr = (System.ComponentModel.DataAnnotations.DisplayAttribute)Attribute.GetCustomAttribute(typeof(TModel).GetProperty(propertyName), typeof(System.ComponentModel.DataAnnotations.DisplayAttribute));
+        if (displayAttr != null)
+            description = displayAttr.Description;
+        var detailedAttr = (CareHomeMock.Helper.DetailedDisplayAttribute)Attribute.GetCustomAttribute(typeof(TModel).GetProperty(propertyName), typeof(CareHomeMock.Helper.DetailedDisplayAttribute));
+        if (detailedAttr != null)
+        {
+            placeholder = detailedAttr.Placeholder;
+            readOnly = detailedAttr.Readonly;
+        }
+
+        // Generates HTML.
+        var label = html.LabelFor(expr, new { @class = "control-label col-md-2" });
+        object htmlAttributes = new { @class = "", placeholder = placeholder };
+        if (readOnly)
+            htmlAttributes = new { @class = "", placeholder = placeholder, @readonly = "readonly" };
+        MvcHtmlString editor;
+        editor = html.CheckBoxFor(expr, htmlAttributes);
+        var validationMessage = html.ValidationMessageFor(expr);
+        
+        return TheThingToDo(label, editor, validationMessage, description);
     }
     
     public static HelperResult EditorFor<TModel, TItem>(HtmlHelper<TModel> html, Expression<Func<TModel, TItem>> expr, EditorType? editorType = null)
@@ -61,6 +93,10 @@
                 
             case EditorType.DropDownList:
                 editor = html.DropDownListFor(expr, null, htmlAttributes);
+                break;
+                
+            case EditorType.Raty:
+                editor = new MvcHtmlString(string.Format("<div class=\"raty\">{0}</div>", html.HiddenFor(expr, htmlAttributes)));
                 break;
         }
         var validationMessage = html.ValidationMessageFor(expr);
