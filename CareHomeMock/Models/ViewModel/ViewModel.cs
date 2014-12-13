@@ -131,4 +131,9 @@ namespace CareHomeMock.Models
         public string CareHomeCode { get; set; }
         public List<MediaFile> MediaFiles { get; set; }
     }
+
+    public class ReviewIndexVM
+    {
+        public int CareManagerId { get; set; }
+    }
 }

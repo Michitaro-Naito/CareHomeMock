@@ -1,0 +1,168 @@
+﻿@model CareHomeMock.Models.ReviewIndexVM
+@{
+    var title = "利用者からの評価";
+    ViewBag.Title = title;
+}
+@section scripts{
+    <script src="~/Scripts/raty/jquery.raty.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            function Review(root, data){
+                var s = this;
+                s.data = data;
+                s.ReplyMessage = ko.observable(data.Reply);
+                s.ReplyMessageToSend = ko.observable();
+                s.SendReply = function(){
+                    console.info(s.data.PartitionKey, s.data.RowKey, s.ReplyMessageToSend());
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Review/Reply',
+                        data:{
+                            partitionKey: s.data.PartitionKey,
+                            rowKey: s.data.RowKey,
+                            message: s.ReplyMessageToSend()
+                        }
+                    }).done(function(data){
+                        if(data.success == true){
+                            s.ReplyMessage(s.ReplyMessageToSend());
+                            s.ReplyMessageToSend(null);
+                            alert('返信しました。');
+                        }
+                        else
+                            alert('返信できませんでした。');
+                    }).fail(function(){
+                        alert('返信できませんでした。');
+                    });
+                }
+            }
+
+            function AppModel(){
+                var s = this;
+
+                s.reviewerTypes = ko.observableArray([]);
+                s.selectedReviewerType = ko.observable();
+
+                s.oldestRowKey = ko.observable(null);
+                s.reviews = ko.observableArray([]);
+                s.noMore = ko.observable(false);
+
+                s.ActivateRaty = function(){
+                    $('.rating').raty({
+                        score: function () {
+                            return $(this).attr('data-score');
+                        },
+                        path: '/Scripts/raty/images'
+                    });
+                }
+
+                s.GetMoreReviews = function(){
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Home/GetReviews',
+                        data: {
+                            id: @Model.CareManagerId,
+                            afterThisRowKey: s.oldestRowKey()
+                        }
+                    }).done(function(data){
+                        console.info(data);
+                        if(data.reviews.length > 0){
+                            var last = Enumerable.From(data.reviews).Last();
+                            s.oldestRowKey(last.RowKey);
+                            for(var n=0; n<data.reviews.length; n++){
+                                s.reviews.push(new Review(s, data.reviews[n]));
+                            }
+                            s.ActivateRaty();
+                        }else{
+                            s.noMore(true);
+                        }
+                    });
+                };
+
+                s.GetReviewerTypes = function(){
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Review/GetReviewerTypes',
+                        dataType: 'JSON'
+                    }).done(function(data){
+                        s.reviewerTypes(data.reviewerTypes);
+                    });
+                };
+
+                s.GenerateOtp = function(){
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Review/GenerateOtp',
+                        dataType: 'JSON',
+                        data: {
+                            reviewerType: s.selectedReviewerType().id
+                        }
+                    }).done(function(data){
+                        console.info('done');
+                        if(data.otp != null){
+                            var type = Enumerable.From(s.reviewerTypes()).First(function(t){ return t.id == data.otp.ReviewerType });
+                            alert('OTPを生成しました。パスワード:' + data.otp.VerificationCode + ' 評価者:' + type.name);
+                        }else{
+                            alert('OTPの生成に失敗しました。');
+                        }
+                    }).fail(function(data){
+                        console.info('failed');
+                    });
+                };
+            }
+
+            var model = new AppModel();
+            ko.applyBindings(model);
+            model.GetReviewerTypes();
+            model.GetMoreReviews();
+        });
+    </script>
+}
+
+<h2>@title</h2>
+
+<div class="form-horizontal">
+    <h3>評価してもらう</h3>
+    <p>
+        患者さんやご家族などに4桁のワンタイムパスワード(OTP)を渡すことで、<span>@Html.ActionLink("こちら", "PostReview", "Home", new { id = Model.CareManagerId }, new { })</span>から評価してもらえます。
+        生成されたOTPは使用されるか1年が経過するまで有効です。
+    </p>
+    <div class="form-group">
+        <label class="control-label col-md-2">評価者</label>
+        <div class="col-md-10"><select data-bind="options: reviewerTypes, optionsText: 'name', value: selectedReviewerType" class="form-control"></select></div>
+    </div>
+    <button type="button" data-bind="click: GenerateOtp" class="btn btn-primary btn-block">OTPを発行する</button>
+</div>
+
+<h3>返信する</h3>
+
+<div data-bind="foreach: reviews">
+    <div class="review">
+        <div class="head">
+            <span data-bind="text: data.ReviewerType" class="reviewerType"></span>
+            <span class="hash">ID:<span data-bind="text: data.IpAddress" class="hash"></span></span>
+            <span data-bind="text: fmDateTime(data.Created)" class="datetime"></span>
+        </div>
+        <div class="body">
+            <div data-bind="attr: { 'data-score': data.Rating }" class="rating"></div>
+            <div data-bind="text: data.Comment"></div>
+        </div>
+        <div data-bind="visible: ReplyMessage() != null" class="reply">
+            <span data-bind="text: ReplyMessage()"></span>
+        </div>
+        <div class="input-group send-reply">
+            <input type="text" data-bind="value: ReplyMessageToSend" class="form-control">
+            <span class="input-group-btn">
+                <button type="button" data-bind="visible: ReplyMessage() == null, click: SendReply" class="btn btn-primary">返信する</button>
+                <button type="button" data-bind="visible: ReplyMessage() != null, click: SendReply" class="btn btn-primary">返信する(上書き)</button>
+            </span>
+        </div>
+    </div>
+</div>
+<button type="button" data-bind="visible: !noMore(), click: GetMoreReviews" class="btn btn-default btn-block">さらに読み込む</button>
+
+<div>@Html.ActionLink("Back to Menu", "CareManagerMenu", "Home")</div>

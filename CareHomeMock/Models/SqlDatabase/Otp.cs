@@ -17,11 +17,18 @@ namespace CareHomeMock.Models
         [Key]
         public int OtpId { get; set; }
 
+        /// <summary>
+        /// When this OTP will expire and be deleted.
+        /// </summary>
         public DateTime Expires { get; set; }
 
         /// <summary>
         /// 4 digits verification code.
         /// </summary>
+        [Required]
+        [MinLength(4)]
+        [MaxLength(4)]
+        [Index(IsUnique=true)]
         public string VerificationCode { get; set; }
 
         /// <summary>

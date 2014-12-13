@@ -506,6 +506,9 @@ footer.copyright{
     padding: 10px;
     background: #fdc;
 }
+.review .send-reply{
+    margin-top: 10px;
+}
 
 /* Form */
 .form-horizontal{

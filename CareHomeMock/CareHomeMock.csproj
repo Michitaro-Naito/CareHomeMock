@@ -200,6 +200,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MediaFileController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Global.asax.cs">
@@ -274,6 +275,10 @@
     <Compile Include="Migrations\201412120105378_Required_CareManager_Email.cs" />
     <Compile Include="Migrations\201412120105378_Required_CareManager_Email.Designer.cs">
       <DependentUpon>201412120105378_Required_CareManager_Email.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412131930530_Edit_Otp_VerificationCode_Unique.cs" />
+    <Compile Include="Migrations\201412131930530_Edit_Otp_VerificationCode_Unique.Designer.cs">
+      <DependentUpon>201412131930530_Edit_Otp_VerificationCode_Unique.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
@@ -600,6 +605,7 @@
     <Content Include="Views\Home\CareManagerMenu.cshtml" />
     <Content Include="Views\Partial\MainLinks.cshtml" />
     <Content Include="Views\StaticPage\Details.cshtml" />
+    <Content Include="Views\Review\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -661,6 +667,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412120105378_Required_CareManager_Email.resx">
       <DependentUpon>201412120105378_Required_CareManager_Email.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412131930530_Edit_Otp_VerificationCode_Unique.resx">
+      <DependentUpon>201412131930530_Edit_Otp_VerificationCode_Unique.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -137,6 +137,7 @@ namespace CareHomeMock.Controllers
             var idString = id.Value.ToString();
             var reviews = table.CreateQuery<Review>().Where(r => r.PartitionKey == idString && r.RowKey.CompareTo(afterThisRowKey) > 0).Take(50).ToList()
                 .Select(r => new {
+                    PartitionKey = r.PartitionKey,
                     RowKey = r.RowKey,
                     Created = r.Created,
                     ReviewerType = r.ReviewerType.ToString(),
@@ -205,6 +206,9 @@ namespace CareHomeMock.Controllers
 
                 // Updates SQL
                 db.SaveChanges();
+
+                Flash("ケアマネを評価しました。");
+                return RedirectToAction("CareManagerInfo", "Home", new { id = model.CareManagerId });
             }
             ViewBag.Rating = new SelectList(Helper.Helper.Ratings, "RatingId", "Label");
             return View(model);
