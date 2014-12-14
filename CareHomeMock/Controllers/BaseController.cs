@@ -95,11 +95,11 @@ namespace CareHomeMock.Controllers
         /// Logs an user activity to TableStorage.
         /// </summary>
         /// <param name="level"></param>
-        /// <param name="userId"></param>
         /// <param name="action"></param>
         /// <param name="data"></param>
-        protected void Log(LogType level, string userId, string action, object data)
+        protected void Log(LogType level, string action, object data = null, string userId = null)
         {
+            userId = userId ?? User.Identity.Name;
             var log = new Log()
             {
                 // Layer 4
@@ -109,9 +109,9 @@ namespace CareHomeMock.Controllers
                 HttpMethod = Request.HttpMethod,
                 Url = Request.Url.ToString(),
                 ContentLength = Request.ContentLength,
-                Cookies = JsonConvert.SerializeObject(Request.Cookies.ToDictionary(), Formatting.Indented),
-                QueryString = JsonConvert.SerializeObject(Request.QueryString.ToDictionary(), Formatting.Indented),
-                Form = JsonConvert.SerializeObject(Request.Form.ToDictionary(), Formatting.Indented),
+                Cookies = JsonConvert.SerializeObject(Request.Unvalidated.Cookies.ToDictionary(), Formatting.Indented),
+                QueryString = JsonConvert.SerializeObject(Request.Unvalidated.QueryString.ToDictionary(), Formatting.Indented),
+                Form = JsonConvert.SerializeObject(Request.Unvalidated.Form.ToDictionary(), Formatting.Indented),
 
                 // Application Layer
                 LogType = level,

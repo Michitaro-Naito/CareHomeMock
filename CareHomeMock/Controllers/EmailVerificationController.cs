@@ -47,6 +47,7 @@ namespace CareHomeMock.Controllers
             registeredUser.CareManager.Add(row.CareManager);
             db.EmailVerifications.Remove(row);
             db.SaveChanges();
+            Log(LogType.CareManager, "ケアマネ会員としてメール認証しました。", new { row.Email, row.CareManagerId });
 
             // Notifies Sender.
             SendEmail(registeredUser.Email, "[ケアマネ情報局] ケアマネ会員として承認されました", string.Format("ID:{0} password:{1}", username, password));

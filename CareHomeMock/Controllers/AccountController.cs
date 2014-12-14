@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace CareHomeMock.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         public AccountController()
             : this(new UserManager<User>(new UserStore<User>(new ApplicationDbContext())))
@@ -50,6 +50,7 @@ namespace CareHomeMock.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+                    Log(LogType.Others, "ログインしました。", userId: model.UserName);
                     return RedirectToLocal(returnUrl);
                 }
                 else

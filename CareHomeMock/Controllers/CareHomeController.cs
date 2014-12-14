@@ -64,6 +64,7 @@ namespace CareHomeMock.Controllers
                     //db.Entry(carehome).Property(h => h.CareManagers).IsModified = false;
                 }
                 db.SaveChanges();
+                Log(LogType.Admin, "事業所情報を更新しました。");
                 return RedirectToAction("Index");
             }
             ViewBag.AreaId = new SelectList(db.Areas.Select(a => new { AreaId = a.AreaId, CityName = a.PrefectureName + a.CityName }), "AreaId", "CityName", carehome.AreaId);
@@ -86,6 +87,7 @@ namespace CareHomeMock.Controllers
                 return HttpNotFound();
             home.Deactivated = true;
             db.SaveChanges();
+            Log(LogType.Admin, "事業所情報を無効化しました。");
             return RedirectToAction("Index");
         }
 
@@ -105,6 +107,7 @@ namespace CareHomeMock.Controllers
                 return HttpNotFound();
             home.Deactivated = false;
             db.SaveChanges();
+            Log(LogType.Admin, "事業所情報を有効化しました。");
             return RedirectToAction("Index");
         }
 
@@ -128,6 +131,7 @@ namespace CareHomeMock.Controllers
                 }
             }
             //Response.ContentType = "text/csv";
+            Log(LogType.Admin, "CSVで事業所一覧をダウンロードしました。");
             return null;
         }
 
@@ -151,6 +155,7 @@ namespace CareHomeMock.Controllers
                 }
             }
             //Response.ContentType = "text/csv";
+            Log(LogType.Admin, "CSVでケアマネ一覧をダウンロードしました。");
             return null;
         }
 
@@ -246,6 +251,7 @@ namespace CareHomeMock.Controllers
                 Debug.WriteLine("Lines:{0} Added:{1} Updated:{2}", line, added, updated);
             }
             db.SaveChanges();
+            Log(LogType.Admin, "CSVで事業所一覧を更新しました。");
             return null;
         }
 
@@ -291,6 +297,7 @@ namespace CareHomeMock.Controllers
 
                 db.SaveChanges();
 
+                Log(LogType.CareHome, "追加情報を更新しました。");
                 Flash("保存しました。");
                 return RedirectToAction("CareHomeMenu", "Home");
             }

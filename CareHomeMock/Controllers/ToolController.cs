@@ -14,8 +14,6 @@ namespace CareHomeMock.Controllers
 {
     public class ToolController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         public ActionResult FlashMessage(string message)
         {
             Flash(message);
@@ -254,15 +252,6 @@ namespace CareHomeMock.Controllers
         public void EmailTest()
         {
             SendEmailToAdmin("Hi", "Hello");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 	}
 }

@@ -13,10 +13,8 @@ namespace CareHomeMock.Controllers
     /// <summary>
     /// Admin controls StaticPages here.
     /// </summary>
-    public class StaticPageController : Controller
+    public class StaticPageController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         public ActionResult Details(int? id)
         {
             var page = db.StaticPage.Find(id);
@@ -72,6 +70,7 @@ namespace CareHomeMock.Controllers
                     db.Entry(staticpage).State = EntityState.Modified;
                 }
                 db.SaveChanges();
+                Log(LogType.Admin, "固定ページを更新しました。", new { staticpage.Title });
                 return RedirectToAction("Index");
             }
             return View(staticpage);
@@ -102,16 +101,8 @@ namespace CareHomeMock.Controllers
             StaticPage staticpage = db.StaticPage.Find(id);
             db.StaticPage.Remove(staticpage);
             db.SaveChanges();
+            Log(LogType.Admin, "固定ページを削除しました。", new { staticpage.Title });
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

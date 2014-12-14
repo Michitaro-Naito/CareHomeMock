@@ -19,10 +19,8 @@ using System.IO;
 
 namespace CareHomeMock.Controllers
 {
-    public class MediaFileController : Controller
+    public class MediaFileController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         /// <summary>
         /// CareHome views and arranges it's files.
         /// </summary>
@@ -60,7 +58,7 @@ namespace CareHomeMock.Controllers
                 }
             }
             db.SaveChanges();
-
+            Log(LogType.CareHome, "写真と動画の並び順を保存しました。");
             return Json(new { result = "success" });
         }
 
@@ -230,6 +228,7 @@ namespace CareHomeMock.Controllers
                 }
 
                 // Done. Redirects User to Index.
+                Log(LogType.CareHome, "写真か動画を更新しました。", new { row.RowKey });
                 return RedirectToAction("Index", new { careHomeId = model.CareHomeId });
             }
 
@@ -314,16 +313,8 @@ namespace CareHomeMock.Controllers
             db.MediaFiles.Remove(mediafile);
             db.SaveChanges();
 
+            Log(LogType.CareHome, "写真か動画を削除しました。", new { mediafile.RowKey });
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

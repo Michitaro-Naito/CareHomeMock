@@ -77,6 +77,7 @@ namespace CareHomeMock.Controllers
                     try
                     {
                         db.SaveChanges();
+                        Log(LogType.CareManager, "OTPを生成しました。", new { newOtp.CareManagerId, newOtp.ReviewerType, newOtp.VerificationCode });
                         return Json(new { otp = newOtp });
                     }
                     catch (DbUpdateException)
@@ -109,6 +110,7 @@ namespace CareHomeMock.Controllers
             review.Reply = message;
             table.Execute(TableOperation.Replace(review));
 
+            Log(LogType.CareManager, "評価に返信しました。", new { review.PartitionKey, review.RowKey });
             return Json(new { success = true });
         }
 

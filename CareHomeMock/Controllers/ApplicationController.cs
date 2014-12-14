@@ -60,6 +60,7 @@ namespace CareHomeMock.Controllers
                 db.SaveChanges();
                 SendEmailToAdmin("[ケアマネ情報局] 事業所会員登録申請がありました", "先ほど申請を受理いたしました。管理画面をご確認ください。");
                 Flash("登録申請を送信しました。後ほど管理者がご連絡を差し上げます。");
+                Log(LogType.Others, "事業所会員登録を申請しました。");
                 return RedirectToAction("CareHomeInfo_BasicInfo", "Home", new { code = home.CareHomeCode });
             }
             return View(model);
@@ -132,7 +133,7 @@ namespace CareHomeMock.Controllers
             SendEmail(registeredUser.Email, "[ケアマネ情報局] 事業所会員として承認されました", string.Format("ID:{0} password:{1} 備考:{2}", username, password, noteForSender));
 
             Flash(string.Format("承認されました。ID:{0}", username));
-            Debug.WriteLine(password);
+            Log(LogType.Admin, "事業所会員登録申請を承認しました。");
             return RedirectToAction("Index");
         }
 
@@ -170,6 +171,7 @@ namespace CareHomeMock.Controllers
             SendEmail(application.Email, "[ケアマネ情報局] 事業所会員として承認されませんでした", string.Format("備考:{0}", noteForSender));
 
             Flash("拒否されました。");
+            Log(LogType.Admin, "事業所会員登録申請を拒否しました。");
 
             return RedirectToAction("Index");
         }
@@ -208,6 +210,7 @@ namespace CareHomeMock.Controllers
             db.Applications.Remove(application);
             db.SaveChanges();
             Flash("削除されました。");
+            Log(LogType.Admin, "事業所会員登録申請を削除しました。");
             return RedirectToAction("Index");
         }
     }

@@ -18,10 +18,8 @@ namespace CareHomeMock.Controllers
     /// <summary>
     /// Admin manages uploaded files here.
     /// </summary>
-    public class FileController : Controller
+    public class FileController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: /File/
         [Authorize(Roles="Admin")]
         public ActionResult Index()
@@ -65,6 +63,7 @@ namespace CareHomeMock.Controllers
             };
             db.Files.Add(row);
             db.SaveChanges();
+            Log(LogType.Admin, "ファイルをアップロードしました。", new { row.RowKey });
 
             // Uploads to Blob.
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
@@ -150,17 +149,9 @@ namespace CareHomeMock.Controllers
             // Deletes from SQL
             db.Files.Remove(file);
             db.SaveChanges();
+            Log(LogType.Admin, "ファイルを削除しました。", new { file.RowKey });
 
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

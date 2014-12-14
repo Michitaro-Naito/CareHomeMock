@@ -117,6 +117,7 @@ namespace CareHomeMock.Controllers
                     entry.Property(p => p.Birthday).IsModified = true;
                     db.SaveChanges();
                 }
+                Log(LogType.CareHome, "所属するケアマネの情報を更新しました。");
                 return RedirectToAction("Index");
             }
             //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
@@ -147,6 +148,7 @@ namespace CareHomeMock.Controllers
             CareManager caremanager = db.CareManagers.Find(careManagerId);
             db.CareManagers.Remove(caremanager);
             db.SaveChanges();
+            Log(LogType.CareHome, "所属するケアマネの情報を削除しました。");
             return RedirectToAction("Index");
         }
 
@@ -212,6 +214,7 @@ namespace CareHomeMock.Controllers
                 model.CopyTo(ref careManager, allow);   // Copies fields only which are incoding.
                 db.SaveChanges();
 
+                Log(LogType.CareManager, "追加情報を更新しました。");
                 Flash("保存されました。");
             }
             ViewBag.Licenses = new MultiSelectList(db.Licenses, "LicenseId", "Name", model.CareManagerLicenses.Select(l => l.LicenseId));

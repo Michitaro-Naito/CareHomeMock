@@ -11,6 +11,7 @@ namespace CareHomeMock.Models
     /// Represents a CareHome in Japan.
     /// 
     /// CareHome belongsTo Area.
+    /// CareHome hasMany Applications.
     /// CareHome hasMany CareManagers.
     /// CareHome hasMany MediaFiles.
     /// </summary>

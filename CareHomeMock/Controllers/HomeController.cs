@@ -177,7 +177,8 @@ namespace CareHomeMock.Controllers
             {
                 // Removes Otp
                 db.Otps.Remove(otp);
-                db.ReviewRatings.Add(new ReviewRating() { CareManagerId = otp.CareManagerId, Rating = model.Rating });
+                var review = new ReviewRating() { CareManagerId = otp.CareManagerId, Rating = model.Rating };
+                db.ReviewRatings.Add(review);
                 db.SaveChanges();
 
                 // Updates TableStorage
@@ -206,6 +207,7 @@ namespace CareHomeMock.Controllers
 
                 // Updates SQL
                 db.SaveChanges();
+                Log(LogType.Others, "ケアマネを評価しました。", new { review.CareManagerId });
 
                 Flash("ケアマネを評価しました。");
                 return RedirectToAction("CareManagerInfo", "Home", new { id = model.CareManagerId });

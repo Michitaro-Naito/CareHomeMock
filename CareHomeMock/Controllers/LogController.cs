@@ -53,6 +53,7 @@ namespace CareHomeMock.Controllers
                 }
                 table.ExecuteBatch(batch);
             }
+            Log(LogType.Admin, "古いログを削除しました。");
             return Json(new { Deleted = logsToDelete.Count });
         }
 	}
