@@ -50,7 +50,8 @@ namespace CareHomeMock.Controllers
             Log(LogType.CareManager, "ケアマネ会員としてメール認証しました。", new { row.Email, row.CareManagerId });
 
             // Notifies Sender.
-            SendEmail(registeredUser.Email, "[ケアマネ情報局] ケアマネ会員として承認されました", string.Format("ID:{0} password:{1}", username, password));
+            Flash("ケアマネ会員として認証されました。IDとパスワードを電子メールアドレスにお送りいたしましたのでご確認ください。");
+            SendEmail(registeredUser.Email, "[ケアマネ情報局] ケアマネ会員として認証されました", string.Format("ID:{0} password:{1}", username, password));
 
             return RedirectToAction("Index", "Home");
         }

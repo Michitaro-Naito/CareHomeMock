@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace CareHomeMock.Controllers
 {
-    public class PartialController : Controller
+    public class PartialController : BaseController
     {
         public ActionResult MainLinks()
         {

@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net.Mail;
 using System.Net;
+using System.Threading;
+using System.Globalization;
 
 namespace CareHomeMock.Controllers
 {
@@ -67,6 +69,16 @@ namespace CareHomeMock.Controllers
         }
 
         // ----- Override -----
+        public BaseController()
+            : base()
+        {
+            var culture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+
+            culture.DateTimeFormat.ShortDatePattern = "yyyy/MM/dd";
+
+            Thread.CurrentThread.CurrentCulture = culture;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
