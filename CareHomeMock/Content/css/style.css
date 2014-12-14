@@ -527,11 +527,8 @@ footer.copyright{
     color: red;
 }
 
-.carehomeinfo-menu{
-	border:1px solid #E9E9E9;
-	background: #F4F4F4;
-	padding: 15px;
-	margin-bottom: 15px;
+ul.nav.nav-tabs.carehomeinfo-menu{
+    margin-bottom: 15px;
 }
 
 .carehomeinfo-tableouter{

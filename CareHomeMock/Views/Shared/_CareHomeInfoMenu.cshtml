@@ -2,9 +2,22 @@
 
 
 
-<div class="carehomeinfo-menu">
-    @Html.ActionLink("基本情報", "CareHomeInfo_BasicInfo", new { id = Model.CareHomeId, name = Model.CompanyName })
-    @Html.ActionLink("ケアマネ一覧", "CareHomeInfo_CareManagers", new { id = Model.CareHomeId, name = Model.CompanyName })
-    @Html.ActionLink("写真と動画", "CareHomeInfo_Media", new { id = Model.CareHomeId, name = Model.CompanyName })
-    @Html.ActionLink("周辺地図", "CareHomeInfo_AccessMap", new { id = Model.CareHomeId, name = Model.CompanyName })
-</div>
+@{
+    var pages = new[]{
+        new { name = "基本情報", action = "CareHomeInfo_BasicInfo"},
+        new { name = "ケアマネ一覧", action = "CareHomeInfo_CareManagers"},
+        new { name = "写真と動画", action = "CareHomeInfo_Media"},
+        new { name = "周辺地図", action = "CareHomeInfo_AccessMap"}
+    };
+}
+<ul class="nav nav-tabs carehomeinfo-menu">
+    @foreach (var p in pages)
+    {
+        var active = "";
+        if (p.action == ViewContext.RouteData.Values["action"].ToString())
+        {
+            active = "active";
+        }
+        <li role="presentation" class="@active"><a href="@Url.Action(p.action, new { id = Model.CareHomeId, name = Model.CompanyName })">@p.name</a></li>
+    }
+</ul>
