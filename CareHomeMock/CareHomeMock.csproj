@@ -281,6 +281,10 @@
     <Compile Include="Migrations\201412131930530_Edit_Otp_VerificationCode_Unique.Designer.cs">
       <DependentUpon>201412131930530_Edit_Otp_VerificationCode_Unique.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412140000572_Remove_CareManager_stringLicenses.cs" />
+    <Compile Include="Migrations\201412140000572_Remove_CareManager_stringLicenses.Designer.cs">
+      <DependentUpon>201412140000572_Remove_CareManager_stringLicenses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -671,6 +675,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412131930530_Edit_Otp_VerificationCode_Unique.resx">
       <DependentUpon>201412131930530_Edit_Otp_VerificationCode_Unique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412140000572_Remove_CareManager_stringLicenses.resx">
+      <DependentUpon>201412140000572_Remove_CareManager_stringLicenses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

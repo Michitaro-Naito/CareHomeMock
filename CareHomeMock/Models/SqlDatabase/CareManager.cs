@@ -100,11 +100,6 @@ namespace CareHomeMock.Models
         }
 
         /// <summary>
-        /// Other licenses which this CareManager has.
-        /// </summary>
-        public string Licenses { get; set; }
-
-        /// <summary>
         /// Amount of current patients.
         /// </summary>
         [Display(Name="現在の患者数")]

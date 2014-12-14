@@ -32,7 +32,6 @@
         @Html.ValidationSummary(false)
         @Html.HiddenFor(m => m.CareManagerId)
 
-        @*Licenses*@
         @MyHelper.EditorFor(Html, m => m.CurrentPatients)
         @MyHelper.CheckBoxFor(Html, m => m.AllowNewPatient)
         @MyHelper.EditorFor(Html, m => m.Career, MyHelper.EditorType.TextArea)
@@ -45,6 +44,14 @@
         @MyHelper.EditorFor(Html, m => m.マネジメント力, MyHelper.EditorType.Raty)
         @MyHelper.EditorFor(Html, m => m.医療知識, MyHelper.EditorType.Raty)
         @MyHelper.EditorFor(Html, m => m.介護知識, MyHelper.EditorType.Raty)
+
+        @*Licenses*@
+        <div class="form-group">
+            <label class="col-md-2">保有資格</label>
+            <div class="col-md-10">
+                @Html.ListBox("Licenses", null, new { @class = "form-control" })
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="control-label col-md-2">メイン画像</label>

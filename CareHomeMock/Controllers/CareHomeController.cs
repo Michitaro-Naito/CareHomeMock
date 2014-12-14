@@ -146,7 +146,7 @@ namespace CareHomeMock.Controllers
                     csv.WriteField(m.Birthday);
                     csv.WriteField(m.Gender);
                     csv.WriteField(m.Licensed);
-                    csv.WriteField(m.Licenses);
+                    //csv.WriteField(m.Licenses);
                     csv.NextRecord();
                 }
             }

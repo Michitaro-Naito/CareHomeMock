@@ -162,13 +162,14 @@ namespace CareHomeMock.Controllers
             var careManager = CurrentUser.CareManager.FirstOrDefault();
             if (careManager == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ViewBag.Licenses = new MultiSelectList(db.Licenses, "LicenseId", "Name", careManager.CareManagerLicenses.Select(l => l.LicenseId));
             return View(careManager);
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAdditionalData(CareManager model, HttpPostedFileBase file)
+        public ActionResult EditAdditionalData(CareManager model, HttpPostedFileBase file, List<int> Licenses)
         {
             var allow = "CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,企画立案力,行動実践力,関係構築力,マネジメント力,医療知識,介護知識";
             
@@ -179,6 +180,13 @@ namespace CareHomeMock.Controllers
                 .ToList();
             fieldsToRemove.ForEach(f => ModelState.Remove(f));
 
+            // Licenses
+            if (Licenses == null)
+                Licenses = new List<int>();
+            model.CareManagerLicenses.Clear();
+            foreach (var l in Licenses)
+                model.CareManagerLicenses.Add(new CareManagerLicenses() { LicenseId = l });
+
             // Checks file size.
             if (file != null && file.ContentLength > 200000)
                 ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
@@ -188,6 +196,10 @@ namespace CareHomeMock.Controllers
                 var careManager = CurrentUser.CareManager.FirstOrDefault();
                 if (careManager == null)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                // Licenses
+                db.CareManagerLicenses.RemoveRange(careManager.CareManagerLicenses);
+                careManager.CareManagerLicenses = model.CareManagerLicenses;
 
                 // Uploads Image
                 if (file != null)
@@ -202,6 +214,7 @@ namespace CareHomeMock.Controllers
 
                 Flash("保存されました。");
             }
+            ViewBag.Licenses = new MultiSelectList(db.Licenses, "LicenseId", "Name", model.CareManagerLicenses.Select(l => l.LicenseId));
             return View(model);
         }
     }
