@@ -285,6 +285,18 @@
     <Compile Include="Migrations\201412140000572_Remove_CareManager_stringLicenses.Designer.cs">
       <DependentUpon>201412140000572_Remove_CareManager_stringLicenses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412151451119_Add_CareHome_Fields.cs" />
+    <Compile Include="Migrations\201412151451119_Add_CareHome_Fields.Designer.cs">
+      <DependentUpon>201412151451119_Add_CareHome_Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412151624101_CareHome_ProfessionalValuesNullable.cs" />
+    <Compile Include="Migrations\201412151624101_CareHome_ProfessionalValuesNullable.Designer.cs">
+      <DependentUpon>201412151624101_CareHome_ProfessionalValuesNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412151717069_CareHome_Established_DataUpdated_Nullable.cs" />
+    <Compile Include="Migrations\201412151717069_CareHome_Established_DataUpdated_Nullable.Designer.cs">
+      <DependentUpon>201412151717069_CareHome_Established_DataUpdated_Nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -678,6 +690,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412140000572_Remove_CareManager_stringLicenses.resx">
       <DependentUpon>201412140000572_Remove_CareManager_stringLicenses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412151451119_Add_CareHome_Fields.resx">
+      <DependentUpon>201412151451119_Add_CareHome_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412151624101_CareHome_ProfessionalValuesNullable.resx">
+      <DependentUpon>201412151624101_CareHome_ProfessionalValuesNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412151717069_CareHome_Established_DataUpdated_Nullable.resx">
+      <DependentUpon>201412151717069_CareHome_Established_DataUpdated_Nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

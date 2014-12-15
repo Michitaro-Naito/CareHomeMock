@@ -1,14 +1,111 @@
 ﻿
 @{
-    ViewBag.Title = "UploadCsv";
+    var title = "CSVから事業所データを更新する";
+    ViewBag.Title = title;
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            function AppModel() {
+                var s = this;
+
+                s.processing = ko.observable(false);
+                s.nextLine = ko.observable(0);
+                s.added = ko.observable(0);
+                s.updated = ko.observable(0);
+
+                s.StartUpdateFromCsv = function () {
+                    s.processing(true);
+                    //s.nextLine(0);
+                    s.added(0);
+                    s.updated(0);
+
+                    s.UpdateFromCsv();
+                }
+
+                s.UpdateFromCsv = function () {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/CareHome/UpdateFromCsv',
+                        dataType: 'JSON',
+                        data: {
+                            skip: s.nextLine()
+                        }
+                    }).done(function (data) {
+                        console.info(data);
+                        if (data.success == true) {
+                            s.nextLine(parseInt(s.nextLine()) + data.added + data.updated);
+                            s.added(s.added() + data.added);
+                            s.updated(s.updated() + data.updated);
+                            if (data.added == 0 && data.updated == 0) {
+                                // No rows affected. Ends.
+                                s.processing(false);
+                                alert('更新を完了しました。');
+                            } else {
+                                s.UpdateFromCsv();
+                            }
+                        }
+                        else
+                            alert(data.error);
+                    }).fail(function () {
+                        alert('更新に失敗しました。');
+                    });
+                }
+            }
+
+            var model = new AppModel();
+            ko.applyBindings(model);
+        });
+    </script>
 }
 
-<h2>UploadCsv</h2>
+<h2>@title</h2>
 
+<h3>ステップ1. 更新に用いるファイルをアップロードします</h3>
+<p>
+    まず、更新に用いるエクセルから出力したCSVをアップロードします。
+</p>
 <form action="" method="post" enctype="multipart/form-data">
 
     <label for="file">Filename:</label>
     <input type="file" name="file" id="file" />
 
-    <input type="submit" />
+    <input type="submit" class="btn btn-primary btn-block"/>
 </form>
+
+<h3>ステップ2. 更新するボタンをクリックします</h3>
+<p>
+    500行ずつ更新を行います。環境にもよりますが40,000行あたり1時間程度かかります。
+    画面を閉じたり移動すると更新作業は中断されますが、データが破損する心配はございません。
+    最後に表示されていた『開始する行』を入力してからボタンを押すことで、続きから更新作業を再開することもできます。
+</p>
+<p>
+    完了時には、開始する行はCSVに含まれる事業所の数と同じになります。
+    万一異なっておりましたら、不具合か、CSVの記述にプログラムでは検出できなかった誤りがあると思われますのでご一報ください。
+</p>
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <td>開始する行</td>
+            <td>
+                <input type="text" data-bind="value: nextLine" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>追加された行</td>
+            <td data-bind="text: added"></td>
+        </tr>
+        <tr>
+            <td>更新された行</td>
+            <td data-bind="text: updated"></td>
+        </tr>
+    </tbody>
+</table>
+<button type="button" data-bind="visible: !processing(), click: StartUpdateFromCsv" class="btn btn-primary btn-block">更新する</button>
+<p data-bind="visible: processing">処理中...</p>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -34,6 +34,13 @@ namespace CareHomeMock.Models
         public string CareHomeCode { get; set; }
 
         /// <summary>
+        /// Name of CareHome like "Foo Care".
+        /// </summary>
+        [MaxLength(255)]
+        [Display(Name="事業所名")]
+        public string Name { get; set; }
+
+        /// <summary>
         /// Is deactivated by Admin?
         /// </summary>
         [Display(Name="無効化")]
@@ -61,6 +68,12 @@ namespace CareHomeMock.Models
         public string Address { get; set; }
 
         /// <summary>
+        /// Japanse building name like "○○マンション123号室".
+        /// </summary>
+        [Display(Name="所在地建物名")]
+        public string AddressBuilding { get; set; }
+
+        /// <summary>
         /// Telephone number like 090-1111-1111.
         /// </summary>
         [Display(Name="Tel")]
@@ -81,7 +94,7 @@ namespace CareHomeMock.Models
         /// When this CareHome established.
         /// </summary>
         [Display(Name="開業日")]
-        public DateTime Established { get; set; }
+        public DateTime? Established { get; set; }
 
         [Display(Name="運営年数")]
         public int Years
@@ -89,7 +102,9 @@ namespace CareHomeMock.Models
             get
             {
                 var zero = new DateTime(1, 1, 1);
-                return (zero + (DateTime.UtcNow - Established)).Year - 1;
+                if (Established == null)
+                    return 0;
+                return (zero + (DateTime.UtcNow - Established.Value)).Year - 1;
             }
         }
 
@@ -100,7 +115,7 @@ namespace CareHomeMock.Models
         public CompanyType CompanyType { get; set; }
 
         /// <summary>
-        /// Name of company like "Foo Corporation".
+        /// Name of company like "Foo Care, inc.".
         /// </summary>
         [Display(Name="法人名称")]
         public string CompanyName { get; set; }
@@ -135,35 +150,36 @@ namespace CareHomeMock.Models
         /// When this information is updated. (NOT record.)
         /// </summary>
         [Display(Name="情報更新日")]
-        public DateTime DataUpdated { get; set; }
+        public DateTime? DataUpdated { get; set; }
 
         // ----- Professional parameters to display -----
-        public double 介護支援専門員在席人数 { get; set; }
-        public double 介護支援専門員常勤換算 { get; set; }
-        public double 事務員在席人数 { get; set; }
-        public double 事務員常勤換算 { get; set; }
-        public double その他在席人数 { get; set; }
-        public double その他常勤換算 { get; set; }
-        public double 全職員在席人数 { get; set; }
-        public double 全職員常勤換算 { get; set; }
-        public double 経験5年以上割合 { get; set; }
+        public double? 介護支援専門員在席人数 { get; set; }
+        public double? 介護支援専門員常勤換算 { get; set; }
+        public double? 事務員在席人数 { get; set; }
+        public double? 事務員常勤換算 { get; set; }
+        public double? その他在席人数 { get; set; }
+        public double? その他常勤換算 { get; set; }
+        public double? 全職員在席人数 { get; set; }
+        public double? 全職員常勤換算 { get; set; }
+        public double? 経験5年以上割合 { get; set; }
 
-        public double 要介護5 { get; set; }
-        public double 要介護4 { get; set; }
-        public double 要介護3 { get; set; }
-        public double 要介護2 { get; set; }
-        public double 要介護1 { get; set; }
-        public double 要支援2 { get; set; }
-        public double 要支援1 { get; set; }
-        public double 自立 { get; set; }
+        public double? 利用者数 { get; set; }
+        public double? 要介護5 { get; set; }
+        public double? 要介護4 { get; set; }
+        public double? 要介護3 { get; set; }
+        public double? 要介護2 { get; set; }
+        public double? 要介護1 { get; set; }
+        public double? 要支援2 { get; set; }
+        public double? 要支援1 { get; set; }
+        public double? 自立 { get; set; }
 
-        public double 利用者の権利擁護 { get; set; }
-        public double サービスの質の確保 { get; set; }
-        public double 相談苦情等への対応 { get; set; }
-        public double 外部機関等との連携 { get; set; }
-        public double 事業運営管理 { get; set; }
-        public double 安全衛生管理等 { get; set; }
-        public double 従業者の研修等 { get; set; }
+        public double? 利用者の権利擁護 { get; set; }
+        public double? サービスの質の確保 { get; set; }
+        public double? 相談苦情等への対応 { get; set; }
+        public double? 外部機関等との連携 { get; set; }
+        public double? 事業運営管理 { get; set; }
+        public double? 安全衛生管理等 { get; set; }
+        public double? 従業者の研修等 { get; set; }
         // ----- /Professional parameters to display -----
 
         public int ReviewCount { get; set; }

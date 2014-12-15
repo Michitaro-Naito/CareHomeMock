@@ -63,7 +63,7 @@ namespace CareHomeMock.Controllers
             return null;
         }
 
-        public ActionResult PopulateDummyData()
+        /*public ActionResult PopulateDummyData()
         {
             var start = DateTime.UtcNow;
 
@@ -124,7 +124,7 @@ namespace CareHomeMock.Controllers
             db.SaveChanges();
             Response.Write(string.Format("Populated. {0}ms", (DateTime.UtcNow - start).TotalMilliseconds));
             return null;
-        }
+        }*/
 
         public ActionResult PopulateDummyCareManagers()
         {
