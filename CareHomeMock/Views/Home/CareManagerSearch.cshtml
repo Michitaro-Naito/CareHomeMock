@@ -48,6 +48,7 @@
                 s.selectedLicense = ko.observable();
                 s.allowNewPatient = ko.observable(true);
                 s.descending = ko.observable(true);
+                s.keyword = ko.observable();
 
                 s.nextPage = ko.observable(0);
                 s.noMore = ko.observable(false);
@@ -121,6 +122,8 @@
                 });
 
                 s.Init = function () {
+                    if (location.hash != null)
+                        s.keyword(location.hash.replace('#', ''));
                     $.ajax({
                         cache: false,
                         type: 'POST',
@@ -168,7 +171,8 @@
                             licenseId: s.cpLicenseId(),
                             sortField: s.cpSortField(),
                             descending: s.descending(),
-                            page: s.nextPage()
+                            page: s.nextPage(),
+                            keyword: s.keyword()
                         }
                     }).done(function (data) {
                         console.info(data);
@@ -223,6 +227,7 @@
             </div>
         </div>
 
+        <div class="col-md-8"><input type="text" data-bind="value: keyword" placeholder="キーワード(ケアマネ名)"/></div>
         <div class="col-md-4"><button type="button" data-bind="click: Search" class="search-btn">検索する</button></div>
     </div>
 </div>

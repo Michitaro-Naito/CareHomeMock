@@ -85,6 +85,8 @@
                 });
 
                 s.Init = function () {
+                    if (location.hash != null)
+                        s.keyword(location.hash.replace('#', ''));
                     $.ajax({
                         cache: false,
                         type: 'POST',

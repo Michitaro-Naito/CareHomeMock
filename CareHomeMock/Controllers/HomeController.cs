@@ -406,7 +406,7 @@ namespace CareHomeMock.Controllers
             return Json(new { count = count, careHomes = careHomes });
         }
 
-        public ActionResult GetCareManagers(int? prefectureCode, int? cityCode, Gender? gender, AgeRange? ageRange, bool? allowNewPatient, int? licenseId, string sortField, bool descending, int? page)
+        public ActionResult GetCareManagers(int? prefectureCode, int? cityCode, Gender? gender, AgeRange? ageRange, bool? allowNewPatient, int? licenseId, string sortField, bool descending, int? page, string keyword = null)
         {
             // Active
             var q = db.CareHomes.Where(h => !h.Deactivated);
@@ -454,6 +454,10 @@ namespace CareHomeMock.Controllers
             // Licenses
             if (licenseId != null)
                 mq = mq.Where(m => m.CareManagerLicenses.Any(l => l.LicenseId == licenseId.Value));
+
+            // Keyword
+            if (!string.IsNullOrEmpty(keyword))
+                mq = mq.Where(m => m.Name.Contains(keyword));
 
             // Sort
             IQueryable<CareManager> rows;
