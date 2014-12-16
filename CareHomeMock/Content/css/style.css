@@ -558,3 +558,30 @@ ul.nav.nav-tabs.carehomeinfo-menu{
     padding: 15px;
     background: white;
 }
+
+/* CareManager Search */
+.search-blo.caremanager-search .city{
+    margin-top: 0;
+    padding-right: 15px;
+}
+.search-blo.caremanager-search .gender{
+    margin-top: 15px;
+    padding-right: 0;
+}
+.search-blo.caremanager-search .age{
+    margin-top: 15px;
+}
+.search-blo.caremanager-search .allownew,
+.search-blo.caremanager-search .descending{
+    margin-top: 14px;
+}
+.search-blo.caremanager-search .allownew .checkbox,
+.search-blo.caremanager-search .descending .checkbox{
+    margin: 7px 0 6px 0;
+}
+.search-blo.caremanager-search .license{
+    margin-top: 15px;
+}
+.search-blo.caremanager-search .sort{
+    margin-top: 15px;
+}

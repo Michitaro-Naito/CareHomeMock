@@ -196,15 +196,15 @@
 
 
 <!-- Search -->
-<div class="search-blo">
+<div class="search-blo caremanager-search">
     <h1><i class="fa fa-search"></i>ケアマネ検索</h1>
     <div class="row">
-        <div class="col-md-4"><select data-bind="options: cpPrefectures, optionsText: 'name', value: selectedPrefecture" class="form-control"></select></div>
-        <div class="col-md-7"><select data-bind="options: cpCities, optionsText: 'name', value: selectedCity" class="form-control"></select></div>
+        <div class="col-md-4 prefecture"><select data-bind="options: cpPrefectures, optionsText: 'name', value: selectedPrefecture" class="form-control"></select></div>
+        <div class="col-md-8 city"><select data-bind="options: cpCities, optionsText: 'name', value: selectedCity" class="form-control"></select></div>
 
-        <div class="col-md-4"><select data-bind="options: cpGenders, optionsText: 'name', value: selectedGender" class="form-control"></select></div>
-        <div class="col-md-4"><select data-bind="options: cpAgeRanges, optionsText: 'name', value: selectedAgeRange" class="form-control"></select></div>
-        <div class="col-md-4">
+        <div class="col-md-4 gender"><select data-bind="options: cpGenders, optionsText: 'name', value: selectedGender" class="form-control"></select></div>
+        <div class="col-md-4 age"><select data-bind="options: cpAgeRanges, optionsText: 'name', value: selectedAgeRange" class="form-control"></select></div>
+        <div class="col-md-4 allownew">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-bind="checked: allowNewPatient" />新規対応可
@@ -212,10 +212,10 @@
             </div>
         </div>
 
-        <div class="col-md-12"><select data-bind="options: cpLicenses, optionsText: 'name', value: selectedLicense" class="form-control"></select></div>
+        <div class="col-md-4 license"><select data-bind="options: cpLicenses, optionsText: 'name', value: selectedLicense" class="form-control"></select></div>
 
-        <div class="col-md-8"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
-        <div class="col-md-4">
+        <div class="col-md-4 sort"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
+        <div class="col-md-4 descending">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-bind="checked: descending" />降順
