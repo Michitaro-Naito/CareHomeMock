@@ -202,10 +202,8 @@
 
     <div class="col-md-6">
         <div>@MyHelper.MainImage(Model.MediaFileDataId, 293, 240, true)</div>
-        <div>
-        </div>
         <div>@QRCode.Render(Request.Url.AbsoluteUri.ToString())</div>
-        <div>SNS連携(工事中)</div>
+        <div>@Html.Partial("_InfoSocial")</div>
     </div>
 </div><!-- row -->
 

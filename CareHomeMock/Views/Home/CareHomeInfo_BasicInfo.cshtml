@@ -232,7 +232,9 @@
     </div>
     <div class="col-md-6">
         <div>@MyHelper.MainImage(Model.MediaFileDataId, 293, 240, true)</div>
-        <div>SNS</div>
+        <div>
+            @Html.Partial("_InfoSocial")
+        </div>
         @if (Model.User == null)
         {
             <p>@Html.ActionLink("この事業所の方ですか？ 登録してください！", "Send", new { controller = "Application", careHomeCode = Model.CareHomeCode })</p>

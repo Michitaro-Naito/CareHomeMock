@@ -639,6 +639,7 @@
     <Content Include="Views\Partial\MainLinks.cshtml" />
     <Content Include="Views\StaticPage\Details.cshtml" />
     <Content Include="Views\Review\Index.cshtml" />
+    <Content Include="Views\Shared\_InfoSocial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

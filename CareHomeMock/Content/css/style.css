@@ -631,3 +631,13 @@ ul.nav.nav-tabs.carehomeinfo-menu{
 .search-blo.caremanager-search .sort{
     margin-top: 15px;
 }
+
+/* Top Social */
+.top-social .col-md-12{
+}
+
+/* _InfoSocial */
+.info-social .col-md-6,
+.info-social .col-md-12{
+    margin-top: 5px;
+}
