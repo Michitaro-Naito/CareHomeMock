@@ -482,6 +482,36 @@ namespace CareHomeMock.Controllers
             });
         }
 
+        /// <summary>
+        /// Visitor gets CareHomes by coordinates for MapSearch.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult GetCareHomesByCoordinates(double longitude, double latitude)
+        {
+            var distance = 0.025;
+            var minLongitude = longitude - distance;
+            var maxLongitude = longitude + distance;
+            var minLatitude = latitude - distance;
+            var maxLatitude = latitude + distance;
+
+            var homes = db.CareHomes
+                .Where(h => h.Longitude > minLongitude && h.Longitude < maxLongitude && h.Latitude > minLatitude && h.Latitude < maxLatitude)
+                .Select(h => new
+                {
+                    CareHomeId = h.CareHomeId,
+                    Code = h.CareHomeCode,
+                    Name = h.Name,
+                    Latitude = h.Latitude,
+                    Longitude = h.Longitude,
+                    Address = h.Area.PrefectureName + h.Area.CityName + h.Address + h.AddressBuilding,
+                    FileName = h.MediaFileDataId
+                })
+                .ToList();
+
+            return Json(homes);
+        }
+
         public ActionResult QRCode()
         {
             return View();

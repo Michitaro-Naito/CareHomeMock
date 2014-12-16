@@ -1,147 +1,174 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    var title = "地図検索";
+    ViewBag.Title = title;
+}
+@section scripts{
+    <style type="text/css">
+        #map-canvas {
+            width: 100%;
+            height: 400px;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGq4kB5UwEsJphzWLAaNoASJiEOpod1KM"></script>
+    <script type="text/javascript">
+        var map;
+        var model;
+
+        //35.681420, 139.766151
+        function initialize() {
+            var mapOptions = {
+                center: { lat: 35.681420, lng: 139.766151 },
+                zoom: 14
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+            google.maps.event.addListener(map, 'dragend', function () {
+                if (map.getZoom() >= 14)
+                    model.GetCareHomes();
+            });
+            google.maps.event.addListener(map, 'click', function (event) {
+                map.setCenter(event.latLng);
+                if (map.getZoom() < 14) {
+                    map.setZoom(14);
+                    model.GetCareHomes();
+                } else {
+                    map.setZoom(8);
+                    model.ClearMarkers();
+                }
+            });
+            google.maps.event.addListener(map, 'zoom_changed', function () {
+                if (map.getZoom() < 14)
+                    model.ClearMarkers();
+            });
+            model.GetCareHomes();
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+        $(document).ready(function () {
+
+            function AppModel() {
+                var s = this;
+
+                s.geolocationSupported = ko.observable(navigator.geolocation);
+                s.latitude = ko.observable(35.710975);
+                s.longitude = ko.observable(139.858934);
+                s.markers = ko.observableArray([]);
+
+                s.AddListener = function (marker) {
+                    google.maps.event.addListener(marker, 'click', function (event) {
+
+                        var container = $('<div>').addClass('gm-iw gm-sm').css('width', '204px');
+                        var title = $('<div>').addClass('gm-title').text(marker.myData.Name);
+                        var basicinfo = $('<div>').addClass('gm-basicinfo');
+                        var address = $('<div>').addClass('gm-addr').text(marker.myData.Address);
+                        var website = $('<div>').addClass('gm-website').append($('<a>').attr('href', '/事業所/' + marker.myData.Code).attr('target', '_blank').text('more info'));
+                        container.append(title);
+                        container.append(basicinfo);
+                        basicinfo.append(address);
+                        if (marker.myData.FileName != null) {
+                            var image = $('<div>').addClass('gm-photos').append($('<img>').attr('src', '/MediaFiles/' + marker.myData.FileName + '?maxWidth=204&maxHeight=50'));
+                            basicinfo.append(image);
+                        }
+                        basicinfo.append(website);
+
+                        new google.maps.InfoWindow({
+                            content: container.get(0)
+                        }).open(marker.getMap(), marker);
+                    });
+                }
+
+                s.ClearMarkers = function (codesToKeep) {
+                    // Removes old markers.
+                    var markersToDelete = Enumerable.From(s.markers())
+                        .Where(function (m) { return $.inArray(m.myData.Code, codesToKeep) < 0; })
+                        .ToArray();
+                    for (var n = 0; n < markersToDelete.length; n++) {
+                        markersToDelete[n].setMap(null);
+                    }
+
+                    var markersToRemain = Enumerable.From(s.markers())
+                        .Where(function (m) { return $.inArray(m.myData.Code, codesToKeep) >= 0; })
+                        .ToArray();
+                    s.markers(markersToRemain);
+                }
+
+                s.GetCareHomes = function () {
+                    var center = map.getCenter();
+                    s.latitude(center.k);
+                    s.longitude(center.D);
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        url: '/Home/GetCareHomesByCoordinates',
+                        dataType: 'JSON',
+                        data: {
+                            longitude: s.longitude(),
+                            latitude: s.latitude()
+                        }
+                    }).done(function (data) {
+                        var codesToKeep = Enumerable.From(data)
+                            .Where(function (h) { return Enumerable.From(s.markers()).Any(function (m) { return m.myData.Code == h.Code }); })
+                            .Select(function (h) { return h.Code })
+                            .ToArray();
+                        s.ClearMarkers(codesToKeep);
+
+                        // Adds new markers.
+                        var homesToAdd = Enumerable.From(data)
+                            .Where(function (h) { return $.inArray(h.Code, codesToKeep) < 0; })
+                            .ToArray();
+                        for (var n = 0; n < homesToAdd.length; n++) {
+                            var home = homesToAdd[n];
+                            var marker = new google.maps.Marker({
+                                position: new google.maps.LatLng(home.Latitude, home.Longitude),
+                                map: map,
+                                title: home.Name
+                            });
+                            marker.myData = home;
+                            s.AddListener(marker);
+                            s.markers.push(marker);
+                        }
+
+                    }).fail(function () {
+                        console.info('Error');
+                    });
+                }
+
+                s.GotoCurrentLocation = function () {
+                    if (navigator.geolocation) {
+                        // Geolocation is supported. Ask user to enable it.
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                            map.setCenter(pos);
+                            map.setZoom(14);
+                            model.GetCareHomes();
+                        });
+                    } else {
+                        // Geolocation is not supported.
+                    }
+                }
+
+            }
+
+            model = new AppModel();
+            ko.applyBindings(model);
+        });
+    </script>
 }
 
-<!--Search start-->
-<div class="search-blo">
-    <h1><i class="fa fa-search"></i>SEARCH CARE HOMES</h1>
-    <div class="row">
-        <div class="col-md-4"><input type="text" class="form-fld-space" value="Prefecture" onfocus="if(this.value=='Prefecture') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='Prefecture'; this.style.color='#ABABAB';}" /></div>
-        <div class="col-md-4"><input type="text" class="form-fld-space" value="City" onfocus="if(this.value=='City') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='City'; this.style.color='#ABABAB';}" /></div>
-        <div class="col-md-4"><input type="text" value="Company Type" onfocus="if(this.value=='Company Type') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='Company Type'; this.style.color='#ABABAB';}" /></div>
 
-        <div class="col-md-8"><input type="text" value="Keyword (E.G.Name or Special)" onfocus="if(this.value=='Keyword (E.G.Name or Special)') { this.value='';this.style.color='#666';}" onblur="if(this.value=='') {this.value='Keyword (E.G.Name or Special)'; this.style.color='#ABABAB';}" /></div>
-        <div class="col-md-4"><button class="search-btn">SEARCH</button></div>
-        <div class="col-md-12">
-            <div class="advanced-search">
-                Advance Search [+]
-            </div>
-        </div>
 
-    </div>
-</div>
-<!--Search end-->
-<div class="col-md-12 total-search">
-    <span>1,16,460</span> items of Care Homes
-</div>
-<!--Search result start-->
-<div class="search-rslt col-md-12">
-    <div class="row">
-        <div class="col-md-4"><img alt="" src="~/Content/images/search-img01.png"></div>
-        <div class="col-md-8">
-            <h3><a href="#">○○ケア</a></h3>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td><i class="fa  fa-thumb-tack"></i></td>
-                        <td>所在地:</td>
-                        <td>愛知県名古屋市昭和区1-2-3</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-calendar"></i></td>
-                        <td>運営年数:</td>
-                        <td>30年</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-tachometer"></i></td>
-                        <td>ケアマネ人数:</td>
-                        <td>12人</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-comments"></i></td>
-                        <td>評価件数:</td>
-                        <td>420件</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-star-half-full"></i></td>
-                        <td>平均評価:</td>
-                        <td>4.6点</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-12">Duis aute irure  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occcupidatat non proident, sunt in culpa qui officia deserunt mollit ani laborum dolore eu fugiat nulla.</div>
-    </div>
-</div>
+<h2>@title</h2>
 
-<div class="search-rslt col-md-12">
-    <div class="row">
-        <div class="col-md-4"><img alt="" src="~/Content/images/search-img02.png"></div>
-        <div class="col-md-8">
-            <h3><a href="#">Duis aute irure  in reprehenderit</a></h3>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td><i class="fa  fa-thumb-tack"></i></td>
-                        <td>Address:</td>
-                        <td>30, Lorem ipsum,unt in culpa</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-calendar"></i></td>
-                        <td>Years:</td>
-                        <td>30Yr. </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-tachometer"></i></td>
-                        <td>CMs Count:</td>
-                        <td>1253</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-comments"></i></td>
-                        <td>Reviewed Count:</td>
-                        <td>4265</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-star-half-full"></i></td>
-                        <td>Reviewed Average Points:</td>
-                        <td>563</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-12">Duis aute irure  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occcupidatat non proident, sunt in culpa qui officia deserunt mollit ani laborum dolore eu fugiat nulla.</div>
-    </div>
-</div>
+<div id="map-canvas"></div>
+<button type="button" data-bind="click: GotoCurrentLocation">現在地周辺を見る</button>
 
-<div class="search-rslt col-md-12">
-    <div class="row">
-        <div class="col-md-4"><img alt="" src="~/Content/images/search-img03.png"></div>
-        <div class="col-md-8">
-            <h3><a href="#">Duis aute irure  in reprehenderit</a></h3>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td><i class="fa  fa-thumb-tack"></i></td>
-                        <td>Address:</td>
-                        <td>30, Lorem ipsum,unt in culpa</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-calendar"></i></td>
-                        <td>Years:</td>
-                        <td>30Yr. </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-tachometer"></i></td>
-                        <td>CMs Count:</td>
-                        <td>1253</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-comments"></i></td>
-                        <td>Reviewed Count:</td>
-                        <td>4265</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-star-half-full"></i></td>
-                        <td>Reviewed Average Points:</td>
-                        <td>563</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-12">Duis aute irure  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occcupidatat non proident, sunt in culpa qui officia deserunt mollit ani laborum dolore eu fugiat nulla.</div>
-    </div>
-</div>
-<!--Search result end-->
-<div class="col-md-12 total-search more-search">
-    More Results
-</div>
+<!--<p>prefs</p>
+
+<p>name</p>
+
+<p>name</p>-->

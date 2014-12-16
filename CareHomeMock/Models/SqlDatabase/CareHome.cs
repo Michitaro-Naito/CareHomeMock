@@ -137,12 +137,14 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Longitude of this CareHome. "fX" in CSV.
         /// </summary>
+        [Index]
         [Display(Name="経度")]
         public double Longitude { get; set; }
 
         /// <summary>
         /// Latitude of this CareHome. "fY" in CSV.
         /// </summary>
+        [Index]
         [Display(Name="緯度")]
         public double Latitude { get; set; }
 
