@@ -559,6 +559,52 @@ ul.nav.nav-tabs.carehomeinfo-menu{
     background: white;
 }
 
+/* Map Search */
+.mapsearch{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+.mapsearch h1{
+	background: #EA6000;
+	font-size: 22px;
+	position: relative;
+	padding: 8px 12px;
+	color: #fff;
+	display: inline-block;
+	margin-bottom: 22px;
+	margin-top: 0;
+}
+.mapsearch h1:before{
+	content: "\f0dd";
+	display: block;
+	position: absolute;
+	bottom: -20px;
+	font-family: 'FontAwesome';
+	text-align: center;
+	left: calc(50% - 12px);
+	color: #EA6000;
+	font-size: 42px;
+}
+.mapsearch #map-canvas{
+    margin-bottom: 5px;
+}
+.mapsearch .goto-current-location{
+    margin-bottom: 5px;
+}
+.mapsearch .prefectures{
+    margin-bottom: 15px;
+}
+
+.search-carehome-by-name,
+.search-caremanager-by-name{
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
 /* CareManager Search */
 .search-blo.caremanager-search .city{
     margin-top: 0;

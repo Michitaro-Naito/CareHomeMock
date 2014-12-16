@@ -51,9 +51,66 @@
 
         $(document).ready(function () {
 
+            function Prefecture(id, name, lat, lng) {
+                var s = this;
+                s.id = id;
+                s.name = name;
+                s.lat = lat;
+                s.lng = lng;
+            }
+
             function AppModel() {
                 var s = this;
 
+                s.prefectures = ko.observableArray([
+                    new Prefecture(1, '北海道', 43.062948, 141.354590),
+                    new Prefecture(2, '青森県', 40.825844, 140.743819),
+                    new Prefecture(3, '岩手県', 39.706743, 141.150313),
+                    new Prefecture(4, '宮城県', 38.265767, 140.872909),
+                    new Prefecture(5, '秋田県', 39.715195, 140.090133),
+                    new Prefecture(6, '山形県', 38.252827, 140.340072),
+                    new Prefecture(7, '福島県', 37.763745, 140.477401),
+                    new Prefecture(8, '茨木県', 36.358911, 140.474654),
+                    new Prefecture(9, '栃木県', 36.553312, 139.873153),
+                    new Prefecture(10, '群馬県', 36.389871, 139.060164),
+                    new Prefecture(11, '埼玉県', 35.860274, 139.644951),
+                    new Prefecture(12, '千葉県', 35.607225, 140.104317),
+                    new Prefecture(13, '東京都', 35.681352, 139.766058),
+                    new Prefecture(14, '神奈川県', 35.443312, 139.629909),
+                    new Prefecture(15, '新潟県', 37.923058, 139.025661),
+                    new Prefecture(16, '富山県', 36.695384, 137.212917),
+                    new Prefecture(17, '石川県', 36.558721, 136.647121),
+                    new Prefecture(18, '福井県', 36.058518, 136.218654),
+                    new Prefecture(19, '山梨県', 35.662299, 138.575222),
+                    new Prefecture(20, '長野県', 36.655732, 138.193447),
+                    new Prefecture(21, '岐阜県', 35.427260, 136.763060),
+                    new Prefecture(22, '静岡県', 34.976156, 138.382170),
+                    new Prefecture(23, '愛知県', 35.180698, 136.904509),
+                    new Prefecture(24, '三重県', 34.721453, 136.503508),
+                    new Prefecture(25, '滋賀県', 35.018905, 135.852568),
+                    new Prefecture(26, '京都府', 35.012719, 135.766737),
+                    new Prefecture(27, '大阪府', 34.694962, 135.502633),
+                    new Prefecture(28, '兵庫県', 34.692704, 135.193643),
+                    new Prefecture(29, '奈良県', 34.679153, 135.800637),
+                    new Prefecture(30, '和歌山県', 34.230734, 135.163430),
+                    new Prefecture(31, '鳥取県', 35.501680, 134.224099),
+                    new Prefecture(32, '島根県', 35.470370, 133.037576),
+                    new Prefecture(33, '岡山県', 34.654304, 133.919229),
+                    new Prefecture(34, '広島県', 34.387274, 132.455301),
+                    new Prefecture(35, '山口県', 34.180761, 131.474771),
+                    new Prefecture(36, '徳島県', 34.070832, 134.554740),
+                    new Prefecture(37, '香川県', 34.350208, 134.049369),
+                    new Prefecture(38, '愛媛県', 33.840733, 132.766715),
+                    new Prefecture(39, '高知県', 33.559676, 133.530265),
+                    new Prefecture(40, '福岡県', 33.591712, 130.396415),
+                    new Prefecture(41, '佐賀県', 33.261626, 130.294791),
+                    new Prefecture(42, '長崎県', 32.754911, 129.877311),
+                    new Prefecture(43, '熊本県', 32.803405, 130.709525),
+                    new Prefecture(44, '大分県', 33.238656, 131.607657),
+                    new Prefecture(45, '宮城県', 31.907841, 131.418143),
+                    new Prefecture(46, '鹿児島県', 31.601900, 130.555717),
+                    new Prefecture(47, '沖縄県', 26.213326, 127.678672)
+                ]);
                 s.geolocationSupported = ko.observable(navigator.geolocation);
                 s.latitude = ko.observable(35.710975);
                 s.longitude = ko.observable(139.858934);
@@ -138,6 +195,13 @@
                     });
                 }
 
+                s.Goto = function (lat, lng) {
+                    var pos = new google.maps.LatLng(lat, lng);
+                    map.setCenter(pos);
+                    map.setZoom(14);
+                    model.GetCareHomes();
+                }
+
                 s.GotoCurrentLocation = function () {
                     if (navigator.geolocation) {
                         // Geolocation is supported. Ask user to enable it.
@@ -152,6 +216,23 @@
                     }
                 }
 
+                s.careHomeName = ko.observable();
+                s.careManagerName = ko.observable();
+
+                s.SearchCareHome = function () {
+                    var link = '/事業所検索';
+                    if (s.careHomeName() != null)
+                        link += '#' + s.careHomeName();
+                    location.href = link;
+                }
+
+                s.SearchCareManager = function () {
+                    var link = '/ケアマネ検索';
+                    if (s.careManagerName() != null)
+                        link += '#' + s.careManagerName();
+                    location.href = link;
+                }
+
             }
 
             model = new AppModel();
@@ -162,13 +243,35 @@
 
 
 
-<h2>@title</h2>
+<div class="mapsearch">
+    <div>
+        <h1><i class="fa fa-search"></i>@title</h1>
+        <div id="map-canvas"></div>
+    </div>
+    <div>
+        <button type="button" data-bind="click: GotoCurrentLocation" class="btn btn-default btn-sm goto-current-location">現在地周辺を見る</button>
+        <div data-bind="foreach: prefectures" class="prefectures">
+            <button type="button" data-bind="text: name, click: function(){ $root.Goto(lat, lng) }" class="btn btn-default btn-sm"></button>
+        </div>
+    </div>
+</div>
 
-<div id="map-canvas"></div>
-<button type="button" data-bind="click: GotoCurrentLocation">現在地周辺を見る</button>
+<div class="search-carehome-by-name">
+    <h4>事業所名から探す</h4>
+    <div class="input-group">
+        <input type="text" data-bind="value: careHomeName" class="form-control" placeholder="事業所名">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" data-bind="click: SearchCareHome">検索する</button>
+        </span>
+    </div><!-- /input-group -->
+</div>
 
-<!--<p>prefs</p>
-
-<p>name</p>
-
-<p>name</p>-->
+<div class="search-caremanager-by-name">
+    <h4>ケアマネ名から探す</h4>
+    <div class="input-group">
+        <input type="text" data-bind="value: careManagerName" class="form-control" placeholder="ケアマネ名">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" data-bind="click: SearchCareManager">検索する</button>
+        </span>
+    </div><!-- /input-group -->
+</div>
