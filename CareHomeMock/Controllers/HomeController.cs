@@ -231,9 +231,7 @@ namespace CareHomeMock.Controllers
                 .OrderBy(c => c.id)
                 .ToList();
 
-            var companyTypes = Enum.GetNames(typeof(CompanyType))
-                .Select(n => new { id = Enum.Parse(typeof(CompanyType), n), name = n })
-                .ToList();
+            var companyTypes = Helper.EnumHelper<CompanyType>.GetIdNamePairs();
 
             var sortFields = new[]{
                 new { id = "ReviewCount", name = "評価件数" },

@@ -172,7 +172,7 @@
                 </tr>
                 <tr>
                     <td>法人区分</td>
-                    <td>@Model.CompanyType</td>
+                    <td>@(CareHomeMock.Helper.EnumHelper<CareHomeMock.Models.CompanyType>.GetDisplayName(Model.CompanyType.ToString()))</td>
                 </tr>
                 <tr>
                     <td>法人名称</td>
