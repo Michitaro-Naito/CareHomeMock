@@ -301,6 +301,18 @@
     <Compile Include="Migrations\201412151927572_CareHome_Longitude_Latitude_Index.Designer.cs">
       <DependentUpon>201412151927572_CareHome_Longitude_Latitude_Index.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412160241164_Add_Index_CareHome_Established_ReviewCount_Rating.cs" />
+    <Compile Include="Migrations\201412160241164_Add_Index_CareHome_Established_ReviewCount_Rating.Designer.cs">
+      <DependentUpon>201412160241164_Add_Index_CareHome_Established_ReviewCount_Rating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412160323139_Add_Index_CareHome_CompanyType.cs" />
+    <Compile Include="Migrations\201412160323139_Add_Index_CareHome_CompanyType.Designer.cs">
+      <DependentUpon>201412160323139_Add_Index_CareHome_CompanyType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412160342402_Index_CareHome_Name_Traits.cs" />
+    <Compile Include="Migrations\201412160342402_Index_CareHome_Name_Traits.Designer.cs">
+      <DependentUpon>201412160342402_Index_CareHome_Name_Traits.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -706,6 +718,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412151927572_CareHome_Longitude_Latitude_Index.resx">
       <DependentUpon>201412151927572_CareHome_Longitude_Latitude_Index.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412160241164_Add_Index_CareHome_Established_ReviewCount_Rating.resx">
+      <DependentUpon>201412160241164_Add_Index_CareHome_Established_ReviewCount_Rating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412160323139_Add_Index_CareHome_CompanyType.resx">
+      <DependentUpon>201412160323139_Add_Index_CareHome_CompanyType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412160342402_Index_CareHome_Name_Traits.resx">
+      <DependentUpon>201412160342402_Index_CareHome_Name_Traits.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

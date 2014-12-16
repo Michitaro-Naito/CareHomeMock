@@ -36,6 +36,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Name of CareHome like "Foo Care".
         /// </summary>
+        [Index]
         [MaxLength(255)]
         [Display(Name="事業所名")]
         public string Name { get; set; }
@@ -93,6 +94,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// When this CareHome established.
         /// </summary>
+        [Index]
         [Display(Name="開業日")]
         public DateTime? Established { get; set; }
 
@@ -111,6 +113,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Type of company like "営利法人(Corporation)", "非営利法人(NPO)", "自営業(Individual Company)" etc.
         /// </summary>
+        [Index]
         [Display(Name="法人種別")]
         public CompanyType CompanyType { get; set; }
 
@@ -184,8 +187,10 @@ namespace CareHomeMock.Models
         public double? 従業者の研修等 { get; set; }
         // ----- /Professional parameters to display -----
 
+        [Index]
         public int ReviewCount { get; set; }
 
+        [Index]
         public double Rating { get; set; }
 
         /// <summary>
@@ -208,6 +213,8 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Traits and points of this CareHome.
         /// </summary>
+        [Index]
+        [MaxLength(255)]
         [Display(Name="特徴・セールスポイント")]
         public string Traits { get; set; }
 

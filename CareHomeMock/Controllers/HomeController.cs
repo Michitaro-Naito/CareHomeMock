@@ -325,7 +325,41 @@ namespace CareHomeMock.Controllers
 
             // Keyword
             if (keyword != null)
-                q = q.Where(h => h.CompanyName.Contains(keyword) || h.Messages.Contains(keyword));
+                q = q.Where(h => h.Name.Contains(keyword) || h.Traits.Contains(keyword));
+
+            // Order
+            IQueryable<CareHome> rows;
+            switch (sortField)
+            {
+                case "Years":
+                    if (descending)
+                        rows = q.OrderBy(h => h.Established);
+                    else
+                        rows = q.OrderByDescending(h => h.Established);
+                    break;
+
+                case "CareManagerCount":
+                    if (descending)
+                        rows = q.OrderByDescending(h => h.CareManagers.Count);
+                    else
+                        rows = q.OrderBy(h => h.CareManagers.Count);
+                    break;
+
+                case "ReviewCount":
+                default:
+                    if (descending)
+                        rows = q.OrderByDescending(h => h.ReviewCount);
+                    else
+                        rows = q.OrderBy(h => h.ReviewCount);
+                    break;
+
+                case "Rating":
+                    if (descending)
+                        rows = q.OrderByDescending(h => h.Rating);
+                    else
+                        rows = q.OrderBy(h => h.Rating);
+                    break;
+            }
 
             // Paging
             var limit = 50;
@@ -333,40 +367,29 @@ namespace CareHomeMock.Controllers
             if (page != null)
                 offset = limit * page.Value;
             var count = q.Count();
-            IQueryable<CareHome> rows;
-            var ordered = q.OrderBy(h => h.UserId == null); // Registered CareHome always first.
-            switch (sortField)
+            var countRegistered = q.Count(h => h.UserId != null);
+            var countNotRegistered = count - countRegistered;
+
+            // Takes registered first and not registered second.
+            var careHomesRegistered = new List<CareHome>();
+            var careHomesNotRegistered = new List<CareHome>();
+            var skipRegistered = offset;
+            var takeRegistered = Math.Min(limit, countRegistered - skipRegistered);
+            var skipNotRegistered = Math.Max(0, offset - countRegistered);
+            var takeNotRegistered = limit - takeRegistered;
+
+            if(takeRegistered > 0)
             {
-                case "Years":
-                    if (descending)
-                        rows = ordered.ThenBy(h => h.Established);
-                    else
-                        rows = ordered.ThenByDescending(h => h.Established);
-                    break;
-
-                case "CareManagerCount":
-                    if (descending)
-                        rows = ordered.ThenByDescending(h => h.CareManagers.Count);
-                    else
-                        rows = ordered.ThenBy(h => h.CareManagers.Count);
-                    break;
-
-                case "ReviewCount":
-                default:
-                    if (descending)
-                        rows = ordered.ThenByDescending(h => h.ReviewCount);
-                    else
-                        rows = ordered.ThenBy(h => h.ReviewCount);
-                    break;
-
-                case "Rating":
-                    if (descending)
-                        rows = ordered.ThenByDescending(h => h.Rating);
-                    else
-                        rows = ordered.ThenBy(h => h.Rating);
-                    break;
+                careHomesRegistered = rows.Where(h => h.UserId != null)
+                    .Skip(skipRegistered).Take(takeRegistered).ToList();
             }
-            var careHomes = rows.Skip(offset).Take(limit).ToList().Select(h => new
+            if(takeNotRegistered > 0)
+            {
+                careHomesNotRegistered = rows.Where(h => h.UserId == null)
+                    .Skip(skipNotRegistered).Take(takeNotRegistered).ToList();
+            }
+
+            var careHomes = careHomesRegistered.Concat(careHomesNotRegistered).Select(h => new
                 {
                     CareHomeId = h.CareHomeId,
                     CareHomeCode = h.CareHomeCode,
