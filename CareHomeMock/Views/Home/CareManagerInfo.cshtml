@@ -1,6 +1,6 @@
 ﻿@model CareHomeMock.Models.CareManager
 @{
-    var title = Model.CareHome.CompanyName + " " + Model.Name;
+    var title = Model.CareHome.Name + " " + Model.Name;
     ViewBag.Title = title;
 }
 
@@ -127,14 +127,14 @@
     </script>
 }
 
-<h2>@Model.CareHome.CompanyName @Model.Name</h2>
+<h2>@title</h2>
 
 <div class="row">
     <div class="col-md-6">
         <table class="table table-condensed">
             <tr>
                 <td>所属</td>
-                <td>@Html.ActionLink(Model.CareHome.CompanyName, "CareHomeInfo_BasicInfo", new { controller = "Home", code = Model.CareHome.CareHomeCode })</td>
+                <td>@Html.ActionLink(Model.CareHome.Name, "CareHomeInfo_BasicInfo", new { controller = "Home", code = Model.CareHome.CareHomeCode })</td>
             </tr>
             <tr>
                 <td>名前</td>

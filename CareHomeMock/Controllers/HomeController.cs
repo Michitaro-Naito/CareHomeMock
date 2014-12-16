@@ -80,8 +80,8 @@ namespace CareHomeMock.Controllers
             var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
-            if (name != careHome.CompanyName)
-                return RedirectToAction("CareHomeInfo_BasicInfo", new { code = code, name = careHome.CompanyName });
+            if (name != careHome.Name)
+                return RedirectToAction("CareHomeInfo_BasicInfo", new { code = code, name = careHome.Name });
             return View(careHome);
         }
 
@@ -122,8 +122,8 @@ namespace CareHomeMock.Controllers
             var careManager = db.CareManagers.Find(id);
             if (careManager == null)
                 return HttpNotFound();
-            if (careHomeName != careManager.CareHome.CompanyName || careManagerName != careManager.Name)
-                return RedirectToRoute(new { action = "CareManagerInfo", controller = "Home", id = id, careHomeName = careManager.CareHome.CompanyName, careManagerName = careManager.Name });
+            if (careHomeName != careManager.CareHome.Name || careManagerName != careManager.Name)
+                return RedirectToRoute(new { action = "CareManagerInfo", controller = "Home", id = id, careHomeName = careManager.CareHome.Name, careManagerName = careManager.Name });
             return View(careManager);
         }
 
@@ -393,8 +393,8 @@ namespace CareHomeMock.Controllers
                 {
                     CareHomeId = h.CareHomeId,
                     CareHomeCode = h.CareHomeCode,
-                    CompanyName = h.CompanyName,
-                    Address = h.Area.PrefectureName + h.Area.CityName + h.Address,
+                    Name = h.Name,
+                    Address = h.Area.PrefectureName + h.Area.CityName + h.Address + h.AddressBuilding,
                     Years = h.Years,
                     CareManagerCount = h.CareManagers.Count,
                     ReviewCount = h.ReviewCount,
@@ -489,7 +489,7 @@ namespace CareHomeMock.Controllers
 
             var careManagers = rows.Skip(offset).Take(limit).ToList().Select(m => new {
                 CareHomeId = m.CareHomeId,
-                CareHomeName = m.CareHome.CompanyName,
+                CareHomeName = m.CareHome.Name,
                 CareManagerId = m.CareManagerId,
                 CareManagerName = m.Name,
                 Years = m.Years,
