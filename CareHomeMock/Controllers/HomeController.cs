@@ -1,5 +1,7 @@
 ﻿using CareHomeMock.Models;
 using System;
+using System.Data;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -306,8 +308,10 @@ namespace CareHomeMock.Controllers
         //[OutputCache(Duration = 300, VaryByParam = "prefectureCode;cityCode;companyType;keyword;page;sortField;descending")]
         public ActionResult GetCareHomes(int? prefectureCode, int? cityCode, CompanyType? companyType, string keyword, int? page, string sortField, bool descending = false)
         {
+            var start = DateTime.UtcNow;
+
             // Active
-            var q = db.CareHomes.Where(h => !h.Deactivated);
+            var q = db.CareHomes.Where(h => !h.Deactivated).Include(h => h.Area).Include(h => h.CareManagers);
 
             // Prefecture
             if (prefectureCode != null)
@@ -322,7 +326,7 @@ namespace CareHomeMock.Controllers
                 q = q.Where(h => h.CompanyType == companyType.Value);
 
             // Keyword
-            if (keyword != null)
+            if (!string.IsNullOrEmpty(keyword))
                 q = q.Where(h => h.Name.Contains(keyword) || h.Traits.Contains(keyword));
 
             // Order
@@ -376,6 +380,8 @@ namespace CareHomeMock.Controllers
             var skipNotRegistered = Math.Max(0, offset - countRegistered);
             var takeNotRegistered = limit - takeRegistered;
 
+            Debug.WriteLine("{0} ms", (DateTime.UtcNow - start).TotalMilliseconds);
+
             if(takeRegistered > 0)
             {
                 careHomesRegistered = rows.Where(h => h.UserId != null)
@@ -386,6 +392,8 @@ namespace CareHomeMock.Controllers
                 careHomesNotRegistered = rows.Where(h => h.UserId == null)
                     .Skip(skipNotRegistered).Take(takeNotRegistered).ToList();
             }
+
+            Debug.WriteLine("{0} ms", (DateTime.UtcNow - start).TotalMilliseconds);
 
             var careHomes = careHomesRegistered.Concat(careHomesNotRegistered).Select(h => new
                 {
@@ -400,6 +408,8 @@ namespace CareHomeMock.Controllers
                     Messages = h.Messages,
                     MediaFileDataId = h.MediaFileDataId
                 }).ToList();
+
+            Debug.WriteLine("{0} ms", (DateTime.UtcNow - start).TotalMilliseconds);
 
             return Json(new { count = count, careHomes = careHomes });
         }
