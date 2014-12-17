@@ -86,7 +86,7 @@ namespace CareHomeMock.Controllers
 
             Debug.WriteLine("Maybe uploaded to blob." + fileName);
 
-            return null;
+            return RedirectToAction("Index");
         }
 
         public ActionResult Download(string fileName)

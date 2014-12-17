@@ -41,6 +41,7 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
+            @Html.ActionLink("表示", "Details", "StaticPage", new { id = item.StaticPageId }, new { target = "_blank" }) |
             @Html.ActionLink("編集", "Edit", new { id=item.StaticPageId }) |
             @Html.ActionLink("削除", "Delete", new { id=item.StaticPageId })
         </td>

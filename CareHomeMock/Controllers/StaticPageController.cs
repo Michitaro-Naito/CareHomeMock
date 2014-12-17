@@ -27,7 +27,7 @@ namespace CareHomeMock.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            return View(db.StaticPage.ToList());
+            return View(db.StaticPage.OrderBy(p=>p.Order).ThenByDescending(p=>p.Updated).ToList());
         }
 
         // GET: /StaticPage/Edit/5

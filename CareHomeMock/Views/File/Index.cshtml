@@ -3,6 +3,23 @@
 @{
     ViewBag.Title = "Index";
 }
+@section scripts{
+    <script>
+        function InsertAsImage(fileName) {
+            window.opener.InsertAsImage(fileName);
+        }
+
+        function InsertAsFile(fileName) {
+            window.opener.InsertAsFile(fileName);
+        }
+
+        $(document).ready(function () {
+
+        });
+    </script>
+}
+
+
 
 <h2>Index</h2>
 
@@ -14,6 +31,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Created)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RowKey)
+        </th>
         <th></th>
     </tr>
 
@@ -22,11 +42,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Created)
         </td>
+        <td>@Html.DisplayFor(m => item.RowKey)</td>
         <td>
-            @Html.ActionLink("ダウンロード", "Download", new { fileName = item.RowKey }) |
+            <button type="button" onclick="InsertAsImage('@item.RowKey')">記事へ画像として挿入する</button>
+            <button type="button" onclick="InsertAsFile('@item.RowKey')">記事へファイルとして挿入する</button>
+            @Html.ActionLink("ダウンロード", "Download", new { fileName = item.RowKey }, new { target = "_blank" }) |
             @Html.ActionLink("削除", "Delete", new { id = item.FileId })
         </td>
     </tr>
 }
-
 </table>
