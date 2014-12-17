@@ -216,6 +216,7 @@ namespace CareHomeMock.Controllers
                 var container = BlobHelper.GetContainer("csv");
                 var blob = container.GetBlockBlobReference("CareHome.UploadCsv");
                 blob.UploadFromStream(file.InputStream);
+                Log(LogType.Admin, "CSVをアップロードしました。");
                 Flash("CSVをアップロードし、更新の準備ができました。更新ボタンを押して更新処理を開始してください。");
             }
 
@@ -307,6 +308,8 @@ namespace CareHomeMock.Controllers
         [HttpPost]
         public ActionResult UpdateFromCsv(int skip = 0, int take = 500)
         {
+            Log(LogType.Admin, string.Format("CSVからの更新を試みました。({0}行目から{1}行)", skip, take));
+
             var container = BlobHelper.GetContainer("csv");
             var blob = container.GetBlockBlobReference("CareHome.UploadCsv");
             using (var mem = new MemoryStream())
