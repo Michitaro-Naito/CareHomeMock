@@ -313,6 +313,10 @@
     <Compile Include="Migrations\201412160342402_Index_CareHome_Name_Traits.Designer.cs">
       <DependentUpon>201412160342402_Index_CareHome_Name_Traits.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412171502365_Add_Css.cs" />
+    <Compile Include="Migrations\201412171502365_Add_Css.Designer.cs">
+      <DependentUpon>201412171502365_Add_Css.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -326,6 +330,7 @@
     <Compile Include="Models\SqlDatabase\CareManager.cs" />
     <Compile Include="Models\SqlDatabase\CareManagerLicenses.cs" />
     <Compile Include="Models\SqlDatabase\Cluster.cs" />
+    <Compile Include="Models\SqlDatabase\Css.cs" />
     <Compile Include="Models\SqlDatabase\EmailVerification.cs" />
     <Compile Include="Models\SqlDatabase\File.cs" />
     <Compile Include="Models\SqlDatabase\License.cs" />
@@ -640,6 +645,7 @@
     <Content Include="Views\StaticPage\Details.cshtml" />
     <Content Include="Views\Review\Index.cshtml" />
     <Content Include="Views\Shared\_InfoSocial.cshtml" />
+    <Content Include="Views\StaticPage\EditCss.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -728,6 +734,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412160342402_Index_CareHome_Name_Traits.resx">
       <DependentUpon>201412160342402_Index_CareHome_Name_Traits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412171502365_Add_Css.resx">
+      <DependentUpon>201412171502365_Add_Css.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

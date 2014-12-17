@@ -1,0 +1,12 @@
+﻿@model CareHomeMock.Models.Css
+@{
+    ViewBag.Title = "View1";
+}
+
+<h2>View1</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.TextArea("Body", new { @class = "form-control" })
+    <button type="submit">保存する</button>
+}

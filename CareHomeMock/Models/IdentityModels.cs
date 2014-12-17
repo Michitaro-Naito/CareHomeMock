@@ -11,6 +11,7 @@ namespace CareHomeMock.Models
         public DbSet<CareManager> CareManagers { get; set; }
         public DbSet<CareManagerLicenses> CareManagerLicenses { get; set; }
         public DbSet<Cluster> Clusters { get; set; }
+        public DbSet<Css> Csses { get; set; }
         public DbSet<EmailVerification> EmailVerifications { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<License> Licenses { get; set; }

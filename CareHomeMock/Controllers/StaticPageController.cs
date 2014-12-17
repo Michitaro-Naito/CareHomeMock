@@ -15,12 +15,32 @@ namespace CareHomeMock.Controllers
     /// </summary>
     public class StaticPageController : BaseController
     {
+        /// <summary>
+        /// Visitor sees a static page.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Details(int? id)
         {
             var page = db.StaticPage.Find(id);
             if (page == null)
                 return HttpNotFound();
             return View(page);
+        }
+
+        /// <summary>
+        /// Visitor sees an additional CSS.
+        /// </summary>
+        /// <returns></returns>
+        //[OutputCache(Duration=60)]
+        public ActionResult Css()
+        {
+            var css = db.Csses.FirstOrDefault();
+            if (css == null)
+                return HttpNotFound();
+            Response.ContentType = "text/css";
+            Response.Write(css.Body);
+            return null;
         }
 
         // GET: /StaticPage/
@@ -74,6 +94,34 @@ namespace CareHomeMock.Controllers
                 return RedirectToAction("Index");
             }
             return View(staticpage);
+        }
+
+        /// <summary>
+        /// Admin edits an additional CSS.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles="Admin")]
+        public ActionResult EditCss()
+        {
+            var css = db.Csses.FirstOrDefault()
+                ?? new Css();
+            return View(css);
+        }
+
+        [Authorize(Roles="Admin")]
+        [HttpPost]
+        public ActionResult EditCss(Css model)
+        {
+            var css = db.Csses.FirstOrDefault();
+            if (css == null)
+            {
+                css = new Css();
+                db.Csses.Add(css);
+            }
+            css.Body = model.Body;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: /StaticPage/Delete/5
