@@ -426,6 +426,7 @@ namespace CareHomeMock.Controllers
                             home.安全衛生管理等 = csv.GetField<Nullable<double>>("安全・衛生管理等");
                             home.従業者の研修等 = csv.GetField<Nullable<double>>("従業者の研修等");
 
+                            db.Entry(home).Property(h => h.UserId).IsModified = false;
                             db.SaveChanges();
                         }
                         catch (Exception e)
