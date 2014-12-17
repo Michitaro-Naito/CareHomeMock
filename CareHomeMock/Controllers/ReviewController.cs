@@ -114,5 +114,29 @@ namespace CareHomeMock.Controllers
             return Json(new { success = true });
         }
 
+        /// <summary>
+        /// Admin deletes a review.
+        /// </summary>
+        /// <param name="partitionKey"></param>
+        /// <param name="rowKey"></param>
+        /// <returns></returns>
+        [Authorize(Roles="Admin")]
+        public ActionResult Delete(string partitionKey, string rowKey)
+        {
+            var review = TableHelper<Review>.Table.CreateQuery<Review>().Where(r => r.PartitionKey == partitionKey && r.RowKey == rowKey).ToList().First();
+            return View(review);
+        }
+
+        [Authorize(Roles="Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(Review model)
+        {
+            var table = TableHelper<Review>.Table;
+            table.Execute(TableOperation.Delete(model));
+            Flash("コメントが削除されました。");
+            return RedirectToAction("CareManagerInfo", "Home", new { id = model.PartitionKey });
+        }
+
 	}
 }

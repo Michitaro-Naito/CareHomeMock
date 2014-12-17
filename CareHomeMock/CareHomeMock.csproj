@@ -646,6 +646,7 @@
     <Content Include="Views\Review\Index.cshtml" />
     <Content Include="Views\Shared\_InfoSocial.cshtml" />
     <Content Include="Views\StaticPage\EditCss.cshtml" />
+    <Content Include="Views\Review\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

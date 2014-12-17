@@ -1,0 +1,35 @@
+﻿@model CareHomeMock.Models.Review
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(r => r.PartitionKey)
+    @Html.HiddenFor(r => r.RowKey)
+    @Html.HiddenFor(r => r.ETag)
+    
+    <table class="table">
+        <tr>
+            <td>ケアマネID</td>
+            <td>@Model.PartitionKey</td>
+        </tr>
+        <tr>
+            <td>コメントID</td>
+            <td>@Model.RowKey</td>
+        </tr>
+        <tr>
+            <td>コメント</td>
+            <td>@Model.Comment</td>
+        </tr>
+        <tr>
+            <td>返信</td>
+            <td>@Model.Reply</td>
+        </tr>
+    </table>
+    
+    <button type="submit" class="btn btn-warning">削除する</button>
+}

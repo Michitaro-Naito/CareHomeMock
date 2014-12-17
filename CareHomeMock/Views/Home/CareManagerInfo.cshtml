@@ -2,6 +2,7 @@
 @{
     var title = Model.CareHome.Name + " " + Model.Name;
     ViewBag.Title = title;
+    var isAdmin = User.IsInRole("Admin");
 }
 
 @section scripts{
@@ -83,6 +84,7 @@
                 s.oldestRowKey = ko.observable(null);
                 s.reviews = ko.observableArray([]);
                 s.noMore = ko.observable(false);
+                s.showDelete = ko.observable(false);
 
                 s.ActivateRaty = function(){
                     $('.rating').raty({
@@ -118,11 +120,19 @@
                         }
                     });
                 }
+
+                s.Delete = function(partitionKey, rowKey){
+                    location.href = '/Review/Delete?partitionKey=' + partitionKey + '&rowKey=' + rowKey;
+                }
             }
 
             var model = new AppModel();
             ko.applyBindings(model);
             model.GetMoreReviews();
+            @if (isAdmin)
+            {
+                <text>model.showDelete(true);</text>
+            }
         });
     </script>
 }
@@ -229,6 +239,9 @@
         </div>
         <div data-bind="visible: Reply != null" class="reply">
             <span data-bind="text: Reply"></span>
+        </div>
+        <div data-bind="visible: $root.showDelete">
+            <button type="button" data-bind="click: function(){$root.Delete($data.PartitionKey, $data.RowKey)}" class="btn btn-warning">削除する</button>
         </div>
     </div>
 </div>
