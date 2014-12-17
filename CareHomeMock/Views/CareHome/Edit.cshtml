@@ -27,8 +27,10 @@
             </div>
         </div>
 
+        @MyHelper.EditorFor(Html, m => m.Name)
         @MyHelper.EditorFor(Html, m => m.Zip)
         @MyHelper.EditorFor(Html, m => m.Address)
+        @MyHelper.EditorFor(Html, m => m.AddressBuilding)
         @MyHelper.EditorFor(Html, m => m.Tel)
         @MyHelper.EditorFor(Html, m => m.Fax)
         @MyHelper.EditorFor(Html, m => m.WebsiteUrl)
@@ -71,7 +73,7 @@
         @MyHelper.EditorFor(Html, m => m.Email)
         @MyHelper.EditorFor(Html, m => m.MediaFileDataId)
         @MyHelper.EditorFor(Html, m => m.Region, MyHelper.EditorType.TextArea)
-        @MyHelper.EditorFor(Html, m => m.Traits, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.Traits)
         @MyHelper.EditorFor(Html, m => m.Messages, MyHelper.EditorType.TextArea)
 
         <div class="form-group">

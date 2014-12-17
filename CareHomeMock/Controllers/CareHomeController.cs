@@ -12,6 +12,7 @@ using CsvHelper;
 using CareHomeMock.Helper;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace CareHomeMock.Controllers
 {
@@ -22,10 +23,21 @@ namespace CareHomeMock.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize(Roles="Admin")]
-        public ActionResult Index()
+        public ActionResult Index(CareHomeIndexVM vm)
         {
-            var carehomes = db.CareHomes.Include(c => c.Area);
-            return View(carehomes.Take(50).ToList());
+            vm = vm ?? new CareHomeIndexVM();
+
+            IQueryable<CareHome> q;
+            if (string.IsNullOrEmpty(vm.SearchString))
+                q = db.CareHomes;
+            else
+                q = db.CareHomes.Where(h => h.CareHomeCode == vm.SearchString || h.Name == vm.SearchString);
+
+            var limit = 50;
+            var offset = vm.Page * limit;
+            vm.CareHomes = q.Include(c => c.Area).OrderBy(h => h.CareHomeId).Skip(offset).Take(limit).ToList();
+
+            return View(vm);
         }
 
         /// <summary>
@@ -120,19 +132,24 @@ namespace CareHomeMock.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DownloadCareHomes()
         {
-            using (var writer = new System.IO.StreamWriter(Response.OutputStream))
+            using (var writer = new System.IO.StreamWriter(Response.OutputStream, Encoding.GetEncoding("Shift-JIS")))
             using (var csv = new CsvHelper.CsvWriter(writer))
             {
-                foreach (var c in db.CareHomes)
+                csv.WriteField("事業所ID");
+                csv.WriteField("事業所名");
+                csv.WriteField("登録者氏名");
+                csv.WriteField("登録者メールアドレス");
+                csv.NextRecord();
+                foreach (var c in db.CareHomes.Where(h => h.UserId != null && !h.Deactivated && h.Email != null).Include(h => h.User))
                 {
-                    csv.WriteField(c.CareHomeId.ToString());
-                    csv.WriteField(c.CompanyName);
-                    csv.WriteField(c.ChiefName);
+                    csv.WriteField(c.CareHomeCode);
+                    csv.WriteField(c.Name);
+                    csv.WriteField(c.User.Name);
                     csv.WriteField(c.Email);
                     csv.NextRecord();
                 }
             }
-            //Response.ContentType = "text/csv";
+            Response.ContentType = "text/csv";
             Log(LogType.Admin, "CSVで事業所一覧をダウンロードしました。");
             return null;
         }
@@ -140,12 +157,20 @@ namespace CareHomeMock.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DownloadCareManagers()
         {
-            using (var writer = new System.IO.StreamWriter(Response.OutputStream))
+            using (var writer = new System.IO.StreamWriter(Response.OutputStream, Encoding.GetEncoding("Shift-JIS")))
             using (var csv = new CsvHelper.CsvWriter(writer))
             {
-                foreach (var m in db.CareManagers)
+                csv.WriteField("事業所ID");
+                csv.WriteField("ケアマネID");
+                csv.WriteField("氏名");
+                csv.WriteField("登録者メールアドレス");
+                csv.WriteField("生年月日");
+                csv.WriteField("性別");
+                csv.WriteField("資格取得年月日");
+                csv.NextRecord();
+                foreach (var m in db.CareManagers.Where(m => m.UserId != null && m.Email != null).Include(m => m.CareHome).Include(m => m.User))
                 {
-                    csv.WriteField(m.CareHomeId);
+                    csv.WriteField(m.CareHome.CareHomeCode);
                     csv.WriteField(m.CareManagerId);
                     csv.WriteField(m.Name);
                     csv.WriteField(m.Email);
@@ -156,7 +181,7 @@ namespace CareHomeMock.Controllers
                     csv.NextRecord();
                 }
             }
-            //Response.ContentType = "text/csv";
+            Response.ContentType = "text/csv";
             Log(LogType.Admin, "CSVでケアマネ一覧をダウンロードしました。");
             return null;
         }

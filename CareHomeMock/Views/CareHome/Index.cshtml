@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CareHomeMock.Models.CareHome>
+﻿@model CareHomeMock.Models.CareHomeIndexVM
 
 @{
     var title = "事業所一覧";
@@ -8,25 +8,34 @@
 <h2>@title</h2>
 
 <p>
-    @Html.ActionLink("作成する", "Edit")
-    @Html.ActionLink("CSVから事業所を更新する", "UploadCsv")
+    @Html.ActionLink("作成する", "Edit") |
+    @Html.ActionLink("CSVから事業所を更新する", "UploadCsv") |
+    @Html.ActionLink("CSVでダウンロードする(事業所)", "DownloadCareHomes", null, new { target="_blank" }) |
+    @Html.ActionLink("CSVでダウンロードする(ケアマネ)", "DownloadCareManagers", null, new { target = "_blank" })
+</p>
+<p>
+    @using (Html.BeginForm())
+    {
+        @MyHelper.EditorFor(Html, m => m.SearchString)
+        @MyHelper.EditorFor(Html, m => m.Page)
+        <button class="btn btn-default" type="submit">検索する</button>
+    }
 </p>
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Deactivated)</th>
+        <th>@Html.DisplayNameFor(model => model.CareHomes[0].Deactivated)</th>
+        <th>@Html.DisplayNameFor(model => model.CareHomes[0].CareHomeCode)</th>
         <th>
-            @Html.DisplayNameFor(model => model.Area.PrefectureName)
+            @Html.DisplayNameFor(model => model.CareHomes[0].Area.PrefectureName)
         </th>
+        <th>@Html.DisplayNameFor(m => m.CareHomes[0].Name)</th>
         <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChiefName)
+            @Html.DisplayNameFor(model => model.CareHomes[0].CompanyName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.CareHomes) {
     <tr>
         <td>
             @if (item.Deactivated)
@@ -34,14 +43,13 @@
                 <span>無効</span>
             }
         </td>
+        <td>@item.CareHomeCode</td>
         <td>
             @Html.DisplayFor(modelItem => item.Area.PrefectureName)
         </td>
+        <td>@item.Name</td>
         <td>
             @Html.DisplayFor(modelItem => item.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChiefName)
         </td>
         <td>
             @Html.ActionLink("編集", "Edit", new { id=item.CareHomeId })

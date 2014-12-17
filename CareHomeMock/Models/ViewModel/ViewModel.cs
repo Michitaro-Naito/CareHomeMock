@@ -136,4 +136,17 @@ namespace CareHomeMock.Models
     {
         public int CareManagerId { get; set; }
     }
+
+    public class CareHomeIndexVM
+    {
+        [Display(Name="検索ワード", Description="事業所IDもしくは事業所名(完全一致)")]
+        [DetailedDisplay(Placeholder="例: K123456")]
+        public string SearchString { get; set; }
+
+        [Display(Name="ページ数", Description="0から始まるページ数")]
+        [DetailedDisplay(Placeholder="例: 0")]
+        public int Page { get; set; }
+
+        public List<CareHome> CareHomes { get; set; }
+    }
 }

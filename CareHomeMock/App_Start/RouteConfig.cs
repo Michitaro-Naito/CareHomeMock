@@ -124,6 +124,18 @@ namespace CareHomeMock
                 defaults: new { controller = "Home", action = "AdminMenu" }
             );
 
+            routes.MapRoute(
+                name: "CareHome.DownloadCareHomes.csv",
+                url: "CareHome/DownloadCareHomes.csv",
+                defaults: new { controller = "CareHome", action = "DownloadCareHomes" }
+            );
+
+            routes.MapRoute(
+                name: "CareHome.DownloadCareManagers.csv",
+                url: "CareHome/DownloadCareManagers.csv",
+                defaults: new { controller = "CareHome", action = "DownloadCareManagers" }
+            );
+
 
 
             // ----- CareHome -----
