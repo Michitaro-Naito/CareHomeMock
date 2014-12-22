@@ -16,10 +16,7 @@
         <header>
             <div class="top-header">
                 <div class="container">
-                    <div class="col-md-5 top-email">
-                        <i class="fa fa-envelope"></i><a href="mailto:mail@carehomes.com">mail@carehomes.com</a>
-                        <i class="fa fa-phone"></i>1-234-567-8900
-                    </div>
+                    <div class="col-md-5 top-email">全国の居宅介護支援事業所とケアマネジャーの紹介サイト</div>
                     <div class="col-md-7">
                         <div class="right">
                             <div class="left">@Html.Partial("_LoginPartial")</div>
@@ -47,7 +44,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <div class="logo"><a href="@Url.Action("Index", "Home")"><img alt="" src="~/Content/images/logo.png"></a></div>
+                        <div class="logo"><a href="@Url.Action("Index", "Home")"><img alt="" src="~/Content/images/Original_transparent_412x75.png"></a></div>
                     </div>
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
@@ -83,7 +80,7 @@
                     <div class="col-md-4">
                         <!--right navigation start-->
                         <div class="right-navigation">
-                            <h3>Main Links</h3>
+                            <h3>Information</h3>
                             <div>@Html.Action("MainLinks", "Partial")</div>
                         </div>
                         <!--right navigation end-->
@@ -113,12 +110,16 @@
                     <div class="col-md-4">
                         <h4>About Us</h4>
                         <div class="aboutus">
-                            <p>Consectetur adipiscing elit aeneane lorem lipsum, condimentum ultrices consequat eu, vehicula mauris lipsum adipiscing lipsum aenean orci lorem.</p>
-                            <p>Asequat lorem ipsum dolor lorem sit amet, consectetur adipiscing dolor elit. Aenean nisl orci, condimentum.</p>
+                            <p>このサイトは株式会社ケアレビューが運営しています。</p>
+                            <ul>
+                                <li><a href="http://hospia.jp/" target="_blank">・病院情報局</a></li>
+                                <li><a href="http://caremap.jp/" target="_blank">・医療介護情報局</a></li>
+                                <li><a href="http://jmap.jp/" target="_blank">・地域医療情報システム</a></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <h4>Main Links</h4>
+                        <h4>Information</h4>
                         <div class="ftr-navigation">@Html.Action("MainLinks", "Partial")</div>
                     </div>
                     <div class="col-md-4">
@@ -140,8 +141,8 @@
         </footer>
         <footer class="copyright">
             <div class="container">
-                <div class="col-md-5">© Copyright @DateTime.Now.Year by Care Homes. All Rights Reserved. </div>
-                <div class="col-md-7 txt-rgt">Developed By: Net Magnetic</div>
+                <div class="col-md-5">Copyright Care Review, Inc. All Rights Reserved.</div>
+                <div class="col-md-7 txt-rgt">Developed By: Amlitek.com</div>
             </div>
         </footer>
         

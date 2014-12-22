@@ -38,7 +38,9 @@
                 s.careHomes = ko.observableArray([]);
                 s.nextPage = ko.observable(0);
                 s.noMore = ko.observable(false);
+                s.loading = ko.observable(false);
 
+                // Computed
                 s.cpPrefectures = ko.computed(function () {
                     var prefectures = Enumerable.From(s.prefectures()).ToArray();
                     prefectures.unshift({ id: null, name: '都道府県' });
@@ -84,6 +86,29 @@
                     return s.selectedSortField().id;
                 });
 
+                // Class
+                s.clReviewCount = ko.computed(function () {
+                    if (s.cpSortField() == 'ReviewCount')
+                        return 'sort-active';
+                    return '';
+                });
+                s.clRating = ko.computed(function () {
+                    if (s.cpSortField() == 'Rating')
+                        return 'sort-active';
+                    return '';
+                });
+                s.clEstablished = ko.computed(function () {
+                    if (s.cpSortField() == 'Years')
+                        return 'sort-active';
+                    return '';
+                });
+                s.clCareManagerCount = ko.computed(function () {
+                    if (s.cpSortField() == 'CareManagerCount')
+                        return 'sort-active';
+                    return '';
+                });
+
+                // Method
                 s.Init = function () {
                     if (location.hash != null)
                         s.keyword(location.hash.replace('#', ''));
@@ -112,12 +137,14 @@
                 }
 
                 s.Search = function () {
+                    s.careHomes([]);
                     s.nextPage(0);
                     s.noMore(false);
                     s.SearchMore();
                 }
 
                 s.SearchMore = function () {
+                    s.loading(true);
                     $.ajax({
                         cache: false,
                         type: 'POST',
@@ -143,7 +170,18 @@
                         }
                         s.nextPage(s.nextPage() + 1);
                         s.ActivateRaty();
+                        s.loading(false);
                     });
+                }
+
+                s.Sort = function (sortField) {
+                    if (sortField == s.selectedSortField()) {
+                        s.descending(!s.descending());
+                    } else {
+                        s.selectedSortField(sortField);
+                        s.descending(true);
+                    }
+                    s.Search();
                 }
             }
 
@@ -162,8 +200,8 @@
         <div class="col-md-4"><select data-bind="options: cpCities, optionsText: 'name', value: selectedCity" class="form-control"></select></div>
         <div class="col-md-4"><select data-bind="options: cpCompanyTypes, optionsText: 'name', value: selectedCompanyType" class="form-control"></select></div>
 
-        <div class="col-md-8"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
-        <div class="col-md-4" style="margin-top: 10px">
+        <div class="col-md-8" style="display: none;"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
+        <div class="col-md-4" style="margin-top: 10px; display: none;">
             <div class="checkbox">
                 <label><input type="checkbox" data-bind="checked: descending" />降順</label>
             </div>
@@ -174,6 +212,19 @@
     </div>
 </div>
 
+<!-- Sort -->
+<ul data-bind="foreach: sortFields" class="list-inline sort-fields">
+    <li>
+        <button type="button" data-bind="click: function(){ $root.Sort($data); }" class="btn btn-default btn-sm">
+            <span data-bind="visible: $root.selectedSortField() == $data">
+                <span data-bind="visible: $root.descending()" class="glyphicon glyphicon-arrow-down"></span>
+                <span data-bind="visible: !$root.descending()" class="glyphicon glyphicon-arrow-up"></span>
+            </span>
+            <span data-bind="text: name"></span>
+        </button>
+    </li>
+</ul>
+
 <!-- Results -->
 <div class="col-md-12 total-search">
     <span data-bind="text: count"></span>件の検索結果
@@ -183,17 +234,17 @@
     <div class="search-rslt col-md-12">
         <div class="row">
             <div class="col-md-4">
-                <a data-bind="attr: { href : cpHref }" href="#" target="_blank">
+                <a data-bind="attr: { href : cpHref }" href="#">
                     <div data-bind="if: data.MediaFileDataId != null">
                         <img data-bind="attr: { src: cpImageSrc }" />
                     </div>
                     <div data-bind="if: data.MediaFileDataId == null">
-                        No Image
+                        画像が登録されていません。
                     </div>
                 </a>
             </div>
             <div class="col-md-8">
-                <h3><a data-bind="text: data.Name, attr: { href : cpHref }" href="#" target="_blank"></a></h3>
+                <h3><a data-bind="text: data.Name, attr: { href : cpHref }" href="#"></a></h3>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -203,22 +254,22 @@
                                 <span data-bind="text: data.Address"></span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr data-bind="attr: { class: $root.clEstablished }">
                             <td><i class="fa fa-calendar"></i></td>
-                            <td>運営年数:</td>
-                            <td><span data-bind="text: data.Years"></span>年</td>
+                            <td>開業日:</td>
+                            <td><span data-bind="text: fmDate(data.Established)"></span></td>
                         </tr>
-                        <tr>
+                        <tr data-bind="attr: { class: $root.clCareManagerCount }">
                             <td><i class="fa fa-tachometer"></i></td>
                             <td>ケアマネ人数:</td>
                             <td><span data-bind="text: data.CareManagerCount"></span>人</td>
                         </tr>
-                        <tr>
+                        <tr data-bind="attr: { class: $root.clReviewCount }">
                             <td><i class="fa fa-comments"></i></td>
                             <td>評価件数:</td>
                             <td><span data-bind="text: data.ReviewCount"></span>件</td>
                         </tr>
-                        <tr>
+                        <tr data-bind="attr: { class: $root.clRating }">
                             <td><i class="fa fa-star-half-full"></i></td>
                             <td>平均得点:</td>
                             <td style="font-size: 11px;">
@@ -234,6 +285,7 @@
     </div>
 </div>
 
-<div data-bind="visible: !noMore(), click: SearchMore" class="col-md-12 total-search more-search">
+<div data-bind="visible: loading" class="col-md-12 total-search more-search">読み込み中</div>
+<div data-bind="visible: !loading() && !noMore(), click: SearchMore" class="col-md-12 total-search more-search">
     さらに読み込む
 </div>

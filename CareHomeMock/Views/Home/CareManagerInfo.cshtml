@@ -60,8 +60,12 @@
                         "litres": @Model.関係構築力
                     },
                     {
-                        "country": "マネジメント力",
-                        "litres": @Model.マネジメント力
+                        "country": "指導管理力",
+                        "litres": @Model.指導管理力
+                    },
+                    {
+                        "country": "公平中立力",
+                        "litres": @Model.公平中立力
                     },
                     {
                         "country": "医療知識",
@@ -143,20 +147,13 @@
     <div class="col-md-6">
         <table class="table table-condensed">
             <tr>
-                <td>所属</td>
-                <td>@Html.ActionLink(Model.CareHome.Name, "CareHomeInfo_BasicInfo", new { controller = "Home", code = Model.CareHome.CareHomeCode })</td>
-            </tr>
-            <tr>
-                <td>名前</td>
-                <td>@Model.Name</td>
-            </tr>
-            <tr>
                 <td>ケアマネ評価得点</td>
-                <td>@Model.Rating</td>
-            </tr>
-            <tr>
-                <td>ケアマネ評価件数</td>
-                <td>@Model.ReviewsCount</td>
+                <td>
+                    <span class="rating" data-score="@Model.Rating"></span>
+                    <span class="rating-value">
+                        <span>@Model.Rating 点</span>/<span>@Model.ReviewsCount 件</span>
+                    </span>
+                </td>
             </tr>
             <tr>
                 <td>性別</td>
@@ -164,11 +161,11 @@
             </tr>
             <tr>
                 <td>年齢</td>
-                <td>@Model.Age</td>
+                <td>@Model.Age 歳</td>
             </tr>
             <tr>
                 <td>ケアマネ資格取得</td>
-                <td>@Model.Licensed</td>
+                <td>@Model.Licensed.ToJstDateString()</td>
             </tr>
             <tr>
                 <td>保有資格</td>
@@ -181,7 +178,7 @@
             </tr>
             <tr>
                 <td>現在担当人数</td>
-                <td>@Model.CurrentPatients</td>
+                <td>@Model.CurrentPatients 名</td>
             </tr>
             <tr>
                 <td>新規対応</td>
@@ -206,13 +203,31 @@
             <dd>@Model.Messages</dd>
 
             <dt>ブログ、FBなど</dt>
-            <dd>@Model.BlogUrls</dd>
+            <dd>
+                @{
+                    var uri = new Uri("http://amlitek.com/");
+                }
+                @foreach (var url in Model.BlogUrls.Split('\n'))
+                {
+                    if (Uri.TryCreate(url, UriKind.Absolute, out uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                    {
+                        <a href="@uri" target="_blank">@uri</a><br/>
+                    }
+                    else
+                    {
+                        <span>@url</span><br/>
+                    }
+                }
+            </dd>
         </dl>
     </div>
 
     <div class="col-md-6">
         <div>@MyHelper.MainImage(Model.MediaFileDataId, 293, 240, true)</div>
-        <div>@QRCode.Render(Request.Url.AbsoluteUri.ToString())</div>
+        <div>
+            <p class="qrcode-description">ケータイ・スマホで見る</p>
+            @QRCode.Render(Request.Url.AbsoluteUri.ToString())
+        </div>
         <div>@Html.Partial("_InfoSocial")</div>
     </div>
 </div><!-- row -->
@@ -226,23 +241,30 @@
 
 <h2>このケアマネの評価</h2>
 <p>@Html.ActionLink("このケアマネを評価する", "PostReview", "Home", new { id = Model.CareManagerId }, new { @class = "btn btn-default" })</p>
-<div data-bind="foreach: reviews">
-    <div class="review">
-        <div class="head">
-            <span data-bind="text: ReviewerType" class="reviewerType"></span>
-            <span class="hash">ID:<span data-bind="text: IpAddress" class="hash"></span></span>
-            <span data-bind="text: fmDateTime(Created)" class="datetime"></span>
-        </div>
-        <div class="body">
-            <div data-bind="attr: { 'data-score': Rating }" class="rating"></div>
-            <div data-bind="text: Comment"></div>
-        </div>
-        <div data-bind="visible: Reply != null" class="reply">
-            <span data-bind="text: Reply"></span>
-        </div>
-        <div data-bind="visible: $root.showDelete">
-            <button type="button" data-bind="click: function(){$root.Delete($data.PartitionKey, $data.RowKey)}" class="btn btn-warning">削除する</button>
+@if (Model.ShowReviews)
+{
+    <div data-bind="foreach: reviews">
+        <div class="review">
+            <div class="head">
+                <span data-bind="text: ReviewerType" class="reviewerType"></span>
+                <span class="hash">ID:<span data-bind="text: IpAddress" class="hash"></span></span>
+                <span data-bind="text: fmDateTime(Created)" class="datetime"></span>
+            </div>
+            <div class="body">
+                <div data-bind="attr: { 'data-score': Rating }" class="rating"></div>
+                <div data-bind="text: Comment"></div>
+            </div>
+            <div data-bind="visible: Reply != null" class="reply">
+                <span data-bind="text: Reply"></span>
+            </div>
+            <div data-bind="visible: $root.showDelete">
+                <button type="button" data-bind="click: function(){$root.Delete($data.PartitionKey, $data.RowKey)}" class="btn btn-warning">削除する</button>
+            </div>
         </div>
     </div>
-</div>
-<button type="button" data-bind="visible: !noMore(), click: GetMoreReviews" class="btn btn-default btn-block">さらに読み込む</button>
+    <button type="button" data-bind="visible: !noMore(), click: GetMoreReviews" class="btn btn-default btn-block">さらに読み込む</button>
+}
+else
+{
+    <p>このケアマネの評価は公開されていません。</p>
+}

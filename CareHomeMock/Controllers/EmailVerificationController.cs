@@ -1,6 +1,8 @@
 ﻿using CareHomeMock.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -43,15 +45,23 @@ namespace CareHomeMock.Controllers
             if (registeredUser == null)
                 throw new Exception("登録されたはずの会員が見つかりませんでした。");
 
+            // Notifies Sender.
+            Flash("ケアマネ会員として認証されました。IDとパスワードを電子メールアドレスにお送りいたしましたのでご確認ください。");
+            //SendEmail(registeredUser.Email, "[ケアマネ情報局] ケアマネ会員として認証されました", string.Format("ID:{0} password:{1}", username, password));
+            dynamic email = new Postal.Email("EmailVerified");
+            email.To = registeredUser.Email;
+            email.CareHomeName = row.CareManager.CareHome.Name;
+            email.CareManagerName = row.CareManager.Name;
+            email.UserId = username;
+            email.Password = password;
+            email.SiteUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+            email.Send();
+
             // Adds CareManager and deletes EmailVerification.
             registeredUser.CareManager.Add(row.CareManager);
             db.EmailVerifications.Remove(row);
             db.SaveChanges();
             Log(LogType.CareManager, "ケアマネ会員としてメール認証しました。", new { row.Email, row.CareManagerId });
-
-            // Notifies Sender.
-            Flash("ケアマネ会員として認証されました。IDとパスワードを電子メールアドレスにお送りいたしましたのでご確認ください。");
-            SendEmail(registeredUser.Email, "[ケアマネ情報局] ケアマネ会員として認証されました", string.Format("ID:{0} password:{1}", username, password));
 
             return RedirectToAction("Index", "Home");
         }

@@ -163,8 +163,8 @@ a,button,.phone-email,.phone-email i,.header-search,.widget-about-2 > ul > li > 
 background-color: #A83A06!important;
 }*/
 .logo{
-	padding-top: 15px;
-	padding-bottom: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 .section-main-container{
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.4)
@@ -306,6 +306,9 @@ background-color: #A83A06!important;
 	background: #fff;
 	margin-bottom: 15px;
 }
+.search-rslt tr.sort-active{
+    background: #FDA000;
+}
 .search-rslt tr td:nth-of-type(3){
 	color: #000;
 }
@@ -376,7 +379,7 @@ footer .aboutus{
 }
 .ftr-navigation ul li{
 	box-shadow: 0px 1px 0 #202020,0px 2px 0 #171717;
-	padding: 8px;
+	padding: 4px;
 }
 .ftr-navigation ul li i{
 	padding-right: 5px;
@@ -530,6 +533,11 @@ footer.copyright{
 ul.nav.nav-tabs.carehomeinfo-menu{
     margin-bottom: 15px;
 }
+ul.nav.nav-tabs.carehomeinfo-menu li a:hover,
+ul.nav.nav-tabs.carehomeinfo-menu li.active a{
+    background: #EA6000;
+    color: white;
+}
 
 .carehomeinfo-tableouter{
 	border:1px solid #E9E9E9;
@@ -627,6 +635,7 @@ ul.nav.nav-tabs.carehomeinfo-menu{
 }
 .search-blo.caremanager-search .license{
     margin-top: 15px;
+    padding-right: 15px;
 }
 .search-blo.caremanager-search .sort{
     margin-top: 15px;
@@ -640,4 +649,29 @@ ul.nav.nav-tabs.carehomeinfo-menu{
 .info-social .col-md-6,
 .info-social .col-md-12{
     margin-top: 5px;
+}
+
+/* Layout */
+.top-email{
+    font-size: smaller;
+}
+
+.aboutus li a{
+    color: #999;
+}
+
+.list-inline.sort-fields{
+    margin: 0;
+    margin-top: 15px;
+    padding: 15px;
+	border:1px solid #E9E9E9;
+	background: #F4F4F4;
+}
+
+.qrcode-description{
+    margin-bottom: 5px;
+}
+
+.rating-value{
+    font-size: 11px;
 }

@@ -1,6 +1,6 @@
 ﻿@model CareHomeMock.Models.CareHome
 @{
-    var title = Model.CompanyName + " 写真と動画";
+    var title = Model.Name + " 写真と動画";
     ViewBag.Title = title;
 }
 
@@ -38,3 +38,12 @@
         </div>
     }
 </div>
+
+@if (Model.User == null)
+{
+    <p>@Html.ActionLink("この事業所の方ですか？ 登録してください！", "Send", new { controller = "Application", careHomeCode = Model.CareHomeCode })</p>
+}
+else
+{
+            <!-- Owned by @Model.User.UserName -->
+}

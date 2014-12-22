@@ -90,6 +90,7 @@
                         "gridType": "circles",
                         "id": "ValueAxis-1",
                         "minimum": 0,
+                        'maximum': 5,
                         "axisAlpha": 0.54,
                         "dashLength": 3,
                         "gridAlpha": 0.51
@@ -143,16 +144,12 @@
         <table class="table table-condensed">
             <tbody>
                 <tr>
-                    <td>事業所ID</td>
-                    <td>@Model.CareHomeCode</td>
-                </tr>
-                <tr>
-                    <td>郵便番号</td>
+                    <td style="min-width:80px;">郵便番号</td>
                     <td>@Model.Zip</td>
                 </tr>
                 <tr>
                     <td>所在地</td>
-                    <td>@Model.Address</td>
+                    <td>@Model.Area.PrefectureName @Model.Area.CityName @Model.Address</td>
                 </tr>
                 <tr>
                     <td>建物名</td>
@@ -168,11 +165,13 @@
                 </tr>
                 <tr>
                     <td>ホームページ</td>
-                    <td>@Model.WebsiteUrl</td>
+                    <td>
+                        <a href="@Model.WebsiteUrl" target="_blank">@Model.WebsiteUrl</a>
+                    </td>
                 </tr>
                 <tr>
                     <td>開業日</td>
-                    <td>@Model.Established</td>
+                    <td>@Model.Established.ToJstDateString()</td>
                 </tr>
                 <tr>
                     <td>法人区分</td>
@@ -192,47 +191,29 @@
                 </tr>
                 <tr>
                     <td>情報更新日</td>
-                    <td>@Model.DataUpdated</td>
-                </tr>
-
-                <tr>
-                    <td>介護支援専門員在席人数</td>
-                    <td>@Model.介護支援専門員在席人数</td>
-                </tr>
-                <tr>
-                    <td>介護支援専門員常勤換算</td>
-                    <td>@Model.介護支援専門員常勤換算</td>
-                </tr>
-                <tr>
-                    <td>事務員在席人数</td>
-                    <td>@Model.事務員在席人数</td>
-                </tr>
-                <tr>
-                    <td>事務員常勤換算</td>
-                    <td>@Model.事務員常勤換算</td>
-                </tr>
-                <tr>
-                    <td>その他在席人数</td>
-                    <td>@Model.その他在席人数</td>
-                </tr>
-                <tr>
-                    <td>その他常勤換算</td>
-                    <td>@Model.その他常勤換算</td>
-                </tr>
-                <tr>
-                    <td>全職員在席人数</td>
-                    <td>@Model.全職員在席人数</td>
-                </tr>
-                <tr>
-                    <td>全職員常勤換算</td>
-                    <td>@Model.全職員常勤換算</td>
+                    <td>@Model.DataUpdated.ToJstDateString()</td>
                 </tr>
                 <tr>
                     <td>経験5年以上割合</td>
-                    <td>@Model.経験5年以上割合</td>
+                    <td>@string.Format("{0:F1}%", 100 * Model.経験5年以上割合)</td>
+                </tr>
+                <tr>
+                    <td>平均得点</td>
+                    <td>@string.Format("{0:F1}", Model.Rating)</td>
                 </tr>
             </tbody>
         </table>
+
+        <dl>
+            <dt>対応可能地域</dt>
+            <dd>@Model.Region</dd>
+
+            <dt>特徴・セールスポイント</dt>
+            <dd>@Model.Traits</dd>
+
+            <dt>メッセージ</dt>
+            <dd>@Model.Messages</dd>
+        </dl>
     </div>
     <div class="col-md-6">
         <div>@MyHelper.MainImage(Model.MediaFileDataId, 293, 240, true)</div>
@@ -249,6 +230,39 @@
         }
     </div>
 </div>
+
+<h2>人員数</h2>
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th></th>
+            <th>在席人数</th>
+            <th>常勤換算</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>介護支援専門員</th>
+            <td>@Model.介護支援専門員在席人数</td>
+            <td>@string.Format("{0:F1}", Model.介護支援専門員常勤換算)</td>
+        </tr>
+        <tr>
+            <th>事務員</th>
+            <td>@Model.事務員在席人数</td>
+            <td>@string.Format("{0:F1}", Model.事務員常勤換算)</td>
+        </tr>
+        <tr>
+            <th>その他</th>
+            <td>@Model.その他在席人数</td>
+            <td>@string.Format("{0:F1}", Model.その他常勤換算)</td>
+        </tr>
+        <tr>
+            <th>全職員</th>
+            <td>@Model.全職員在席人数</td>
+            <td>@string.Format("{0:F1}", Model.全職員常勤換算)</td>
+        </tr>
+    </tbody>
+</table>
 
 <h2>利用者の要介護度別内訳</h2>
 <div class="row">

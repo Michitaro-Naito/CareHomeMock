@@ -70,7 +70,7 @@ namespace CareHomeMock.Controllers
                     {
                         CareManagerId = careManager.CareManagerId,
                         VerificationCode = string.Format("{0:0000}", random.Next(10000)),
-                        Expires = DateTime.UtcNow.AddYears(1),
+                        Expires = DateTime.UtcNow.AddMonths(1),
                         ReviewerType = reviewerType
                     };
                     db.Otps.Add(newOtp);

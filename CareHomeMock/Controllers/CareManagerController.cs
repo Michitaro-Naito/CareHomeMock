@@ -90,10 +90,22 @@ namespace CareHomeMock.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string code, [Bind(Include="CareManagerId,CareHomeId,Email,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager)
+        public ActionResult Edit(string code, [Bind(Include = "CareManagerId,CareHomeId,Email,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager, HttpPostedFileBase file)
         {
+            // Checks file size.
+            if (file != null && file.ContentLength > 200000)
+                ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
+
             if (ModelState.IsValid)
             {
+                // Uploads Image
+                if (file != null)
+                {
+                    BlobHelper.DeleteIfExists("mediafile", caremanager.MediaFileDataId);
+                    caremanager.MediaFileDataId = BlobHelper.Upload("mediafile", file, file.FileName);
+                }
+
+                // Adds / Edits record
                 if (caremanager.CareManagerId == 0)
                 {
                     // Add
@@ -103,7 +115,18 @@ namespace CareHomeMock.Controllers
                     db.SaveChanges();
 
                     // Notifies CareManager to verify.
-                    SendEmail(caremanager.Email, "[ケアマネ情報局] ケアマネ会員認証", "URL: " + Url.Action("Verify", "EmailVerification", new { verificationCode = verification.VerificationCode}, Request.Url.Scheme));
+                    //SendEmail(caremanager.Email, "[ケアマネ情報局] ケアマネ会員認証", "URL: " + Url.Action("Verify", "EmailVerification", new { verificationCode = verification.VerificationCode}, Request.Url.Scheme));
+                    var added = db.CareManagers.Include(m => m.CareHome).FirstOrDefault(m => m.CareManagerId == caremanager.CareManagerId);
+                    dynamic email = new Postal.Email("CareManagerAdded");
+                    email.To = added.Email;
+                    email.CareManagerName = added.Name;
+                    email.CareHomeName = added.CareHome.Name;
+                    email.CareHomeUserName = "";
+                    if (added.CareHome.User != null)
+                        email.CareHomeUserName = added.CareHome.User.Name;
+                    email.VerificationUrl = Url.Action("Verify", "EmailVerification", new { verificationCode = verification.VerificationCode }, Request.Url.Scheme);
+                    email.SiteUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+                    email.Send();
                 }
                 else
                 {
@@ -115,6 +138,8 @@ namespace CareHomeMock.Controllers
                     entry.Property(p => p.Gender).IsModified = true;
                     entry.Property(p => p.Licensed).IsModified = true;
                     entry.Property(p => p.Birthday).IsModified = true;
+                    if(file != null)
+                        entry.Property(p => p.MediaFileDataId).IsModified = true;
                     db.SaveChanges();
                 }
                 Log(LogType.CareHome, "所属するケアマネの情報を更新しました。");
@@ -173,7 +198,7 @@ namespace CareHomeMock.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditAdditionalData(CareManager model, HttpPostedFileBase file, List<int> Licenses)
         {
-            var allow = "CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,企画立案力,行動実践力,関係構築力,マネジメント力,医療知識,介護知識";
+            var allow = "CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,ShowReviews,企画立案力,行動実践力,関係構築力,指導管理力,公平中立力,医療知識,介護知識";
             
             // Removes fields from ModelState which are not incoming.
             var allowedFields = allow.Split(',');
@@ -189,10 +214,6 @@ namespace CareHomeMock.Controllers
             foreach (var l in Licenses)
                 model.CareManagerLicenses.Add(new CareManagerLicenses() { LicenseId = l });
 
-            // Checks file size.
-            if (file != null && file.ContentLength > 200000)
-                ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
-
             if (ModelState.IsValid)
             {
                 var careManager = CurrentUser.CareManager.FirstOrDefault();
@@ -202,13 +223,6 @@ namespace CareHomeMock.Controllers
                 // Licenses
                 db.CareManagerLicenses.RemoveRange(careManager.CareManagerLicenses);
                 careManager.CareManagerLicenses = model.CareManagerLicenses;
-
-                // Uploads Image
-                if (file != null)
-                {
-                    BlobHelper.DeleteIfExists("mediafile", careManager.MediaFileDataId);
-                    careManager.MediaFileDataId = BlobHelper.Upload("mediafile", file, file.FileName);
-                }
 
                 // Updates SQL
                 model.CopyTo(ref careManager, allow);   // Copies fields only which are incoding.

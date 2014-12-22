@@ -1,6 +1,6 @@
 ﻿@model CareHomeMock.Models.CareHome
 @{
-    ViewBag.Title = Model.CompanyName + " ケアマネ一覧";
+    ViewBag.Title = Model.Name + " ケアマネ一覧";
 }
 @section scripts{
     <script src="~/Scripts/raty/jquery.raty.js"></script>
@@ -10,7 +10,8 @@
                 score: function () {
                     return $(this).attr('data-score');
                 },
-                path: '/Scripts/raty/images'
+                path: '/Scripts/raty/images',
+                readOnly: true
             });
         });
     </script>
@@ -53,6 +54,18 @@
                                     <span><span>@Math.Round(m.Rating, 1)</span>点</span>
                                 </td>
                             </tr>
+                            <tr>
+                                <td><i class="fa fa-stethoscope"></i></td>
+                                <td>保有資格:</td>
+                                <td>
+                                    <ul>
+                                        @foreach (var l in m.CareManagerLicenses)
+                                        {
+                                            <li>@l.License.Name</li>
+                                        }
+                                    </ul>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -61,3 +74,12 @@
         </div>
     }
 </div>
+
+@if (Model.User == null)
+{
+    <p>@Html.ActionLink("この事業所の方ですか？ 登録してください！", "Send", new { controller = "Application", careHomeCode = Model.CareHomeCode })</p>
+}
+else
+{
+            <!-- Owned by @Model.User.UserName -->
+}

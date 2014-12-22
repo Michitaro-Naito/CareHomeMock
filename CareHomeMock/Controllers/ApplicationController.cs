@@ -59,7 +59,7 @@ namespace CareHomeMock.Controllers
                 db.Applications.Add(application);
                 db.SaveChanges();
                 SendEmailToAdmin("[ケアマネ情報局] 事業所会員登録申請がありました", "先ほど申請を受理いたしました。管理画面をご確認ください。");
-                Flash("登録申請を送信しました。後ほど管理者がご連絡を差し上げます。");
+                Flash("事業所会員の登録申請を送信しました。事務局でご本人確認をさせていただき、承認された場合は管理者用のIDとパスワードをご連絡いたします。");
                 Log(LogType.Others, "事業所会員登録を申請しました。");
                 return RedirectToAction("CareHomeInfo_BasicInfo", "Home", new { code = home.CareHomeCode });
             }
@@ -124,13 +124,22 @@ namespace CareHomeMock.Controllers
             if (registeredUser == null)
                 throw new Exception("登録されたはずの会員が見つかりませんでした。");
 
+            // Notifies Sender.
+            //SendEmail(registeredUser.Email, "[ケアマネ情報局] 事業所会員として承認されました", string.Format("ID:{0} password:{1} 備考:{2}", username, password, noteForSender));
+            dynamic email = new Postal.Email("ApplicationApproved");
+            email.To = registeredUser.Email;
+            email.CareHomeName = application.CareHome.Name;
+            email.CareHomeUserName = application.Name;
+            email.UserId = username;
+            email.Password = password;
+            email.SiteUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+            email.Note = noteForSender;
+            email.Send();
+
             // Adds CareHome and deletes Application.
             registeredUser.CareHomes.Add(application.CareHome);
             db.Applications.Remove(application);
             db.SaveChanges();
-
-            // Notifies Sender.
-            SendEmail(registeredUser.Email, "[ケアマネ情報局] 事業所会員として承認されました", string.Format("ID:{0} password:{1} 備考:{2}", username, password, noteForSender));
 
             Flash(string.Format("承認されました。ID:{0}", username));
             Log(LogType.Admin, "事業所会員登録申請を承認しました。");

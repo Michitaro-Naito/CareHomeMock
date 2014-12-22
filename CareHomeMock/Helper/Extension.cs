@@ -127,5 +127,12 @@ namespace CareHomeMock.Helper
             var jst = utc.ToJst();
             return jst.ToString("yyyy/MM/dd");
         }
+
+        public static string ToJstDateString(this DateTime? utc)
+        {
+            if (utc == null)
+                return "";
+            return utc.Value.ToJstDateString();
+        }
     }
 }

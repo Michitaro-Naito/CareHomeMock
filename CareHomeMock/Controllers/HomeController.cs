@@ -270,10 +270,8 @@ namespace CareHomeMock.Controllers
                     name = regex.Replace(name, match => {
                         switch (match.Groups["num"].Value)
                         {
-                            case "10":
-                                return "20歳未満";
-                            case "90":
-                                return "90歳以上";
+                            case "70":
+                                return "70歳以上";
                             default:
                                 return match.Groups["num"].Value + "代";
                         }
@@ -401,6 +399,7 @@ namespace CareHomeMock.Controllers
                     CareHomeCode = h.CareHomeCode,
                     Name = h.Name,
                     Address = h.Area.PrefectureName + h.Area.CityName + h.Address + h.AddressBuilding,
+                    Established = h.Established,
                     Years = h.Years,
                     CareManagerCount = h.CareManagers.Count,
                     ReviewCount = h.ReviewCount,
@@ -441,15 +440,12 @@ namespace CareHomeMock.Controllers
                 var max = new DateTime(3000, 1, 1);
                 switch (ageRange.Value)
                 {
-                    case AgeRange.Range10:
-                        min = DateTime.UtcNow.AddYears(-20);
-                        break;
                     default:
                         min = DateTime.UtcNow.AddYears(-10 * ((int)ageRange.Value + 1));
                         max = DateTime.UtcNow.AddYears(-10 * (int)ageRange.Value);
                         break;
-                    case AgeRange.Range90:
-                        max = DateTime.UtcNow.AddYears(-90);
+                    case AgeRange.Range70:
+                        max = DateTime.UtcNow.AddYears(-70);
                         break;
                 }
                 mq = mq.Where(m => m.Birthday > min && m.Birthday <= max);
@@ -504,6 +500,7 @@ namespace CareHomeMock.Controllers
                 CareHomeName = m.CareHome.Name,
                 CareManagerId = m.CareManagerId,
                 CareManagerName = m.Name,
+                Licensed = m.Licensed,
                 Years = m.Years,
                 ReviewCount = m.ReviewsCount,
                 Rating = m.Rating,
@@ -532,6 +529,7 @@ namespace CareHomeMock.Controllers
 
             var homes = db.CareHomes
                 .Where(h => h.Longitude > minLongitude && h.Longitude < maxLongitude && h.Latitude > minLatitude && h.Latitude < maxLatitude)
+                .Include(h => h.CareManagers)
                 .Select(h => new
                 {
                     CareHomeId = h.CareHomeId,
@@ -540,7 +538,10 @@ namespace CareHomeMock.Controllers
                     Latitude = h.Latitude,
                     Longitude = h.Longitude,
                     Address = h.Area.PrefectureName + h.Area.CityName + h.Address + h.AddressBuilding,
-                    FileName = h.MediaFileDataId
+                    FileName = h.MediaFileDataId,
+                    Rating = h.Rating,
+                    CareManagerCount = h.CareManagers.Count,
+                    Registered = !string.IsNullOrEmpty(h.UserId)
                 })
                 .ToList();
 

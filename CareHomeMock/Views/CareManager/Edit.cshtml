@@ -17,7 +17,7 @@
 
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -34,9 +34,17 @@
 
         @MyHelper.EditorFor(Html, m => m.Gender, MyHelper.EditorType.DropDownList)
 
-        @MyHelper.EditorFor(Html, m => m.Licensed)
+        @MyHelper.EditorFor(Html, m => m.Licensed, MyHelper.EditorType.Date)
 
-        @MyHelper.EditorFor(Html, m => m.Birthday)
+        @MyHelper.EditorFor(Html, m => m.Birthday, MyHelper.EditorType.Date)
+        
+        <div class="form-group">
+            <label class="control-label col-md-2">メイン画像</label>
+            <div class="col-md-10">
+                <span>JPEGかPNG、GIF。200kBまで。</span>
+                <input type="file" name="file" accept="image/jpeg, image/jpg, image/png, image/gif" />
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

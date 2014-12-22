@@ -52,6 +52,7 @@
 
                 s.nextPage = ko.observable(0);
                 s.noMore = ko.observable(false);
+                s.loading = ko.observable(false);
 
                 s.count = ko.observable(0);
                 s.careManagers = ko.observableArray([]);
@@ -121,6 +122,24 @@
                     return s.selectedLicense().id;
                 });
 
+                // Class
+                s.clReviewCount = ko.computed(function () {
+                    if (s.cpSortField() == 'ReviewCount')
+                        return 'sort-active';
+                    return '';
+                });
+                s.clRating = ko.computed(function () {
+                    if (s.cpSortField() == 'Rating')
+                        return 'sort-active';
+                    return '';
+                });
+                s.clLicensed = ko.computed(function () {
+                    if (s.cpSortField() == 'Years')
+                        return 'sort-active';
+                    return '';
+                });
+
+                // Method
                 s.Init = function () {
                     if (location.hash != null)
                         s.keyword(location.hash.replace('#', ''));
@@ -153,6 +172,7 @@
                 }
 
                 s.Search = function () {
+                    s.careManagers([]);
                     s.nextPage(0);
                     s.noMore(false);
                     s.SearchMore();
@@ -189,6 +209,16 @@
                         s.ActivateRaty();
                     });
                 }
+
+                s.Sort = function (sortField) {
+                    if (sortField == s.selectedSortField()) {
+                        s.descending(!s.descending());
+                    } else {
+                        s.selectedSortField(sortField);
+                        s.descending(true);
+                    }
+                    s.Search();
+                }
             }
 
             var model = new AppModel();
@@ -209,7 +239,7 @@
 
         <div class="col-md-4 gender"><select data-bind="options: cpGenders, optionsText: 'name', value: selectedGender" class="form-control"></select></div>
         <div class="col-md-4 age"><select data-bind="options: cpAgeRanges, optionsText: 'name', value: selectedAgeRange" class="form-control"></select></div>
-        <div class="col-md-4 allownew">
+        <div class="col-md-4 allownew" style="display: none;">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-bind="checked: allowNewPatient" />新規対応可
@@ -219,8 +249,8 @@
 
         <div class="col-md-4 license"><select data-bind="options: cpLicenses, optionsText: 'name', value: selectedLicense" class="form-control"></select></div>
 
-        <div class="col-md-4 sort"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
-        <div class="col-md-4 descending">
+        <div class="col-md-4 sort" style="display: none;"><select data-bind="options: sortFields, optionsText: 'name', value: selectedSortField" class="form-control"></select></div>
+        <div class="col-md-4 descending" style="display: none;">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-bind="checked: descending" />降順
@@ -232,6 +262,19 @@
         <div class="col-md-4"><button type="button" data-bind="click: Search" class="search-btn">検索する</button></div>
     </div>
 </div>
+
+<!-- Sort -->
+<ul data-bind="foreach: sortFields" class="list-inline sort-fields">
+    <li>
+        <button type="button" data-bind="click: function(){ $root.Sort($data); }" class="btn btn-default btn-sm">
+            <span data-bind="visible: $root.selectedSortField() == $data">
+                <span data-bind="visible: $root.descending()" class="glyphicon glyphicon-arrow-down"></span>
+                <span data-bind="visible: !$root.descending()" class="glyphicon glyphicon-arrow-up"></span>
+            </span>
+            <span data-bind="text: name"></span>
+        </button>
+    </li>
+</ul>
 
 <!-- Results -->
 <div class="col-md-12 total-search">
@@ -260,17 +303,17 @@
                             <td>所属:</td>
                             <td><span data-bind="text: data.CareHomeName"></span></td>
                         </tr>
-                        <tr>
+                        <tr data-bind="attr: { class: $root.clLicensed }">
                             <td><i class="fa fa-calendar"></i></td>
-                            <td>経験年数:</td>
-                            <td><span data-bind="text: data.Years"></span>年</td>
+                            <td>資格取得年:</td>
+                            <td><span data-bind="text: fmDate(data.Licensed)"></span></td>
                         </tr>
-                        <tr>
+                        <tr data-bind="attr: { class: $root.clReviewCount }">
                             <td><i class="fa fa-comments"></i></td>
                             <td>評価件数:</td>
                             <td><span data-bind="text: data.ReviewCount"></span>件</td>
                         </tr>
-                        <tr>
+                        <tr data-bind="attr: { class: $root.clRating }">
                             <td><i class="fa fa-star-half-full"></i></td>
                             <td>平均得点:</td>
                             <td style="font-size: 11px;">
@@ -286,6 +329,7 @@
     </div>
 </div>
 
-<div data-bind="visible: !noMore(), click: SearchMore" class="col-md-12 total-search more-search">
+<div data-bind="visible: loading" class="col-md-12 total-search more-search">読み込み中</div>
+<div data-bind="visible: !loading() && !noMore(), click: SearchMore" class="col-md-12 total-search more-search">
     さらに読み込む
 </div>

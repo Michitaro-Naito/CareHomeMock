@@ -55,7 +55,7 @@ namespace CareHomeMock.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "ユーザー名かパスワードに誤りがあります。");
                 }
             }
 

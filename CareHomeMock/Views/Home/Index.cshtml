@@ -3,6 +3,7 @@
     ViewBag.Title = title;
 }
 @section scripts{
+    <script src="~/Scripts/raty/jquery.raty.js"></script>
     <style type="text/css">
         #map-canvas {
             width: 100%;
@@ -42,6 +43,8 @@
             google.maps.event.addListener(map, 'zoom_changed', function () {
                 if (map.getZoom() < 14)
                     model.ClearMarkers();
+                else
+                    model.GetCareHomes();
             });
             model.GetCareHomes();
         }
@@ -120,18 +123,37 @@
                     google.maps.event.addListener(marker, 'click', function (event) {
 
                         var container = $('<div>').addClass('gm-iw gm-sm').css('width', '204px');
-                        var title = $('<div>').addClass('gm-title').text(marker.myData.Name);
+                        var website = $('<div>').addClass('gm-title').append($('<a>').attr('href', '/事業所/' + marker.myData.Code).text(marker.myData.Name));
                         var basicinfo = $('<div>').addClass('gm-basicinfo');
-                        var address = $('<div>').addClass('gm-addr').text(marker.myData.Address);
-                        var website = $('<div>').addClass('gm-website').append($('<a>').attr('href', '/事業所/' + marker.myData.Code).attr('target', '_blank').text('more info'));
-                        container.append(title);
+                        var count = $('<div>').text('ケアマネ人数: ' + marker.myData.CareManagerCount + '人');
+                        var rating = $('<span>').addClass('rating').attr('data-score', marker.myData.Rating);
+                        var ratingOuter = null;
+                        if (marker.myData.Rating != 0)
+                            ratingOuter = $('<div>')
+                                .append($('<span>').text('評価: ').css('', ''))
+                                .append(rating)
+                                .append($('<span>').text(marker.myData.Rating + '点'));
+                        else
+                            ratingOuter = $('<div>').text('評価: なし');
+
+                        container.append(website);
                         container.append(basicinfo);
-                        basicinfo.append(address);
+                        basicinfo.append(count);
+                        basicinfo.append(ratingOuter);
+
+                        // Activate Raty
+                        rating.raty({
+                            score: function () {
+                                return $(this).attr('data-score');
+                            },
+                            path: '/Scripts/raty/images',
+                            readOnly: true
+                        });
+
                         if (marker.myData.FileName != null) {
                             var image = $('<div>').addClass('gm-photos').append($('<img>').attr('src', '/MediaFiles/' + marker.myData.FileName + '?maxWidth=204&maxHeight=50'));
                             basicinfo.append(image);
                         }
-                        basicinfo.append(website);
 
                         new google.maps.InfoWindow({
                             content: container.get(0)
@@ -180,10 +202,14 @@
                             .ToArray();
                         for (var n = 0; n < homesToAdd.length; n++) {
                             var home = homesToAdd[n];
+                            var opacity = 1.0;
+                            if (home.Registered != true)
+                                opacity = 0.25;
                             var marker = new google.maps.Marker({
                                 position: new google.maps.LatLng(home.Latitude, home.Longitude),
                                 map: map,
-                                title: home.Name
+                                title: home.Name,
+                                opacity: opacity
                             });
                             marker.myData = home;
                             s.AddListener(marker);

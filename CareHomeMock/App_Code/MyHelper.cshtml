@@ -21,7 +21,17 @@
         TextBox,
         TextArea,
         DropDownList,
-        Raty
+        Raty,
+        Date
+    }
+
+    public static HelperResult DisplayFor<TModel, TItem>(HtmlHelper<TModel> html, Expression<Func<TModel, TItem>> expr)
+    {
+        var label = html.LabelFor(expr, new { @class = "control-label col-md-2" });
+        var display = html.DisplayFor(expr);
+        var description = "";
+        var hidden = html.HiddenFor(expr);
+        return TheThingToDisplay(label, display, description, hidden);
     }
 
     public static HelperResult CheckBoxFor<TModel>(HtmlHelper<TModel> html, Expression<Func<TModel, bool>> expr)
@@ -82,6 +92,10 @@
         MvcHtmlString editor;
         switch (editorType)
         {
+            case EditorType.Date:
+                editor = html.TextBoxFor(expr, "{0:yyyy/MM/dd}", htmlAttributes);
+                break;
+
             case EditorType.TextBox:
             default:
                 editor = html.TextBoxFor(expr, htmlAttributes);
@@ -104,6 +118,20 @@
         // Calls view helper.
         return TheThingToDo(label, editor, validationMessage, description);
     }
+}
+@helper TheThingToDisplay(MvcHtmlString label, MvcHtmlString display, string description, MvcHtmlString hidden)
+{
+    <div class="form-group">
+        @label
+        <div class="col-md-10">
+            @if (!string.IsNullOrEmpty(description))
+            {
+                <span>@description</span>
+            }
+            @display
+            @hidden
+        </div>
+    </div>
 }
 @helper TheThingToDo(MvcHtmlString label, MvcHtmlString textbox, MvcHtmlString validationMessage, string description)
 {
@@ -138,6 +166,7 @@
     }
     else
     {
-        <span>No Image</span>
+        <span>画像が登録されていません。</span>
     }
 }
+

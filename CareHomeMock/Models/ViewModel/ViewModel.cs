@@ -21,8 +21,7 @@ namespace CareHomeMock.Models
         public int CareManagerId { get; set; }
 
         [Required]
-        [MinLength(4)]
-        [MaxLength(4)]
+        [StringLength(4, MinimumLength=4)]
         [Display(Name="パスワード")]
         public string Otp { get; set; }
 
@@ -32,8 +31,7 @@ namespace CareHomeMock.Models
         public int Rating { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(1024)]
+        [StringLength(1024, MinimumLength = 5)]
         [Display(Name="コメント")]
         public string Message { get; set; }
 
@@ -109,20 +107,19 @@ namespace CareHomeMock.Models
         [Required]
         [MaxLength(255)]
         [EmailAddress]
-        [Display(Name="ご担当者メールアドレス", Description="ご担当者様のメールアドレスを入力してください：")]
+        [Display(Name="メールアドレス", Description="ご担当者様のメールアドレスを入力してください：")]
         [DetailedDisplay(Placeholder="例: care@example.com")]
         public string EmailPersonInCharge { get; set; }
 
         [Required]
         [MaxLength(255)]
-        [Display(Name="ご担当者氏名", Description="ご担当者様の氏名を入力してください：")]
+        [Display(Name="ご担当者名", Description="ご担当者様の氏名を入力してください：")]
         [DetailedDisplay(Placeholder="例: 田中一郎")]
         public string NamePersonInCharge { get; set; }
 
         [Required]
         [MaxLength(3000)]
-        [Display(Name="備考", Description="管理者へ送信する備考を入力してください：")]
-        [DetailedDisplay(Placeholder="例: ○○の折にお会いした××です。")]
+        [Display(Name = "備考", Description = "連絡事項があれば入力してください：")]
         public string Note { get; set; }
     }
 

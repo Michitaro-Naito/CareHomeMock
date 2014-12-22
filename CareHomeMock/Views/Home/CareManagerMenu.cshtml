@@ -1,6 +1,22 @@
 ﻿<h2>ケアマネメニュー</h2>
 
-<ul>
-    <li>@Html.ActionLink("基本情報編集", "EditAdditionalData", "CareManager")</li>
-    <li>@Html.ActionLink("利用者からの評価", "Index", "Review")</li>
-</ul>
+<div class="row">
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>追加情報編集</h3>
+                <p>保有資格や自己評価の編集など。</p>
+                <p><a href="@Url.Action("EditAdditionalData", "CareManager")" class="btn btn-primary" role="button">見る</a> <a href="#" class="btn btn-default" role="button">ヘルプ</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>周囲からの評価受付</h3>
+                <p>OTPの発行や返信など。</p>
+                <p><a href="@Url.Action("Index", "Review")" class="btn btn-primary" role="button">見る</a> <a href="#" class="btn btn-default" role="button">ヘルプ</a></p>
+            </div>
+        </div>
+    </div>
+</div>

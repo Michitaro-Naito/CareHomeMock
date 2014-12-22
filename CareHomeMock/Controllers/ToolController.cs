@@ -152,7 +152,8 @@ namespace CareHomeMock.Controllers
                     m.Name = string.Format("佐藤花子{0}", n);
                 m.Rating = 5.0 * rand.NextDouble();
                 m.ReviewsCount = rand.Next(1000);
-                m.マネジメント力 = 5.0 * rand.NextDouble();
+                m.指導管理力 = 5.0 * rand.NextDouble();
+                m.公平中立力 = 5.0 * rand.NextDouble();
                 m.医療知識 = 5.0 * rand.NextDouble();
                 m.介護知識 = 5.0 * rand.NextDouble();
                 m.関係構築力 = 5.0 * rand.NextDouble();
@@ -249,9 +250,15 @@ namespace CareHomeMock.Controllers
             return null;
         }
 
-        public void EmailTest()
+        public ActionResult EmailTest()
         {
-            SendEmailToAdmin("Hi", "Hello");
+            //SendEmailToAdmin("Hi", "Hello");
+            dynamic email = new Postal.Email("Example");
+            email.To = "m-naito@amlitek.com";
+            email.FunnyLink = "http://example.com/";
+            email.Send();
+
+            return null;
         }
 	}
 }

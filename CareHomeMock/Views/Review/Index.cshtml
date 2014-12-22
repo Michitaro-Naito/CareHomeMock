@@ -126,10 +126,10 @@
 <h2>@title</h2>
 
 <div class="form-horizontal">
-    <h3>評価してもらう</h3>
+    <h3>評価用ワンタイムパスワード発行</h3>
     <p>
-        患者さんやご家族などに4桁のワンタイムパスワード(OTP)を渡すことで、<span>@Html.ActionLink("こちら", "PostReview", "Home", new { id = Model.CareManagerId }, new { })</span>から評価してもらえます。
-        生成されたOTPは使用されるか1年が経過するまで有効です。
+        以下のボタンを押すと4桁のワンタイムパスワード(OTP)が発行され、画面に表示されますので、メモをとって評価していただきたい方にお渡しください。
+        OTPは、使用されるか、未使用のまま１ヶ月経過すると無効となります。
     </p>
     <div class="form-group">
         <label class="control-label col-md-2">評価者</label>

@@ -32,34 +32,63 @@
         @Html.ValidationSummary(false)
         @Html.HiddenFor(m => m.CareManagerId)
 
-        @MyHelper.EditorFor(Html, m => m.CurrentPatients)
-        @MyHelper.CheckBoxFor(Html, m => m.AllowNewPatient)
-        @MyHelper.EditorFor(Html, m => m.Career, MyHelper.EditorType.TextArea)
-        @MyHelper.EditorFor(Html, m => m.Messages, MyHelper.EditorType.TextArea)
-        @MyHelper.EditorFor(Html, m => m.BlogUrls, MyHelper.EditorType.TextArea)
-
-        @MyHelper.EditorFor(Html, m => m.企画立案力, MyHelper.EditorType.Raty)
-        @MyHelper.EditorFor(Html, m => m.行動実践力, MyHelper.EditorType.Raty)
-        @MyHelper.EditorFor(Html, m => m.関係構築力, MyHelper.EditorType.Raty)
-        @MyHelper.EditorFor(Html, m => m.マネジメント力, MyHelper.EditorType.Raty)
-        @MyHelper.EditorFor(Html, m => m.医療知識, MyHelper.EditorType.Raty)
-        @MyHelper.EditorFor(Html, m => m.介護知識, MyHelper.EditorType.Raty)
+        @MyHelper.DisplayFor(Html, m => m.Email)
+        @MyHelper.DisplayFor(Html, m => m.Name)
+        @MyHelper.DisplayFor(Html, m => m.Gender)
+        @MyHelper.DisplayFor(Html, m => m.Licensed)
+        @MyHelper.DisplayFor(Html, m => m.Birthday)
 
         @*Licenses*@
         <div class="form-group">
             <label class="col-md-2">保有資格</label>
             <div class="col-md-10">
-                @Html.ListBox("Licenses", null, new { @class = "form-control" })
+                @foreach (var row in (MultiSelectList)ViewData["Licenses"])
+                {
+                    <label>
+                        <input type="checkbox" name="Licenses" value="@row.Value"
+                               @if (row.Selected)
+                               {
+                                   <text>checked="checked"</text>
+                               }
+                                   />
+                        @row.Text
+                    </label>
+                }
+                @*Html.ListBox("Licenses", null, new { @class = "form-control" })*@
             </div>
         </div>
 
-        <div class="form-group">
+        @MyHelper.EditorFor(Html, m => m.CurrentPatients)
+        @MyHelper.CheckBoxFor(Html, m => m.AllowNewPatient)
+        @MyHelper.EditorFor(Html, m => m.Career, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.Messages, MyHelper.EditorType.TextArea)
+        @MyHelper.EditorFor(Html, m => m.BlogUrls, MyHelper.EditorType.TextArea)
+        @MyHelper.CheckBoxFor(Html, m => m.ShowReviews)
+
+        <h3>コンピテンシー自己評価</h3>
+        <p>
+            ケアマネジャーとしてのご自身の能力を、５段階で自己評価してください。<br />
+            5：平均よりも優れている<br />
+            4：平均よりもやや優れている<br />
+            3：ケアマネジャーの平均レベル<br />
+            2：平均よりもやや劣っている<br />
+            1：平均よりも劣っている
+        </p>
+        @MyHelper.EditorFor(Html, m => m.企画立案力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.行動実践力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.関係構築力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.指導管理力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.公平中立力, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.医療知識, MyHelper.EditorType.Raty)
+        @MyHelper.EditorFor(Html, m => m.介護知識, MyHelper.EditorType.Raty)
+
+        @*<div class="form-group">
             <label class="control-label col-md-2">メイン画像</label>
             <div class="col-md-10">
                 <span>JPEGかPNG、GIF。200kBまで。</span>
                 <input type="file" name="file" accept="image/jpeg, image/jpg, image/png, image/gif" />
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -41,28 +41,29 @@ namespace CareHomeMock.Models
         /// </summary>
         [Required]
         [EmailAddress]
-        [Display(Name="メールアドレス")]
+        [Display(Name="メールアドレス", Description="非公表")]
         [DetailedDisplay(Placeholder="例: foo@example.com")]
         public string Email { get; set; }
 
         /// <summary>
         /// Birthday of this CareManager. Date only like 2014/1/1 0:00:00.
         /// </summary>
-        [Display(Name="生年月日")]
+        [Required]
+        [Display(Name = "生年月日", Description="年齢に変換して公表")]
         [DetailedDisplay(Placeholder="例: 2014/1/1")]
         public DateTime Birthday { get; set; }
 
         /// <summary>
         /// Name of this CareManager like "田中太郎".
         /// </summary>
-        [Display(Name="氏名")]
+        [Display(Name = "氏名", Description = "公表 ※個人情報を気になさる方は本名でなくてもかまいません（姓のみ、ニックネームなど）")]
         [DetailedDisplay(Placeholder="例: 田中一郎")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gender of this CareManager.
         /// </summary>
-        [Display(Name="性別")]
+        [Display(Name="性別",Description="公表")]
         [DetailedDisplay(Placeholder="例: 男性")]
         public Gender Gender { get; set; }
 
@@ -82,7 +83,8 @@ namespace CareHomeMock.Models
         /// <summary>
         /// When this CareManager has been licensed.
         /// </summary>
-        [Display(Name="ケアマネ資格取得年月日")]
+        [Required]
+        [Display(Name = "ケアマネ資格取得年月日",Description="公表")]
         [DetailedDisplay(Placeholder="例: 2014/1/1")]
         public DateTime Licensed { get; set; }
 
@@ -102,7 +104,7 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Amount of current patients.
         /// </summary>
-        [Display(Name="現在の患者数")]
+        [Display(Name="担当人数")]
         [DetailedDisplay(Placeholder="例: 12")]
         public int CurrentPatients { get; set; }
 
@@ -130,12 +132,17 @@ namespace CareHomeMock.Models
         [Display(Name="ブログのURLなど")]
         public string BlogUrls { get; set; }
 
+        [Display(Name="評価を公開する")]
+        public bool ShowReviews { get; set; }
+
         // ----- Professional Parameters to Display -----
         [Range(1, 5)]
         public double 企画立案力 { get; set; }
         public double 行動実践力 { get; set; }
         public double 関係構築力 { get; set; }
         public double マネジメント力 { get; set; }
+        public double 指導管理力 { get; set; }
+        public double 公平中立力 { get; set; }
         public double 医療知識 { get; set; }
         public double 介護知識 { get; set; }
         // ----- /Professional Parameters to Display -----
@@ -200,7 +207,8 @@ namespace CareHomeMock.Models
             企画立案力 = 1;
             行動実践力 = 1;
             関係構築力 = 1;
-            マネジメント力 = 1;
+            指導管理力 = 1;
+            公平中立力 = 1;
             医療知識 = 1;
             介護知識 = 1;
         }

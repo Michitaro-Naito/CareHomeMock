@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareHomeMock", "CareHomeMoc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareHomeMockTest", "CareHomeMockTest\CareHomeMockTest.csproj", "{497A3F7A-EDE9-4B94-95CB-0EA109B96116}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyResources", "MyResources\MyResources.csproj", "{B8ACFB95-FB90-4343-A1C5-D4C1C77C8F05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{497A3F7A-EDE9-4B94-95CB-0EA109B96116}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{497A3F7A-EDE9-4B94-95CB-0EA109B96116}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{497A3F7A-EDE9-4B94-95CB-0EA109B96116}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8ACFB95-FB90-4343-A1C5-D4C1C77C8F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8ACFB95-FB90-4343-A1C5-D4C1C77C8F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8ACFB95-FB90-4343-A1C5-D4C1C77C8F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8ACFB95-FB90-4343-A1C5-D4C1C77C8F05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

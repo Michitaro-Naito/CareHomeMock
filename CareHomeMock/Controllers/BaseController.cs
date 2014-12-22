@@ -72,11 +72,13 @@ namespace CareHomeMock.Controllers
         public BaseController()
             : base()
         {
-            var culture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+            var culture = CultureInfo.CreateSpecificCulture("ja-JP");
+            //var culture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
 
             culture.DateTimeFormat.ShortDatePattern = "yyyy/MM/dd";
 
             Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
         }
 
         protected override void Dispose(bool disposing)
