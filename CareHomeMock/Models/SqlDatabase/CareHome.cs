@@ -220,6 +220,8 @@ namespace CareHomeMock.Models
         /// <summary>
         /// Traits and points of this CareHome.
         /// </summary>
+        [Index]
+        [StringLength(255)]
         [Display(Name="特徴・セールスポイント")]
         public string Traits { get; set; }
 

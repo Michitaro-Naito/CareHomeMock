@@ -7,13 +7,13 @@ namespace CareHomeMock.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class DropIndex_CareHome_Traits : IMigrationMetadata
+    public sealed partial class Add_CareManager_Index : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DropIndex_CareHome_Traits));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Add_CareManager_Index));
         
         string IMigrationMetadata.Id
         {
-            get { return "201412230610165_DropIndex_CareHome_Traits"; }
+            get { return "201412230920065_Add_CareManager_Index"; }
         }
         
         string IMigrationMetadata.Source
