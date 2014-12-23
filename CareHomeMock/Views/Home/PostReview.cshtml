@@ -26,6 +26,8 @@
             </div>
         </div>
 
+        @MyHelper.EditorFor(Html, m => m.ReviewerType, MyHelper.EditorType.DropDownList)
+
         <div class="form-group">
             @Html.LabelFor(model => model.Rating, new { @class = "control-label col-md-2" })
             <div class="col-md-10">

@@ -2,6 +2,20 @@
 
 
 
+<table class="carehomeinfo-menu-rating">
+    <tr>
+        <td>評価得点：</td>
+        <td class="rating" data-score="@Model.Rating"></td>
+        <td class="rating-value">
+            <span>@string.Format("{0:F1}", Model.Rating) 点</span>
+        </td>
+        <td>評価件数：</td>
+        <td>@Model.ReviewCount 件</td>
+    </tr>
+</table>
+
+
+
 @{
     var pages = new[]{
         new { name = "基本情報", action = "CareHomeInfo_BasicInfo"},

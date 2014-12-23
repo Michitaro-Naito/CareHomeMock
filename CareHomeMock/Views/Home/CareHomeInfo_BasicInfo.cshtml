@@ -81,6 +81,7 @@
                         "id": "AmGraph-1",
                         "lineAlpha": 1,
                         "lineThickness": 2,
+                        'lineColor': '#F00',
                         "valueField": "litres"
                     }
                 ],
@@ -157,15 +158,6 @@
         <table class="table table-condensed">
             <tbody>
                 <tr>
-                    <td>評価得点</td>
-                    <td>
-                        <span class="rating" data-score="@Model.Rating"></span>
-                        <span class="rating-value">
-                            <span>@string.Format("{0:F1}", Model.Rating) 点</span>/<span>@Model.ReviewCount 件</span>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
                     <td style="min-width:80px;">郵便番号</td>
                     <td>@Model.Zip</td>
                 </tr>
@@ -221,17 +213,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <dl>
-            <dt>対応可能地域</dt>
-            <dd>@Model.Region</dd>
-
-            <dt>特徴・セールスポイント</dt>
-            <dd>@Model.Traits</dd>
-
-            <dt>メッセージ</dt>
-            <dd>@Model.Messages</dd>
-        </dl>
     </div>
     <div class="col-md-6">
         <div>@MyHelper.MainImage(Model.MediaFileDataId, 293, 240, true)</div>
@@ -249,7 +230,16 @@
     </div>
 </div>
 
-<h2>人員数</h2>
+<h3 class="region">対応可能地域</h3>
+<p class="region">@Model.Region</p>
+
+<h3 class="traits">特徴・セールスポイント</h3>
+<p class="traits">@Model.Traits</p>
+
+<h3 class="message">メッセージ</h3>
+<p class="message">@Model.Messages</p>
+
+<h3>人員数</h3>
 <table class="table table-condensed">
     <thead>
         <tr>
@@ -282,14 +272,14 @@
     </tbody>
 </table>
 
-<h2>利用者の要介護度別内訳</h2>
+<h3>利用者の要介護度別内訳</h3>
 <div class="row">
     <div class="col-md-12">
         <div id="chartdiv" style="width: 100%; height: 200px; background-color: #FFFFFF;"></div>
     </div>
 </div>
 
-<h2>第三者評価</h2>
+<h3>第三者評価</h3>
 <div class="row">
     <div class="col-md-12">
         <div id="chartdiv-radar" style="width: 100%; height: 240px; background-color: #FFFFFF;"></div>

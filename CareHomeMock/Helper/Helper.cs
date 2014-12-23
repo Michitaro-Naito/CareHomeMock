@@ -44,6 +44,34 @@ namespace CareHomeMock.Helper
             }
         }
 
+        public static SelectList GetBirthdayYears(DateTime selected)
+        {
+            // 1920 to 15 years ago
+            var years = new List<int>();
+            var start = 1920;
+            var end = DateTime.UtcNow.Year - 15;
+            for (var n = start; n <= end; n++)
+            {
+                years.Add(n);
+            }
+            var selectedValue = selected.Year + "/12/31";
+            return new SelectList(years.Select(y => new { id = y + "/12/31", name = y + "年" }), "id", "name", selectedValue);
+        }
+
+        public static SelectList GetLicensedYears(DateTime selected)
+        {
+            // 1998 to 1 year later
+            var years = new List<int>();
+            var start = 1998;
+            var end = DateTime.UtcNow.Year + 1;
+            for (var n = start; n <= end; n++)
+            {
+                years.Add(n);
+            }
+            var selectedValue = selected.Year + "/12/31";
+            return new SelectList(years.Select(y => new { id = y + "/12/31", name = y + "年" }), "id", "name", selectedValue);
+        }
+
         /*class Foo
         {
             public int a, b, c;

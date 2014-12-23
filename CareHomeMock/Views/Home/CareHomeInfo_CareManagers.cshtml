@@ -26,7 +26,7 @@
     {
         <p>この事業所はまだケアマネ情報を掲載していません。</p>
     }
-    @foreach (var m in Model.CareManagers)
+    @foreach (var m in Model.CareManagers.OrderBy(m=>m.Order))
     {
         <div class="search-rslt col-md-12">
             <div class="row">
@@ -50,22 +50,36 @@
                             <tr>
                                 <td><i class="fa fa-star-half-full"></i></td>
                                 <td>平均得点:</td>
-                                <td style="font-size: 11px;">
-                                    <span data-score="@m.Rating" class="rating"></span>
-                                    <span><span>@Math.Round(m.Rating, 1)</span>点</span>
-                                </td>
+                                @if (m.ShowReviews)
+                                {
+                                    <td style="font-size: 11px;">
+                                        <span data-score="@m.Rating" class="rating"></span>
+                                        <span><span>@Math.Round(m.Rating, 1)</span>点</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>非公表</td>
+                                }
                             </tr>
                             <tr>
                                 <td><i class="fa fa-stethoscope"></i></td>
                                 <td>保有資格:</td>
-                                <td>
-                                    <ul>
-                                        @foreach (var l in m.CareManagerLicenses)
-                                        {
-                                            <li>@l.License.Name</li>
-                                        }
-                                    </ul>
-                                </td>
+                                @if (m.ShowReviews)
+                                {
+                                    <td>
+                                        <ul>
+                                            @foreach (var l in m.CareManagerLicenses)
+                                            {
+                                                <li>@l.License.Name</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>非公表</td>
+                                }
                             </tr>
                         </tbody>
                     </table>

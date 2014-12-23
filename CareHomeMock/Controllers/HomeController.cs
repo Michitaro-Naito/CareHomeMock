@@ -87,33 +87,39 @@ namespace CareHomeMock.Controllers
             return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_CareManagers(string code)
+        public ActionResult CareHomeInfo_CareManagers(string code, string name)
         {
             if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
+            if (name != careHome.Name)
+                return RedirectToAction("CareHomeInfo_CareManagers", new { code = code, name = careHome.Name });
             return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_Media(string code)
+        public ActionResult CareHomeInfo_Media(string code, string name)
         {
             if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
+            if (name != careHome.Name)
+                return RedirectToAction("CareHomeInfo_Media", new { code = code, name = careHome.Name });
             return View(careHome);
         }
 
-        public ActionResult CareHomeInfo_AccessMap(string code)
+        public ActionResult CareHomeInfo_AccessMap(string code, string name)
         {
             if (code == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var careHome = db.CareHomes.FirstOrDefault(h => h.CareHomeCode == code);
             if (careHome == null)
                 return HttpNotFound();
+            if (name != careHome.Name)
+                return RedirectToAction("CareHomeInfo_AccessMap", new { code = code, name = careHome.Name });
             return View(careHome);
         }
 
@@ -162,6 +168,7 @@ namespace CareHomeMock.Controllers
                 return HttpNotFound();
 
             ViewBag.Rating = new SelectList(Helper.Helper.Ratings, "RatingId", "Label");
+            ViewBag.ReviewerType = Helper.EnumHelper<ReviewerType>.GetSelectList(ReviewerType.要介護者本人);
             return View(new HomePostReviewVM(){ CareManagerId = id.Value });
         }
 
@@ -184,7 +191,7 @@ namespace CareHomeMock.Controllers
                 db.SaveChanges();
 
                 // Updates TableStorage
-                AddReview(otp.CareManagerId, otp.ReviewerType, model.Rating, model.Message);
+                AddReview(otp.CareManagerId, model.ReviewerType, model.Rating, model.Message);
 
                 // Calculates CareManager.Rating and CareManager.ReviewCount (Cached value to display)
                 var careManager = db.CareManagers.Find(otp.CareManagerId);
@@ -201,7 +208,7 @@ namespace CareHomeMock.Controllers
                 var homeSum = home.CareManagers.Sum(m => m.TotalRating);
                 var homeCount = home.CareManagers.Sum(m => m.ReviewsCount);
                 home.ReviewCount = homeCount;
-                home.Rating = homeSum / count;
+                home.Rating = homeSum / homeCount;
 
                 // Removes old ReviewRatings
                 var ratingsToRemove = db.ReviewRatings.Where(r => r.Created <= oneYearAgo).ToList();
@@ -215,6 +222,7 @@ namespace CareHomeMock.Controllers
                 return RedirectToAction("CareManagerInfo", "Home", new { id = model.CareManagerId });
             }
             ViewBag.Rating = new SelectList(Helper.Helper.Ratings, "RatingId", "Label");
+            ViewBag.ReviewerType = Helper.EnumHelper<ReviewerType>.GetSelectList(model.ReviewerType);
             return View(model);
         }
 
@@ -451,8 +459,8 @@ namespace CareHomeMock.Controllers
                 mq = mq.Where(m => m.Birthday > min && m.Birthday <= max);
             }
 
-            // AllowNewPatient
-            if (allowNewPatient != null)
+            // AllowNewPatient only?
+            if (allowNewPatient != null && allowNewPatient.Value)
                 mq = mq.Where(m => m.AllowNewPatient == allowNewPatient.Value);
 
             // Licenses
@@ -504,7 +512,8 @@ namespace CareHomeMock.Controllers
                 Years = m.Years,
                 ReviewCount = m.ReviewsCount,
                 Rating = m.Rating,
-                MediaFileDataId = m.MediaFileDataId
+                MediaFileDataId = m.MediaFileDataId,
+                ShowReviews = m.ShowReviews
             }).ToList();
 
             return Json(new 

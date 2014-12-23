@@ -32,13 +32,15 @@
         @Html.ValidationSummary(false)
         @Html.HiddenFor(m => m.CareManagerId)
 
-        @MyHelper.DisplayFor(Html, m => m.Email)
+        <h3>基本情報</h3>
+        <p>基本情報は事業所管理者以外は変更できません</p>
+        @MyHelper.DisplayFor(Html, m => m.Email, Model.Email)
         @MyHelper.DisplayFor(Html, m => m.Name)
         @MyHelper.DisplayFor(Html, m => m.Gender)
-        @MyHelper.DisplayFor(Html, m => m.Licensed)
-        @MyHelper.DisplayFor(Html, m => m.Birthday)
+        @MyHelper.DisplayFor(Html, m => m.Licensed, Model.Licensed.Year + "年")
+        @MyHelper.DisplayFor(Html, m => m.Birthday, Model.Birthday.Year + "年")
 
-        @*Licenses*@
+        <h3>追加情報</h3>
         <div class="form-group">
             <label class="col-md-2">保有資格</label>
             <div class="col-md-10">

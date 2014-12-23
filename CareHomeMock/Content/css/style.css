@@ -544,6 +544,10 @@ ul.nav.nav-tabs.carehomeinfo-menu li.active a{
     color: white;
 }
 
+.carehomeinfo-menu-rating img{
+    padding-bottom: 6px;
+}
+
 .carehomeinfo-tableouter{
 	border:1px solid #E9E9E9;
 	background: #F4F4F4;

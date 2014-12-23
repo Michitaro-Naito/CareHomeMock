@@ -38,13 +38,39 @@ namespace CareHomeMock.Controllers
             if (home == null)
                 return HttpNotFound();
 
-            var careManagers = home.CareManagers.ToList();
+            var careManagers = home.CareManagers.OrderBy(m => m.Order).ToList();
 
             return View(new CareManagerIndexVM() {
                 CareHomeId = home.CareHomeId,
                 CareHomeCode = home.CareHomeCode,
                 CareManagers = careManagers
             });
+        }
+        
+        /// <summary>
+        /// CareHome arranges it's CareManagers. AJAX.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        public ActionResult SaveOrder(int[] orderedIds)
+        {
+            var home = CurrentUser.CareHomes.FirstOrDefault();
+            if (home == null)
+                return HttpNotFound();
+            var rows = home.CareManagers.Where(m => orderedIds.Contains(m.CareManagerId)).ToList();
+            var nextOrder = 0;
+            foreach (var id in orderedIds)
+            {
+                var row = rows.FirstOrDefault(m => m.CareManagerId == id);
+                if (row != null)
+                {
+                    row.Order = nextOrder;
+                    nextOrder++;
+                }
+            }
+            db.SaveChanges();
+            Log(LogType.CareHome, "ケアマネの並び順を保存しました。");
+            return Json(new { result = "success" });
         }
 
         /// <summary>
@@ -81,6 +107,8 @@ namespace CareHomeMock.Controllers
 
             //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", careManager.CareHomeId);
             ViewBag.Gender = EnumHelper<Gender>.GetSelectList(careManager.Gender);
+            ViewBag.Birthday = Helper.Helper.GetBirthdayYears(careManager.Birthday);
+            ViewBag.Licensed = Helper.Helper.GetLicensedYears(careManager.Licensed);
             return View(careManager);
         }
 
@@ -95,6 +123,10 @@ namespace CareHomeMock.Controllers
             // Checks file size.
             if (file != null && file.ContentLength > 200000)
                 ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
+
+            // Sets Dec. 31th.
+            caremanager.Birthday = new DateTime(caremanager.Birthday.Year, 12, 31);
+            caremanager.Licensed = new DateTime(caremanager.Licensed.Year, 12, 31);
 
             if (ModelState.IsValid)
             {
@@ -147,6 +179,8 @@ namespace CareHomeMock.Controllers
             }
             //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
             ViewBag.Gender = EnumHelper<Gender>.GetSelectList(caremanager.Gender);
+            ViewBag.Birthday = Helper.Helper.GetBirthdayYears(caremanager.Birthday);
+            ViewBag.Licensed = Helper.Helper.GetLicensedYears(caremanager.Licensed);
             return View(caremanager);
         }
 

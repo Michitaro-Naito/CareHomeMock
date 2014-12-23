@@ -325,15 +325,17 @@
                         <tr data-bind="attr: { class: $root.clReviewCount }">
                             <td><i class="fa fa-comments"></i></td>
                             <td>評価件数:</td>
-                            <td><span data-bind="text: data.ReviewCount"></span>件</td>
+                            <td data-bind="visible: data.ShowReviews"><span data-bind="text: data.ReviewCount"></span>件</td>
+                            <td data-bind="visible: !data.ShowReviews">非公表</td>
                         </tr>
                         <tr data-bind="attr: { class: $root.clRating }">
                             <td><i class="fa fa-star-half-full"></i></td>
                             <td>平均得点:</td>
-                            <td style="font-size: 11px;">
+                            <td data-bind="visible: data.ShowReviews" style="font-size: 11px;">
                                 <span data-bind="attr: { 'data-score': data.Rating }" class="rating"></span>
                                 <span><span data-bind="text: Math.round(10*data.Rating)/10.0"></span>点</span>
                             </td>
+                            <td data-bind="visible: !data.ShowReviews">非公表</td>
                         </tr>
                     </tbody>
                 </table>

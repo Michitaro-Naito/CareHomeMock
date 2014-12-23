@@ -34,6 +34,14 @@
         return TheThingToDisplay(label, display, description, hidden);
     }
 
+    public static HelperResult DisplayFor<TModel, TItem>(HtmlHelper<TModel> html, Expression<Func<TModel, TItem>> expr, string displayText)
+    {
+        var label = html.LabelFor(expr, new { @class = "control-label col-md-2" });
+        var description = "";
+        var hidden = html.HiddenFor(expr);
+        return TheThingToDisplayText(label, displayText, description, hidden);
+    }
+
     public static HelperResult CheckBoxFor<TModel>(HtmlHelper<TModel> html, Expression<Func<TModel, bool>> expr)
     {
         // Gets property name.
@@ -106,7 +114,8 @@
                 break;
                 
             case EditorType.DropDownList:
-                editor = html.DropDownListFor(expr, null, htmlAttributes);
+                //editor = html.DropDownListFor(expr, null, htmlAttributes);
+                editor = html.DropDownList(propertyName, null, htmlAttributes);
                 break;
                 
             case EditorType.Raty:
@@ -120,6 +129,20 @@
     }
 }
 @helper TheThingToDisplay(MvcHtmlString label, MvcHtmlString display, string description, MvcHtmlString hidden)
+{
+    <div class="form-group">
+        @label
+        <div class="col-md-10">
+            @if (!string.IsNullOrEmpty(description))
+            {
+                <span>@description</span>
+            }
+            @display
+            @hidden
+        </div>
+    </div>
+}
+@helper TheThingToDisplayText(MvcHtmlString label, string display, string description, MvcHtmlString hidden)
 {
     <div class="form-group">
         @label

@@ -31,6 +31,8 @@ namespace CareHomeMock.Models
         [ForeignKey("CareHomeId")]
         public virtual CareHome CareHome { get; set; }
 
+        public int Order { get; set; }
+
         /// <summary>
         /// RowKey of Image.
         /// </summary>
@@ -47,6 +49,7 @@ namespace CareHomeMock.Models
 
         /// <summary>
         /// Birthday of this CareManager. Date only like 2014/1/1 0:00:00.
+        /// Always Month = 12, Day = 31
         /// </summary>
         [Required]
         [Display(Name = "生年月日", Description="年齢に変換して公表")]
@@ -75,16 +78,24 @@ namespace CareHomeMock.Models
         {
             get
             {
-                var zero = new DateTime(1, 1, 1);
-                return (zero + (DateTime.UtcNow - Birthday)).Year - 1;
+                try
+                {
+                    var zero = new DateTime(1, 1, 1);
+                    return (zero + (DateTime.UtcNow - Birthday)).Year - 1;
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
         /// <summary>
         /// When this CareManager has been licensed.
+        /// Always Month = 12, Day = 31
         /// </summary>
         [Required]
-        [Display(Name = "ケアマネ資格取得年月日",Description="公表")]
+        [Display(Name = "ケアマネ資格取得年",Description="公表")]
         [DetailedDisplay(Placeholder="例: 2014/1/1")]
         public DateTime Licensed { get; set; }
 
@@ -96,8 +107,15 @@ namespace CareHomeMock.Models
         {
             get
             {
-                var zero = new DateTime(1, 1, 1);
-                return (zero + (DateTime.UtcNow - Licensed)).Year - 1;
+                try
+                {
+                    var zero = new DateTime(1, 1, 1);
+                    return (zero + (DateTime.UtcNow - Licensed)).Year - 1;
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
@@ -142,8 +160,11 @@ namespace CareHomeMock.Models
         public double 関係構築力 { get; set; }
         public double マネジメント力 { get; set; }
         public double 指導管理力 { get; set; }
+        [Display(Name="公平中立性")]
         public double 公平中立力 { get; set; }
+        [Display(Name="医療の知識")]
         public double 医療知識 { get; set; }
+        [Display(Name="介護の知識")]
         public double 介護知識 { get; set; }
         // ----- /Professional Parameters to Display -----
 

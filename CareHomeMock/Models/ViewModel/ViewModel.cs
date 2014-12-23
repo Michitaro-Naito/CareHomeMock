@@ -26,6 +26,10 @@ namespace CareHomeMock.Models
         public string Otp { get; set; }
 
         [Required]
+        [Display(Name = "評価者")]
+        public ReviewerType ReviewerType { get; set; }
+
+        [Required]
         [Range(1, 5)]
         [Display(Name="評価点数")]
         public int Rating { get; set; }

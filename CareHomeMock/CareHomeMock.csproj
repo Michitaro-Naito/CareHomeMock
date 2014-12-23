@@ -340,6 +340,14 @@
     <Compile Include="Migrations\201412230545173_Add_StaticPage_NotListed.Designer.cs">
       <DependentUpon>201412230545173_Add_StaticPage_NotListed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412230610165_DropIndex_CareHome_Traits.cs" />
+    <Compile Include="Migrations\201412230610165_DropIndex_CareHome_Traits.Designer.cs">
+      <DependentUpon>201412230610165_DropIndex_CareHome_Traits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412230849241_Add_CareManager_Order.cs" />
+    <Compile Include="Migrations\201412230849241_Add_CareManager_Order.Designer.cs">
+      <DependentUpon>201412230849241_Add_CareManager_Order.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -781,6 +789,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412230545173_Add_StaticPage_NotListed.resx">
       <DependentUpon>201412230545173_Add_StaticPage_NotListed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412230610165_DropIndex_CareHome_Traits.resx">
+      <DependentUpon>201412230610165_DropIndex_CareHome_Traits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412230849241_Add_CareManager_Order.resx">
+      <DependentUpon>201412230849241_Add_CareManager_Order.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

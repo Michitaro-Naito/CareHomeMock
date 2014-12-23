@@ -4,11 +4,40 @@
     var title = "ケアマネ一覧";
     ViewBag.Title = title;
 }
+@section scripts{
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sortable').sortable().disableSelection();
+            $('#SaveOrder').click(function () {
+                var orderedIds = [];
+                $('#sortable tr').each(function (n, element) {
+                    var id = parseInt($(element).find('.CareManagerId').text());
+                    orderedIds.push(id);
+                });
+                console.info(orderedIds);
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    url: '/CareManager/SaveOrder',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({
+                        orderedIds: orderedIds
+                    })
+                }).done(function (data) {
+                    console.info(data);
+                    location.reload();
+                });
+            });
+        });
+    </script>
+}
 
 <h2>@title</h2>
 
 <p>
     @Html.ActionLink("ケアマネ情報を追加する", "Edit", new { code = Model.CareHomeCode, careManagerId = (int?)null }, new { @class = "btn btn-default" })
+    <button type="button" id="SaveOrder" class="btn btn-default">並び順を保存する</button>
 </p>
 <table class="table table-striped">
     <thead>
@@ -32,11 +61,12 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="sortable">
         @foreach (var item in Model.CareManagers)
         {
             <tr>
                 <td>
+                    <span class="CareManagerId" style="display:none;">@item.CareManagerId</span>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>

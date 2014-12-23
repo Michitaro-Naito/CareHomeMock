@@ -27,6 +27,7 @@
                         "id": "AmGraph-1",
                         "lineAlpha": 1,
                         "lineThickness": 2,
+                        'lineColor': '#F00',
                         "valueField": "litres"
                     }
                 ],
@@ -64,15 +65,15 @@
                         "litres": @Model.指導管理力
                     },
                     {
-                        "country": "公平中立力",
+                        "country": "公平中立性",
                         "litres": @Model.公平中立力
                     },
                     {
-                        "country": "医療知識",
+                        "country": "医療の知識",
                         "litres": @Model.医療知識
                     },
                     {
-                        "country": "介護知識",
+                        "country": "介護の知識",
                         "litres": @Model.介護知識
                     }
                 ]
@@ -153,10 +154,17 @@
             <tr>
                 <td>評価得点</td>
                 <td>
-                    <span class="rating" data-score="@Model.Rating"></span>
-                    <span class="rating-value">
-                        <span>@string.Format("{0:F1}", Model.Rating) 点</span>/<span>@Model.ReviewsCount 件</span>
-                    </span>
+                    @if (Model.ShowReviews)
+                    {
+                        <span class="rating" data-score="@Model.Rating"></span>
+                        <span class="rating-value">
+                            <span>@string.Format("{0:F1}", Model.Rating) 点</span>/<span>@Model.ReviewsCount 件</span>
+                        </span>
+                    }
+                    else
+                    {
+                        <span>非公表</span>
+                    }
                 </td>
             </tr>
             <tr>
@@ -197,34 +205,27 @@
                     }
                 </td>
             </tr>
-        </table>
-
-        <dl>
-            <dt>経歴</dt>
-            <dd>@Model.Career</dd>
-
-            <dt>メッセージ</dt>
-            <dd>@Model.Messages</dd>
-
-            <dt>ブログ、FBなど</dt>
-            <dd>
-                @if (!string.IsNullOrEmpty(Model.BlogUrls))
-                {
-                    var uri = new Uri("http://amlitek.com/");
-                    foreach (var url in Model.BlogUrls.Split('\n'))
+            <tr>
+                <td>ブログ、FBなど</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(Model.BlogUrls))
                     {
-                        if (Uri.TryCreate(url, UriKind.Absolute, out uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                        var uri = new Uri("http://amlitek.com/");
+                        foreach (var url in Model.BlogUrls.Split('\n'))
                         {
-                            <a href="@uri" target="_blank">@uri</a><br/>
-                        }
-                        else
-                        {
-                            <span>@url</span><br/>
+                            if (Uri.TryCreate(url, UriKind.Absolute, out uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                            {
+                                <a href="@uri" target="_blank">@uri</a><br />
+                            }
+                            else
+                            {
+                                <span>@url</span><br />
+                            }
                         }
                     }
-                }
-            </dd>
-        </dl>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="col-md-6">
@@ -237,14 +238,20 @@
     </div>
 </div><!-- row -->
 
-<h2>コンピテンシー自己評価</h2>
+<h3 class="career">経歴</h3>
+<p class="career">@Model.Career</p>
+
+<h3 class="message">メッセージ</h3>
+<p class="message">@Model.Messages</p>
+
+<h3>コンピテンシー自己評価</h3>
 <div class="row">
     <div class="col-md-12">
         <div id="chartdiv" style="width: 100%; height: 240px; background-color: #FFFFFF;"></div>
     </div>
 </div>
 
-<h2>このケアマネの評価</h2>
+<h3>このケアマネの評価</h3>
 <p>@Html.ActionLink("このケアマネを評価する", "PostReview", "Home", new { id = Model.CareManagerId }, new { @class = "btn btn-default" })</p>
 @if (Model.ShowReviews)
 {

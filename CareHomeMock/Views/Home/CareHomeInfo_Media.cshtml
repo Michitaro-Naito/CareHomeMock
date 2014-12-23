@@ -3,6 +3,22 @@
     var title = Model.Name;
     ViewBag.Title = title;
 }
+@section scripts{
+<script src="~/Scripts/raty/jquery.raty.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.rating').raty({
+            score: function () {
+                return $(this).attr('data-score');
+            },
+            path: '/Scripts/raty/images',
+            readOnly: true,
+            hints: ['すすめない', 'あまりすすめない', 'どちらとも言えない', 'まあすすめる', 'すすめる']
+        });
+    });
+</script>
+
+}
 
 <h2>@title</h2>
 @Html.Partial("_CareHomeInfoMenu", Model)

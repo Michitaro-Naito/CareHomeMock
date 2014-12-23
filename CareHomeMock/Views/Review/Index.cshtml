@@ -105,7 +105,7 @@
                         console.info('done');
                         if(data.otp != null){
                             var type = Enumerable.From(s.reviewerTypes()).First(function(t){ return t.id == data.otp.ReviewerType });
-                            alert('OTPを生成しました。パスワード:' + data.otp.VerificationCode + ' 評価者:' + type.name);
+                            alert('OTPを生成しました。パスワード:' + data.otp.VerificationCode/* + ' 評価者:' + type.name*/);
                         }else{
                             alert('OTPの生成に失敗しました。');
                         }
@@ -131,7 +131,7 @@
         以下のボタンを押すと4桁のワンタイムパスワード(OTP)が発行され、画面に表示されますので、メモをとって評価していただきたい方にお渡しください。
         OTPは、使用されるか、未使用のまま１ヶ月経過すると無効となります。
     </p>
-    <div class="form-group">
+    <div class="form-group" style="display:none;">
         <label class="control-label col-md-2">評価者</label>
         <div class="col-md-10"><select data-bind="options: reviewerTypes, optionsText: 'name', value: selectedReviewerType" class="form-control"></select></div>
     </div>
