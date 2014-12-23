@@ -9,6 +9,18 @@
     <script>
         $(document).ready(function () {
 
+            function SortField(root, data) {
+                var s = this;
+                s.id = data.id;
+                s.name = data.name;
+                s.clButton = ko.computed(function () {
+                    var cl = 'btn btn-default btn-sm';
+                    if (root.selectedSortField() == s)
+                        cl += ' sort-active';
+                    return cl;
+                });
+            }
+
             function CareManager(data) {
                 var s = this;
                 s.data = data;
@@ -156,7 +168,9 @@
                         for (var n = 0; n < data.licenses.length; n++) {
                             s.licenses.push(new License(data.licenses[n]));
                         }
-                        s.sortFields(data.sortFields);
+                        for (var n = 0; n < data.sortFields.length; n++) {
+                            s.sortFields.push(new SortField(s, data.sortFields[n]));
+                        }
                         s.Search();
                     });
                 }
@@ -239,10 +253,10 @@
 
         <div class="col-md-4 gender"><select data-bind="options: cpGenders, optionsText: 'name', value: selectedGender" class="form-control"></select></div>
         <div class="col-md-4 age"><select data-bind="options: cpAgeRanges, optionsText: 'name', value: selectedAgeRange" class="form-control"></select></div>
-        <div class="col-md-4 allownew" style="display: none;">
+        <div class="col-md-4 allownew">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" data-bind="checked: allowNewPatient" />新規対応可
+                    <input type="checkbox" data-bind="checked: allowNewPatient" />新規対応可のみ
                 </label>
             </div>
         </div>
@@ -258,7 +272,7 @@
             </div>
         </div>
 
-        <div class="col-md-8"><input type="text" data-bind="value: keyword" placeholder="キーワード(ケアマネ名)"/></div>
+        <div class="col-md-8 keyword"><input type="text" data-bind="value: keyword" placeholder="キーワード(ケアマネ名)"/></div>
         <div class="col-md-4"><button type="button" data-bind="click: Search" class="search-btn">検索する</button></div>
     </div>
 </div>
@@ -266,7 +280,7 @@
 <!-- Sort -->
 <ul data-bind="foreach: sortFields" class="list-inline sort-fields">
     <li>
-        <button type="button" data-bind="click: function(){ $root.Sort($data); }" class="btn btn-default btn-sm">
+        <button type="button" data-bind="click: function(){ $root.Sort($data); }, attr: { class: clButton }" class="btn btn-default btn-sm">
             <span data-bind="visible: $root.selectedSortField() == $data">
                 <span data-bind="visible: $root.descending()" class="glyphicon glyphicon-arrow-down"></span>
                 <span data-bind="visible: !$root.descending()" class="glyphicon glyphicon-arrow-up"></span>
@@ -306,7 +320,7 @@
                         <tr data-bind="attr: { class: $root.clLicensed }">
                             <td><i class="fa fa-calendar"></i></td>
                             <td>資格取得年:</td>
-                            <td><span data-bind="text: fmDate(data.Licensed)"></span></td>
+                            <td><span data-bind="text: fmYear(data.Licensed)"></span>年</td>
                         </tr>
                         <tr data-bind="attr: { class: $root.clReviewCount }">
                             <td><i class="fa fa-comments"></i></td>

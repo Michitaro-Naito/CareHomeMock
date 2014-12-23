@@ -336,6 +336,10 @@
     <Compile Include="Migrations\201412220844236_Add_CareManager_ShowReviews.Designer.cs">
       <DependentUpon>201412220844236_Add_CareManager_ShowReviews.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412230545173_Add_StaticPage_NotListed.cs" />
+    <Compile Include="Migrations\201412230545173_Add_StaticPage_NotListed.Designer.cs">
+      <DependentUpon>201412230545173_Add_StaticPage_NotListed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlobStorage\MediaFileData.cs" />
     <Compile Include="Models\Enum\AgeRange.cs" />
@@ -387,6 +391,7 @@
     <Content Include="Content\images\search-img01.png" />
     <Content Include="Content\images\search-img02.png" />
     <Content Include="Content\images\search-img03.png" />
+    <Content Include="Content\images\spotlight-poi-not-registered.png" />
     <Content Include="Content\images\top-ad.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -773,6 +778,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412220844236_Add_CareManager_ShowReviews.resx">
       <DependentUpon>201412220844236_Add_CareManager_ShowReviews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412230545173_Add_StaticPage_NotListed.resx">
+      <DependentUpon>201412230545173_Add_StaticPage_NotListed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

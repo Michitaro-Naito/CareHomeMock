@@ -79,6 +79,8 @@
             </div>
         </div>
 
+        @MyHelper.CheckBoxFor(Html, m => m.NotListed)
+
         <div class="form-group">
             @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
             <div class="col-md-10">

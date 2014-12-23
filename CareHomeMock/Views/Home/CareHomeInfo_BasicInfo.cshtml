@@ -1,10 +1,11 @@
 ﻿@model CareHomeMock.Models.CareHome
 @{
-    var title = Model.Name + " 基本情報";
+    var title = Model.Name;
     ViewBag.Title = title;
 }
 @section scripts{
     <!-- amCharts javascript sources -->
+    <script src="~/Scripts/raty/jquery.raty.js"></script>
     <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/amcharts.js"></script>
     <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/pie.js"></script>
     <script type="text/javascript" src="http://cdn.amcharts.com/lib/3/radar.js"></script>
@@ -132,6 +133,18 @@
             }
         );
     </script>
+    <script>
+        $(document).ready(function(){
+            $('.rating').raty({
+                score: function () {
+                    return $(this).attr('data-score');
+                },
+                path: '/Scripts/raty/images',
+                readOnly: true,
+                hints: ['すすめない', 'あまりすすめない', 'どちらとも言えない', 'まあすすめる', 'すすめる']
+            });
+        });
+    </script>
 }
 
 
@@ -143,6 +156,15 @@
     <div class="col-md-6">
         <table class="table table-condensed">
             <tbody>
+                <tr>
+                    <td>評価得点</td>
+                    <td>
+                        <span class="rating" data-score="@Model.Rating"></span>
+                        <span class="rating-value">
+                            <span>@string.Format("{0:F1}", Model.Rating) 点</span>/<span>@Model.ReviewCount 件</span>
+                        </span>
+                    </td>
+                </tr>
                 <tr>
                     <td style="min-width:80px;">郵便番号</td>
                     <td>@Model.Zip</td>
@@ -196,10 +218,6 @@
                 <tr>
                     <td>経験5年以上割合</td>
                     <td>@string.Format("{0:F1}%", 100 * Model.経験5年以上割合)</td>
-                </tr>
-                <tr>
-                    <td>平均得点</td>
-                    <td>@string.Format("{0:F1}", Model.Rating)</td>
                 </tr>
             </tbody>
         </table>

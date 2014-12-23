@@ -8,6 +8,18 @@
     <script>
         $(document).ready(function () {
 
+            function SortField(root, data) {
+                var s = this;
+                s.id = data.id;
+                s.name = data.name;
+                s.clButton = ko.computed(function () {
+                    var cl = 'btn btn-default btn-sm';
+                    if (root.selectedSortField() == s)
+                        cl += ' sort-active';
+                    return cl;
+                });
+            }
+
             function CareHome(data) {
                 var s = this;
                 s.data = data;
@@ -121,7 +133,9 @@
                         s.prefectures(data.prefectures);
                         s.cities(data.cities);
                         s.companyTypes(data.companyTypes);
-                        s.sortFields(data.sortFields);
+                        for (var n = 0; n < data.sortFields.length; n++) {
+                            s.sortFields.push(new SortField(s, data.sortFields[n]));
+                        }
                         s.Search();
                     });
                 }
@@ -215,7 +229,7 @@
 <!-- Sort -->
 <ul data-bind="foreach: sortFields" class="list-inline sort-fields">
     <li>
-        <button type="button" data-bind="click: function(){ $root.Sort($data); }" class="btn btn-default btn-sm">
+        <button type="button" data-bind="click: function(){ $root.Sort($data); }, attr: { class: clButton }">
             <span data-bind="visible: $root.selectedSortField() == $data">
                 <span data-bind="visible: $root.descending()" class="glyphicon glyphicon-arrow-down"></span>
                 <span data-bind="visible: !$root.descending()" class="glyphicon glyphicon-arrow-up"></span>
@@ -234,7 +248,7 @@
     <div class="search-rslt col-md-12">
         <div class="row">
             <div class="col-md-4">
-                <a data-bind="attr: { href : cpHref }" href="#">
+                <a data-bind="attr: { href : cpHref }" href="#" target="_blank">
                     <div data-bind="if: data.MediaFileDataId != null">
                         <img data-bind="attr: { src: cpImageSrc }" />
                     </div>
@@ -244,7 +258,7 @@
                 </a>
             </div>
             <div class="col-md-8">
-                <h3><a data-bind="text: data.Name, attr: { href : cpHref }" href="#"></a></h3>
+                <h3><a data-bind="text: data.Name, attr: { href : cpHref }" href="#" target="_blank"></a></h3>
                 <table class="table">
                     <tbody>
                         <tr>

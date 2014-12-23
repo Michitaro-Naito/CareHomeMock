@@ -106,7 +106,14 @@ namespace CareHomeMock.Models
                 var zero = new DateTime(1, 1, 1);
                 if (Established == null)
                     return 0;
-                return (zero + (DateTime.UtcNow - Established.Value)).Year - 1;
+                try
+                {
+                    return (zero + (DateTime.UtcNow - Established.Value)).Year - 1;
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +21,12 @@ namespace CareHomeMock.Models
         public string Title { get; set; }
         [AllowHtml]
         public string Html { get; set; }
+
+        /// <summary>
+        /// If true, this StaticPage is not listed at Information, Layout.
+        /// </summary>
+        [Display(Name="一覧に表示しない")]
+        public bool NotListed { get; set; }
 
 
 

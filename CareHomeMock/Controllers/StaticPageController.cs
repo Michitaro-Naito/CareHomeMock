@@ -75,7 +75,7 @@ namespace CareHomeMock.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="StaticPageId,Created,Updated,Order,Title,Html")] StaticPage staticpage)
+        public ActionResult Edit([Bind(Include="StaticPageId,Created,Updated,Order,NotListed,Title,Html")] StaticPage staticpage)
         {
             if (ModelState.IsValid)
             {

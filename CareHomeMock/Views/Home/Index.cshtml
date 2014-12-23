@@ -17,9 +17,19 @@
     <script type="text/javascript">
         var map;
         var model;
+        var markerImage;
 
         //35.681420, 139.766151
         function initialize() {
+
+            // Loads an original marker image.
+            markerImage = new google.maps.MarkerImage(
+                '@Url.Content("~/Content/images/spotlight-poi-not-registered.png")',    //'http://localhost:52448/Content/images/spotlight-poi-not-registered.png',
+                new google.maps.Size(22, 40),   // Size
+                new google.maps.Point(0, 0),    // Offset
+                new google.maps.Point(11, 40)   // Anchor point
+                );
+
             var mapOptions = {
                 center: { lat: 35.681420, lng: 139.766151 },
                 zoom: 14
@@ -123,7 +133,7 @@
                     google.maps.event.addListener(marker, 'click', function (event) {
 
                         var container = $('<div>').addClass('gm-iw gm-sm').css('width', '204px');
-                        var website = $('<div>').addClass('gm-title').append($('<a>').attr('href', '/事業所/' + marker.myData.Code).text(marker.myData.Name));
+                        var website = $('<div>').addClass('gm-title carehome').append($('<a>').attr('href', '/事業所/' + marker.myData.Code).text(marker.myData.Name));
                         var basicinfo = $('<div>').addClass('gm-basicinfo');
                         var count = $('<div>').text('ケアマネ人数: ' + marker.myData.CareManagerCount + '人');
                         var rating = $('<span>').addClass('rating').attr('data-score', marker.myData.Rating);
@@ -202,14 +212,14 @@
                             .ToArray();
                         for (var n = 0; n < homesToAdd.length; n++) {
                             var home = homesToAdd[n];
-                            var opacity = 1.0;
+                            var markerImageToSet = null;
                             if (home.Registered != true)
-                                opacity = 0.25;
+                                markerImageToSet = markerImage;
                             var marker = new google.maps.Marker({
                                 position: new google.maps.LatLng(home.Latitude, home.Longitude),
                                 map: map,
                                 title: home.Name,
-                                opacity: opacity
+                                icon: markerImageToSet
                             });
                             marker.myData = home;
                             s.AddListener(marker);

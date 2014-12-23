@@ -1,6 +1,17 @@
 ﻿
+function fmYear(str) {
+    // /Date(1417328685970)/
+    if (str == null)
+        return '';
+    var regex = /\/Date([0-9]*)\//;
+    var date = new Date(parseInt(str.match(/[0-9]+/)));
+    return date.getFullYear();
+}
+
 function fmDate(str) {
     // /Date(1417328685970)/
+    if (str == null)
+        return '';
     var regex = /\/Date([0-9]*)\//;
     var date = new Date(parseInt(str.match(/[0-9]+/)));
     //return date;
@@ -9,6 +20,8 @@ function fmDate(str) {
 
 function fmDateTime(str) {
     // /Date(1417328685970)/
+    if (str == null)
+        return '';
     var regex = /\/Date([0-9]*)\//;
     var date = new Date(parseInt(str.match(/[0-9]+/)));
     var minutes = date.getMinutes();

@@ -14,6 +14,7 @@ namespace CareHomeMock.Controllers
             using (var db = new ApplicationDbContext())
             {
                 var pages = db.StaticPage
+                    .Where(p => !p.NotListed)
                     .OrderBy(p => p.Order)
                     .ThenByDescending(p => p.Updated)
                     .ToList();

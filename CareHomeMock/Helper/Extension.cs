@@ -128,6 +128,12 @@ namespace CareHomeMock.Helper
             return jst.ToString("yyyy/MM/dd");
         }
 
+        public static string ToJstYearString(this DateTime utc)
+        {
+            var jst = utc.ToJst();
+            return jst.ToString("yyyy");
+        }
+
         public static string ToJstDateString(this DateTime? utc)
         {
             if (utc == null)

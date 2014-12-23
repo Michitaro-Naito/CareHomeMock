@@ -307,6 +307,11 @@ background-color: #A83A06!important;
 	margin-bottom: 15px;
 }
 .search-rslt tr.sort-active{
+    /*background: #FDA000;*/
+}
+.btn.sort-active,
+.btn.sort-active:hover,
+.btn.sort-active:focus{
     background: #FDA000;
 }
 .search-rslt tr td:nth-of-type(3){
@@ -379,7 +384,7 @@ footer .aboutus{
 }
 .ftr-navigation ul li{
 	box-shadow: 0px 1px 0 #202020,0px 2px 0 #171717;
-	padding: 4px;
+	padding: 0;
 }
 .ftr-navigation ul li i{
 	padding-right: 5px;
@@ -613,6 +618,10 @@ ul.nav.nav-tabs.carehomeinfo-menu li.active a{
 	margin-bottom: 15px;
 }
 
+.gm-style .gm-iw .gm-title.carehome{
+    font-weight: bold;
+}
+
 /* CareManager Search */
 .search-blo.caremanager-search .city{
     margin-top: 0;
@@ -635,6 +644,8 @@ ul.nav.nav-tabs.carehomeinfo-menu li.active a{
 }
 .search-blo.caremanager-search .license{
     margin-top: 15px;
+}
+.search-blo.caremanager-search .keyword{
     padding-right: 15px;
 }
 .search-blo.caremanager-search .sort{

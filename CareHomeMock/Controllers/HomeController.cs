@@ -271,7 +271,7 @@ namespace CareHomeMock.Controllers
                         switch (match.Groups["num"].Value)
                         {
                             case "70":
-                                return "70歳以上";
+                                return "70代以上";
                             default:
                                 return match.Groups["num"].Value + "代";
                         }

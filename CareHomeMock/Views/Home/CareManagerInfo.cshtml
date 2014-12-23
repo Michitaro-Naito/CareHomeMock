@@ -1,6 +1,6 @@
 ﻿@model CareHomeMock.Models.CareManager
 @{
-    var title = Model.CareHome.Name + " " + Model.Name;
+    var title = Model.Name;
     ViewBag.Title = title;
     var isAdmin = User.IsInRole("Admin");
 }
@@ -147,11 +147,15 @@
     <div class="col-md-6">
         <table class="table table-condensed">
             <tr>
-                <td>ケアマネ評価得点</td>
+                <td>所属</td>
+                <td>@Html.ActionLink(Model.CareHome.Name, "CareHomeInfo_BasicInfo", new{ controller ="Home", code=Model.CareHome.CareHomeCode})</td>
+            </tr>
+            <tr>
+                <td>評価得点</td>
                 <td>
                     <span class="rating" data-score="@Model.Rating"></span>
                     <span class="rating-value">
-                        <span>@Model.Rating 点</span>/<span>@Model.ReviewsCount 件</span>
+                        <span>@string.Format("{0:F1}", Model.Rating) 点</span>/<span>@Model.ReviewsCount 件</span>
                     </span>
                 </td>
             </tr>
@@ -165,7 +169,7 @@
             </tr>
             <tr>
                 <td>ケアマネ資格取得</td>
-                <td>@Model.Licensed.ToJstDateString()</td>
+                <td>@Model.Licensed.ToJstYearString() 年</td>
             </tr>
             <tr>
                 <td>保有資格</td>
@@ -204,18 +208,19 @@
 
             <dt>ブログ、FBなど</dt>
             <dd>
-                @{
-                    var uri = new Uri("http://amlitek.com/");
-                }
-                @foreach (var url in Model.BlogUrls.Split('\n'))
+                @if (!string.IsNullOrEmpty(Model.BlogUrls))
                 {
-                    if (Uri.TryCreate(url, UriKind.Absolute, out uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                    var uri = new Uri("http://amlitek.com/");
+                    foreach (var url in Model.BlogUrls.Split('\n'))
                     {
-                        <a href="@uri" target="_blank">@uri</a><br/>
-                    }
-                    else
-                    {
-                        <span>@url</span><br/>
+                        if (Uri.TryCreate(url, UriKind.Absolute, out uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                        {
+                            <a href="@uri" target="_blank">@uri</a><br/>
+                        }
+                        else
+                        {
+                            <span>@url</span><br/>
+                        }
                     }
                 }
             </dd>
