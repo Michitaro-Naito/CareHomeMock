@@ -231,13 +231,40 @@
 </div>
 
 <h3 class="region">対応可能地域</h3>
-<p class="region">@Model.Region</p>
+<p class="region">
+    @if (!string.IsNullOrEmpty(Model.Region))
+    {
+        var rows = Model.Region.Split('\n');
+        foreach (var row in rows)
+        {
+            <p>@row</p>
+        }
+    }
+</p>
 
 <h3 class="traits">特徴・セールスポイント</h3>
-<p class="traits">@Model.Traits</p>
+<p class="traits">
+    @if (!string.IsNullOrEmpty(Model.Traits))
+    {
+        var rows = Model.Traits.Split('\n');
+        foreach (var row in rows)
+        {
+            <span>@row</span><br/>
+        }
+    }
+</p>
 
 <h3 class="message">メッセージ</h3>
-<p class="message">@Model.Messages</p>
+<p class="message">
+    @if (!string.IsNullOrEmpty(Model.Messages))
+    {
+        var rows = Model.Messages.Split('\n');
+        foreach (var row in rows)
+        {
+            <span>@row</span><br/>
+        }
+    }
+</p>
 
 <h3>人員数</h3>
 <table class="table table-condensed">

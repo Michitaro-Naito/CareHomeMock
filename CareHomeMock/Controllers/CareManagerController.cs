@@ -105,9 +105,10 @@ namespace CareHomeMock.Controllers
                     return HttpNotFound();
             }
 
-            //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", careManager.CareHomeId);
             ViewBag.Gender = EnumHelper<Gender>.GetSelectList(careManager.Gender);
-            ViewBag.Birthday = Helper.Helper.GetBirthdayYears(careManager.Birthday);
+            ViewBag.Year = Helper.Helper.GetBirthdayYears(careManager.Birthday);
+            ViewBag.Month = Helper.Helper.GetBirthdayMonths(careManager.Birthday);
+            ViewBag.Day = Helper.Helper.GetBirthdayDays(careManager.Birthday);
             ViewBag.Licensed = Helper.Helper.GetLicensedYears(careManager.Licensed);
             return View(careManager);
         }
@@ -118,14 +119,14 @@ namespace CareHomeMock.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string code, [Bind(Include = "CareManagerId,CareHomeId,Email,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager, HttpPostedFileBase file)
+        public ActionResult Edit(string code, [Bind(Include = "CareManagerId,CareHomeId,Email,MediaFileDataId,Name,Gender,Age,Licensed,Licenses,CurrentPatients,AllowNewPatient,Career,Messages,BlogUrls,TotalRating,ReviewsCount,Rating,Birthday")] CareManager caremanager, HttpPostedFileBase file, int year, int month, int day)
         {
             // Checks file size.
             if (file != null && file.ContentLength > 200000)
                 ModelState.AddModelError("", "アップロードできる画像のサイズは200kBまでです。");
 
             // Sets Dec. 31th.
-            caremanager.Birthday = new DateTime(caremanager.Birthday.Year, 12, 31);
+            caremanager.Birthday = new DateTime(year, month, day);
             caremanager.Licensed = new DateTime(caremanager.Licensed.Year, 12, 31);
 
             if (ModelState.IsValid)
@@ -177,9 +178,10 @@ namespace CareHomeMock.Controllers
                 Log(LogType.CareHome, "所属するケアマネの情報を更新しました。");
                 return RedirectToAction("Index");
             }
-            //ViewBag.CareHomeId = new SelectList(db.CareHomes, "CareHomeId", "Zip", caremanager.CareHomeId);
             ViewBag.Gender = EnumHelper<Gender>.GetSelectList(caremanager.Gender);
-            ViewBag.Birthday = Helper.Helper.GetBirthdayYears(caremanager.Birthday);
+            ViewBag.Year = Helper.Helper.GetBirthdayYears(caremanager.Birthday);
+            ViewBag.Month = Helper.Helper.GetBirthdayMonths(caremanager.Birthday);
+            ViewBag.Day = Helper.Helper.GetBirthdayDays(caremanager.Birthday);
             ViewBag.Licensed = Helper.Helper.GetLicensedYears(caremanager.Licensed);
             return View(caremanager);
         }

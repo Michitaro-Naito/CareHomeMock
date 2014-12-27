@@ -36,7 +36,16 @@
 
         @MyHelper.EditorFor(Html, m => m.Licensed, MyHelper.EditorType.DropDownList)
 
-        @MyHelper.EditorFor(Html, m => m.Birthday, MyHelper.EditorType.DropDownList)
+        @*@MyHelper.EditorFor(Html, m => m.Birthday, MyHelper.EditorType.DropDownList)*@
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Birthday, new { @class = "control-label col-md-2" })
+            <div class="col-md-10 form-inline">
+                @Html.DropDownList("Year", null, new { @class = "form-control" })
+                @Html.DropDownList("Month", null, new { @class = "form-control" })
+                @Html.DropDownList("Day", null, new { @class = "form-control" })
+            </div>
+        </div>
         
         <div class="form-group">
             <label class="control-label col-md-2">メイン画像</label>

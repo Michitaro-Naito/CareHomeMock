@@ -54,8 +54,26 @@ namespace CareHomeMock.Helper
             {
                 years.Add(n);
             }
-            var selectedValue = selected.Year + "/12/31";
-            return new SelectList(years.Select(y => new { id = y + "/12/31", name = y + "年" }), "id", "name", selectedValue);
+            var selectedValue = selected.Year;
+            return new SelectList(years.Select(y => new { id = y, name = y + "年" }), "id", "name", selectedValue);
+        }
+
+        public static SelectList GetBirthdayMonths(DateTime selected)
+        {
+            var months = new List<int>();
+            for (var n = 1; n <= 12; n++)
+                months.Add(n);
+            var selectedValue = selected.Month;
+            return new SelectList(months.Select(m => new { id = m, name = m + "月" }), "id", "name", selectedValue);
+        }
+
+        public static SelectList GetBirthdayDays(DateTime selected)
+        {
+            var days = new List<int>();
+            for (var n = 1; n <= 31; n++)
+                days.Add(n);
+            var selectedValue = selected.Day;
+            return new SelectList(days.Select(m => new { id = m, name = m + "日" }), "id", "name", selectedValue);
         }
 
         public static SelectList GetLicensedYears(DateTime selected)

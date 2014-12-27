@@ -388,6 +388,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\myriadpro-regular.svg" />
     <Content Include="Content\images\bottom-ad.png" />
+    <Content Include="Content\images\carema_logo.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\Original_transparent_412x75.png" />
     <Content Include="Content\images\right-ad01.png" />

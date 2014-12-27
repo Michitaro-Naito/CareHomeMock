@@ -239,10 +239,28 @@
 </div><!-- row -->
 
 <h3 class="career">経歴</h3>
-<p class="career">@Model.Career</p>
+<p class="career">
+    @if (!string.IsNullOrEmpty(Model.Career))
+    {
+        var rows = Model.Career.Split('\n');
+        foreach (var row in rows)
+        {
+            <span>@row</span><br/>
+        }
+    }
+</p>
 
 <h3 class="message">メッセージ</h3>
-<p class="message">@Model.Messages</p>
+<p class="message">
+    @if (!string.IsNullOrEmpty(Model.Messages))
+    {
+        var rows = Model.Messages.Split('\n');
+        foreach (var row in rows)
+        {
+            <span>@row</span><br/>
+        }
+    }
+</p>
 
 <h3>コンピテンシー自己評価</h3>
 <div class="row">

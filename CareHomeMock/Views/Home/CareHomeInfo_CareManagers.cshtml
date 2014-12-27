@@ -39,13 +39,20 @@
                         <tbody>
                             <tr>
                                 <td><i class="fa fa-calendar"></i></td>
-                                <td>経験年数:</td>
-                                <td><span>@m.Years</span>年</td>
+                                <td>資格取得年:</td>
+                                <td><span>@string.Format("{0:yyyy}", m.Licensed)</span>年</td>
                             </tr>
                             <tr>
                                 <td><i class="fa fa-comments"></i></td>
                                 <td>評価件数:</td>
-                                <td><span>@m.ReviewsCount</span>件</td>
+                                @if (m.ShowReviews)
+                                {
+                                    <td><span>@m.ReviewsCount</span>件</td>
+                                }
+                                else
+                                {
+                                    <td>非公表</td>
+                                }
                             </tr>
                             <tr>
                                 <td><i class="fa fa-star-half-full"></i></td>
@@ -65,21 +72,14 @@
                             <tr>
                                 <td><i class="fa fa-stethoscope"></i></td>
                                 <td>保有資格:</td>
-                                @if (m.ShowReviews)
-                                {
-                                    <td>
-                                        <ul>
-                                            @foreach (var l in m.CareManagerLicenses)
-                                            {
-                                                <li>@l.License.Name</li>
-                                            }
-                                        </ul>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>非公表</td>
-                                }
+                                <td>
+                                    <ul>
+                                        @foreach (var l in m.CareManagerLicenses)
+                                        {
+                                            <li>@l.License.Name</li>
+                                        }
+                                    </ul>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

@@ -133,7 +133,7 @@
                     google.maps.event.addListener(marker, 'click', function (event) {
 
                         var container = $('<div>').addClass('gm-iw gm-sm').css('width', '204px');
-                        var website = $('<div>').addClass('gm-title carehome').append($('<a>').attr('href', '/事業所/' + marker.myData.Code).text(marker.myData.Name));
+                        var website = $('<div>').addClass('gm-title carehome').append($('<a>').attr('href', '/事業所/' + marker.myData.Code).attr('target', '_blank').text(marker.myData.Name));
                         var basicinfo = $('<div>').addClass('gm-basicinfo');
                         var count = $('<div>').text('ケアマネ人数: ' + marker.myData.CareManagerCount + '人');
                         var rating = $('<span>').addClass('rating').attr('data-score', marker.myData.Rating);
