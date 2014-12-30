@@ -686,6 +686,7 @@
     <Content Include="Views\Emails\ApplicationApproved.cshtml" />
     <Content Include="Views\Emails\CareManagerAdded.cshtml" />
     <Content Include="Views\Emails\EmailVerified.cshtml" />
+    <Content Include="Views\Emails\Example.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

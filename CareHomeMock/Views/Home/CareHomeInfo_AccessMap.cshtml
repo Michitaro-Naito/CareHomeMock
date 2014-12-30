@@ -13,7 +13,7 @@
         }
     </style>
     <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGq4kB5UwEsJphzWLAaNoASJiEOpod1KM"></script>
+            src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings["GoogleApiKey"])"></script>
     <script type="text/javascript">
         function initialize() {
             var mapOptions = {
