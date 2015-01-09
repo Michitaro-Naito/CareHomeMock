@@ -21,5 +21,10 @@ namespace CareHomeMock
         {
 
         }
+
+        public string GetAbsoluteUrl(string relativeUrl)
+        {
+            return string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, relativeUrl);
+        }
     }
 }

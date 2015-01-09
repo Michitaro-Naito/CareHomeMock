@@ -150,4 +150,9 @@ namespace CareHomeMock.Models
 
         public List<CareHome> CareHomes { get; set; }
     }
+
+    public class InfoSocialPartialVM
+    {
+        public string LikeUrl { get; set; }
+    }
 }

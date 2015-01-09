@@ -3,6 +3,7 @@
     var title = Model.Name;
     ViewBag.Title = title;
     var isAdmin = User.IsInRole("Admin");
+    var shortUrl = GetAbsoluteUrl(Url.RouteUrl("CareManagerInfoShort", new { id = Model.CareManagerId }));
 }
 
 @section scripts{
@@ -232,9 +233,10 @@
         <div>@MyHelper.MainImage(Model.MediaFileDataId, 293, 240, true)</div>
         <div>
             <p class="qrcode-description">ケータイ・スマホで見る</p>
-            @QRCode.Render(Request.Url.AbsoluteUri.ToString())
+            <!--@shortUrl-->
+            @QRCode.Render(shortUrl)
         </div>
-        <div>@Html.Partial("_InfoSocial")</div>
+        <div>@Html.Partial("_InfoSocial", new CareHomeMock.Models.InfoSocialPartialVM { LikeUrl = shortUrl })</div>
     </div>
 </div><!-- row -->
 

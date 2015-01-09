@@ -38,6 +38,12 @@ namespace CareHomeMock
                 defaults: new { controller = "Home", action = "CareHomeInfo_BasicInfo", code = UrlParameter.Optional, name = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "CareHomeInfoShort",
+                url: "kt/{code}",
+                defaults: new { controller = "Home", action = "CareHomeInfo_BasicInfo", code = UrlParameter.Optional, name = (string)null }
+            );
+
             // CareHomeInfo_CareManagers
             routes.MapRoute(
                 name: "CareHomeInfo_CareManagers",
@@ -78,6 +84,13 @@ namespace CareHomeMock
                 name: "CareManagerInfo",
                 url: "ケアマネ/{id}/{careHomeName}/{careManagerName}",
                 defaults: new { controller = "Home", action = "CareManagerInfo", id = UrlParameter.Optional, careHomeName = UrlParameter.Optional, careManagerName = UrlParameter.Optional }
+            );
+
+            // CareManagerInfo
+            routes.MapRoute(
+                name: "CareManagerInfoShort",
+                url: "cm/{id}",
+                defaults: new { controller = "Home", action = "CareManagerInfo", id = UrlParameter.Optional, careHomeName = (string)null, careManagerName = (string)null }
             );
 
             // PostReview

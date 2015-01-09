@@ -2,6 +2,7 @@
 @{
     var title = Model.Name;
     ViewBag.Title = title;
+    var shortUrl = GetAbsoluteUrl(Url.RouteUrl("CareHomeInfoShort", new { code = Model.CareHomeCode }));
 }
 @section scripts{
     <!-- amCharts javascript sources -->
@@ -217,7 +218,7 @@
     <div class="col-md-6">
         <div>@MyHelper.MainImage(Model.MediaFileDataId, 293, 240, true)</div>
         <div>
-            @Html.Partial("_InfoSocial")
+            @Html.Partial("_InfoSocial", new CareHomeMock.Models.InfoSocialPartialVM() { LikeUrl = shortUrl })
         </div>
         @if (Model.User == null)
         {
