@@ -657,6 +657,9 @@ ul.nav.nav-tabs.carehomeinfo-menu li.active a{
 }
 
 /* Top Social */
+.top-social{
+    overflow: hidden;
+}
 .top-social .col-md-12{
 }
 
@@ -697,5 +700,13 @@ ul.nav.nav-tabs.carehomeinfo-menu li.active a{
 @media (max-width: 420px) {
     .logo img{
         max-width: 180px;
+    }
+}
+@media (max-width: 350px) {
+    .top-ad,
+    .rgt-ad-blo {
+        margin-left: -15px;
+        margin-right: -15px;
+        overflow: hidden;
     }
 }

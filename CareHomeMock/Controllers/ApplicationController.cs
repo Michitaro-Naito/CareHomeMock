@@ -111,7 +111,7 @@ namespace CareHomeMock.Controllers
                 throw new InvalidOperationException("該当する事業所会員は既に登録されています。");
 
             // Generates username and password.
-            var username = "carehome" + application.CareHome.CareHomeCode;
+            var username = "KT" + application.CareHome.CareHomeCode;
             var password = System.Web.Security.Membership.GeneratePassword(12, 1);
 
             // Registers CareHomeUser.

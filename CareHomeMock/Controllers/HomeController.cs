@@ -59,6 +59,7 @@ namespace CareHomeMock.Controllers
         /// Map Search
         /// </summary>
         /// <returns></returns>
+        //[OutputCache(Duration=30, VaryByParam="abc", VaryByCustom="$IsMobile")]
         public ActionResult Index()
         {
             return View();

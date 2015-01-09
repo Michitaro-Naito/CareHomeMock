@@ -22,9 +22,9 @@
                             <div class="left">@Html.Partial("_LoginPartial")</div>
                             <div class="social-ul">
                                 <ul>
-                                    <li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <!--<li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
                                     <li class="social-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li class="social-google"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li class="social-google"><a href="#"><i class="fa fa-google-plus"></i></a></li>-->
                                 </ul>
                             </div>
                         </div>
@@ -68,7 +68,32 @@
         <section>
             <div class="container section-main-container">
                 <!--Top start-->
-                <div class="center top-ad"><img alt="" src="~/Content/images/top-ad.png"></div>
+                <div class="center top-ad">
+                    @if (IsMobile)
+                    {
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- caremgr_mobile -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:320px;height:100px"
+                             data-ad-client="ca-pub-4974907436165676"
+                             data-ad-slot="2274491756"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    }
+                    else
+                    {
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- caremgr_top -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:728px;height:90px"
+                             data-ad-client="ca-pub-4974907436165676"
+                             data-ad-slot="2414092558"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    }
+                </div>
                 <!--Top end-->
                 <div class="row">
                     <!--Left panel start-->
@@ -86,28 +111,42 @@
                         <!--right navigation end-->
                         <!--right add-->
                         <div class="rgt-ad-blo">
-                            <img alt="" src="~/Content/images/right-ad01.png">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- caremgr_rectangle1 -->
+                            <ins class="adsbygoogle"
+                                 style="display:inline-block;width:300px;height:250px"
+                                 data-ad-client="ca-pub-4974907436165676"
+                                 data-ad-slot="6844292159"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
                         </div>
                         <!--right add-->
                         <div class="rgt-ad-blo">
-                            <img alt="" src="~/Content/images/right-ad02.png">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- caremgr_rectangle2 -->
+                            <ins class="adsbygoogle"
+                                 style="display:inline-block;width:300px;height:250px"
+                                 data-ad-client="ca-pub-4974907436165676"
+                                 data-ad-slot="8321025359"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
                         </div>
                     </div>
                     <!--Right panel end-->
 
                 </div>
+                <!--Bottom ads here-->
                 <!--Top start-->
-                <div class="center top-ad"><img alt="" src="~/Content/images/bottom-ad.png"></div>
+                <div class="center top-ad">@*<img alt="" src="~/Content/images/bottom-ad.png">*@</div>
                 <!--Top end-->
             </div>
-            @{
-                //Html.Partial("_LoginPartial");
-            }
         </section>
         <footer>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <h4>About Us</h4>
                         <div class="aboutus">
                             <p>このサイトは株式会社ケアレビューが運営しています。</p>
@@ -118,11 +157,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <h4>Information</h4>
                         <div class="ftr-navigation">@Html.Action("MainLinks", "Partial")</div>
                     </div>
-                    <div class="col-md-4">
+                    <!--<div class="col-md-4">
                         <h4>Follow us</h4>
                         <div class="row ftr-social">
                             <div class="col-md-6">
@@ -135,7 +174,7 @@
                                 <a href="#"><i class="fa fa-google-plus"></i>Google Plus</a>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </footer>
