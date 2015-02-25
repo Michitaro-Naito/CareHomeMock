@@ -26,7 +26,7 @@
     {
         <p>この事業所はまだケアマネ情報を掲載していません。</p>
     }
-    @foreach (var m in Model.CareManagers.OrderBy(m=>m.Order))
+    @foreach (var m in Model.CareManagers.Where(m=>m.UserId != null).OrderBy(m=>m.Order))
     {
         <div class="search-rslt col-md-12">
             <div class="row">
