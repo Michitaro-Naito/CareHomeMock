@@ -2,11 +2,11 @@
 
 
 
-<div class="row info-social">
+@*<div class="row info-social">
 
-    <div class="col-md-12">
+    <div class="col-md-4">
         <!-- Facebook Like -->
-        <div class="fb-like" data-layout="standard" data-action="like" data-show-faces="false" data-share="false" data-href="@Model.LikeUrl"></div>
+        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false" data-href="@Model.LikeUrl"></div>
         <div id="fb-root"></div>
         <script>
             (function (d, s, id) {
@@ -18,16 +18,16 @@
             }(document, 'script', 'facebook-jssdk'));</script>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <!-- Google+ Plus One -->
         <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
         <g:plusone href="@Model.LikeUrl"></g:plusone>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <!-- Twitter Tweet -->
         <a href="https://twitter.com/share" class="twitter-share-button" data-url="@Model.LikeUrl">Tweet</a>
         <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
     </div>
 
-</div>
+</div>*@

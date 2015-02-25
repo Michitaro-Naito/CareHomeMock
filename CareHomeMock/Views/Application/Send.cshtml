@@ -1,6 +1,6 @@
 ﻿@model CareHomeMock.Models.ApplicationSendVM
 @{
-    var title = "事業所登録申請";
+    var title = "事業所会員登録申請";
     ViewBag.Title = title;
 }
 @section scripts{
@@ -12,8 +12,8 @@
     <div class="form-horizontal">
         <h2>@title</h2>
         <p class="description">
-            こちらの事業所の責任者の方は、以下にお名前とメールアドレスを入力して送信してください。
-            事務局でご本人確認をさせていただき、承認された場合は管理者用のIDとパスワードをご連絡いたします。（事業所会員の登録は無料です。）
+            こちらの事業所の責任者（またはシステム管理担当者）の方は、以下にお名前とメールアドレスを入力して送信してください。
+            手続き方法をメールでご案内させていただきます。（事業所会員登録は無料です。）
         </p>
         <p>@Html.ActionLink("事業所会員登録のご案内", "Details", "StaticPage", new { id = 7 }, null)</p>
 

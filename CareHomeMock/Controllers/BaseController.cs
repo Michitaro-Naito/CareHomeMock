@@ -170,7 +170,7 @@ namespace CareHomeMock.Controllers
         /// <param name="body"></param>
         protected void SendEmail(string to, string subject, string body)
         {
-            var from = "info@hospia.jp";
+            var from = "member@caremgr.jp";
 
             var message = new MailMessage(from, to, subject, body);
             message.BodyEncoding = System.Text.Encoding.GetEncoding(50220); // Shift-JIS

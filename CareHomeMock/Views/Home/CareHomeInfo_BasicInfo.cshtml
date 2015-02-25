@@ -3,6 +3,7 @@
     var title = Model.Name;
     ViewBag.Title = title;
     var shortUrl = GetAbsoluteUrl(Url.RouteUrl("CareHomeInfoShort", new { code = Model.CareHomeCode }));
+    ViewBag.ShortUrl = shortUrl;
 }
 @section scripts{
     <!-- amCharts javascript sources -->

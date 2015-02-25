@@ -4,6 +4,7 @@
     ViewBag.Title = title;
     var isAdmin = User.IsInRole("Admin");
     var shortUrl = GetAbsoluteUrl(Url.RouteUrl("CareManagerInfoShort", new { id = Model.CareManagerId }));
+    ViewBag.ShortUrl = shortUrl;
 }
 
 @section scripts{

@@ -61,7 +61,8 @@ namespace CareHomeMock.Controllers
                 SendEmailToAdmin("[ケアマネ情報局] 事業所会員登録申請がありました", "先ほど申請を受理いたしました。管理画面をご確認ください。");
                 Flash("事業所会員の登録申請を送信しました。事務局でご本人確認をさせていただき、承認された場合は管理者用のIDとパスワードをご連絡いたします。");
                 Log(LogType.Others, "事業所会員登録を申請しました。");
-                return RedirectToAction("CareHomeInfo_BasicInfo", "Home", new { code = home.CareHomeCode });
+                //return RedirectToAction("CareHomeInfo_BasicInfo", "Home", new { code = home.CareHomeCode });
+                return RedirectToAction("Details", "StaticPage", new { id = 8 });
             }
             return View(model);
         }

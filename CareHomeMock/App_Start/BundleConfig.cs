@@ -23,10 +23,10 @@ namespace CareHomeMock
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            /*bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/style.css",
                       "~/Content/css/bootstrap.css",
-                      "~/Content/css/font-awesome.css"));
+                      "~/Content/css/font-awesome.css"));*/
         }
     }
 }
