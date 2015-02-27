@@ -9,7 +9,7 @@ Subject: [ケアマネ情報局] 事業所会員として承認されました
 事業所会員として承認させていただきましたので、ログイン用のIDとパスワードをご案内いたします。
 
 ID：@ViewBag.UserId
-Password：@ViewBag.Password
+Password：@Html.Raw(ViewBag.Password)
 
 サイト右上の「Login」ボタンを押し、IDとパスワード入力してログインしてください。
 ログインが完了すると、画面上部にID:xxxxxxxと表示されますので、その箇所をクリックすると事業所情報の管理画面が開きます。
