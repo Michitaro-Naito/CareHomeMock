@@ -33,7 +33,7 @@ namespace CareHomeMock.Controllers
 
             // Generates username and password.
             var username = string.Format("CM{0:D6}", row.CareManagerId);
-            var password = System.Web.Security.Membership.GeneratePassword(12, 1);
+            var password = Helper.PasswordHelper.GeneratePassword(12);
 
             // Registers CareHomeUser.
             var user = new User() { UserName = username, Email = row.Email, Name = row.CareManager.Name };
