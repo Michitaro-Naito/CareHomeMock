@@ -73,8 +73,11 @@ namespace CareHomeMock.Controllers
                 else
                 {
                     // Edit
-                    db.Entry(carehome).State = EntityState.Modified;
-                    db.Entry(carehome).Property(h => h.UserId).IsModified = false;
+                    var entry = db.Entry(carehome);
+                    entry.State = EntityState.Modified;
+                    entry.Property(h => h.UserId).IsModified = false;
+                    entry.Property(h => h.Rating).IsModified = false;
+                    entry.Property(h => h.ReviewCount).IsModified = false;
                     //db.Entry(carehome).Property(h => h.CareManagers).IsModified = false;
                 }
                 db.SaveChanges();
