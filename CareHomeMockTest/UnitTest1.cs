@@ -110,5 +110,11 @@ namespace CareHomeMockTest
             Assert.AreEqual<double>(dest.C, src.C);
             Assert.AreNotEqual<string>(dest.D, src.D);
         }
+
+        [TestMethod]
+        public void GeneratePassword()
+        {
+            Console.WriteLine(PasswordHelper.GeneratePassword(12));
+        }
     }
 }
